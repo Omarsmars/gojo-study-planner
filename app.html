@@ -2,217 +2,220 @@
 <html>
 <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>GOJO Study Planner</title>
+<title>GOJO Study Planner</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            background: #080808;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
+body {
+    margin: 0;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
 
-        .container {
-            width: 92%;
-            max-width: 900px;
-            margin: auto;
-        }
+.container {
+    width: 92%;
+    max-width: 900px;
+    margin: auto;
+}
 
-        header {
-            text-align: center;
-            padding: 40px 10px 25px;
-        }
+header {
+    text-align: center;
+    padding: 35px 10px;
+}
 
-        header h1 {
-            font-size: 48px;
-            margin: 0;
-        }
+header h1 {
+    font-size: 48px;
+    margin: 0;
+}
 
-        header p {
-            color: #888;
-            margin-top: 8px;
-        }
+header p {
+    color: #888;
+}
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
 
-        .stat {
-            background: #141414;
-            border: 1px solid #292929;
-            border-radius: 15px;
-            padding: 18px;
-            text-align: center;
-        }
+.stat {
+    background: #141414;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 18px;
+    text-align: center;
+}
 
-        .stat h2 {
-            margin: 5px;
-            font-size: 28px;
-        }
+.stat h2 {
+    margin: 5px;
+    font-size: 28px;
+}
 
-        .stat p {
-            color: #888;
-            margin: 5px;
-            font-size: 14px;
-        }
+.stat p {
+    color: #888;
+    margin: 5px;
+}
 
-        .progressBox,
-        .form {
-            background: #141414;
-            border: 1px solid #292929;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+.box {
+    background: #141414;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
 
-        .progressBar {
-            width: 100%;
-            height: 14px;
-            background: #252525;
-            border-radius: 20px;
-            overflow: hidden;
-        }
+.progressBar {
+    width: 100%;
+    height: 14px;
+    background: #252525;
+    border-radius: 20px;
+    overflow: hidden;
+}
 
-        .progress {
-            height: 100%;
-            width: 0%;
-            background: white;
-            transition: width 0.3s;
-        }
+.progress {
+    height: 100%;
+    width: 0%;
+    background: white;
+    transition: 0.3s;
+}
 
-        .form h2 {
-            margin-top: 0;
-        }
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    margin: 6px 0;
+    background: #0b0b0b;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 9px;
+    font-size: 15px;
+}
 
-        input {
-            width: 100%;
-            padding: 13px;
-            margin: 6px 0;
-            background: #0b0b0b;
-            color: white;
-            border: 1px solid #333;
-            border-radius: 9px;
-            font-size: 15px;
-        }
+button {
+    padding: 11px 15px;
+    margin: 5px 3px 0 0;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
 
-        button {
-            padding: 11px 15px;
-            margin: 5px 3px 0 0;
-            border: none;
-            border-radius: 9px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+.mainButton {
+    width: 100%;
+    background: white;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
-        #addButton {
-            width: 100%;
-            background: white;
-            color: black;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+.secondaryButton {
+    background: #292929;
+    color: white;
+}
 
-        ul {
-            padding: 0;
-        }
+ul {
+    padding: 0;
+}
 
-        li {
-            list-style: none;
-            background: #141414;
-            border: 1px solid #292929;
-            border-radius: 15px;
-            padding: 18px;
-            margin: 12px 0;
-        }
+li {
+    list-style: none;
+    background: #141414;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 18px;
+    margin: 12px 0;
+}
 
-        .taskName {
-            font-size: 19px;
-            font-weight: bold;
-        }
+.taskName {
+    font-size: 19px;
+    font-weight: bold;
+}
 
-        .subject {
-            color: #aaa;
-            margin-top: 7px;
-        }
+.subject {
+    color: #aaa;
+    margin-top: 7px;
+}
 
-        .deadline {
-            color: #777;
-            margin-top: 5px;
-        }
+.deadline {
+    color: #777;
+    margin-top: 5px;
+}
 
-        .complete {
-            text-decoration: line-through;
-            opacity: 0.5;
-        }
+.complete {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
 
-        .deleteButton {
-            background: #292929;
-            color: white;
-        }
+.plan {
+    margin-top: 20px;
+}
 
-        .empty {
-            text-align: center;
-            color: #666;
-            padding: 30px;
-        }
+.examCountdown {
+    text-align: center;
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 15px 0;
+}
 
-        footer {
-            text-align: center;
-            color: #555;
-            padding: 40px 0;
-            font-size: 14px;
-        }
+.examCountdown h2 {
+    font-size: 32px;
+    margin: 5px;
+}
 
-        /* PHONE DESIGN */
+.planDay {
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+}
 
-        @media (max-width: 600px) {
+.planDay h3 {
+    margin-top: 0;
+}
 
-            header {
-                padding-top: 25px;
-            }
+.planDay p {
+    color: #aaa;
+}
 
-            header h1 {
-                font-size: 38px;
-            }
+.empty {
+    text-align: center;
+    color: #666;
+    padding: 25px;
+}
 
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+footer {
+    text-align: center;
+    color: #555;
+    padding: 35px 0;
+}
 
-            .stat {
-                padding: 14px;
-            }
+@media (max-width: 600px) {
 
-            .stat h2 {
-                font-size: 25px;
-            }
+    header h1 {
+        font-size: 38px;
+    }
 
-            .form,
-            .progressBox {
-                padding: 17px;
-            }
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
 
-            li {
-                padding: 16px;
-            }
+    .box {
+        padding: 17px;
+    }
 
-            button {
-                padding: 10px 13px;
-            }
+}
 
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -223,118 +226,187 @@
 <div class="container">
 
 
-    <header>
+<header>
 
-        <h1>📚 GOJO</h1>
+<h1>📚 GOJO</h1>
 
-        <p>
-            STUDY PLANNER
-        </p>
+<p>STUDY PLANNER</p>
 
-    </header>
+</header>
 
 
-    <!-- DASHBOARD -->
+<!-- DASHBOARD -->
 
-    <div class="dashboard">
+<div class="dashboard">
 
-        <div class="stat">
+<div class="stat">
 
-            <h2 id="totalTasks">0</h2>
+<h2 id="totalTasks">0</h2>
 
-            <p>Total Tasks</p>
+<p>Total Tasks</p>
 
-        </div>
-
-
-        <div class="stat">
-
-            <h2 id="completedTasks">0</h2>
-
-            <p>Completed</p>
-
-        </div>
+</div>
 
 
-        <div class="stat">
+<div class="stat">
 
-            <h2 id="progressText">0%</h2>
+<h2 id="completedTasks">0</h2>
 
-            <p>Progress</p>
+<p>Completed</p>
 
-        </div>
-
-    </div>
+</div>
 
 
-    <!-- PROGRESS -->
+<div class="stat">
 
-    <div class="progressBox">
+<h2 id="progressText">0%</h2>
 
-        <h3>🎯 Your Progress</h3>
+<p>Progress</p>
 
-        <div class="progressBar">
+</div>
 
-            <div
-                class="progress"
-                id="progress">
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <!-- ADD TASK -->
+<!-- PROGRESS -->
 
-    <div class="form">
+<div class="box">
 
-        <h2>➕ Add Task</h2>
+<h3>🎯 Your Progress</h3>
 
+<div class="progressBar">
 
-        <input
-            type="text"
-            id="task"
-            placeholder="What do you need to do?"
-        >
+<div
+class="progress"
+id="progress">
+</div>
 
+</div>
 
-        <input
-            type="text"
-            id="subject"
-            placeholder="Subject"
-        >
+</div>
 
 
-        <input
-            type="date"
-            id="deadline"
-        >
+<!-- ADD TASK -->
+
+<div class="box">
+
+<h2>➕ Add Task</h2>
+
+<input
+type="text"
+id="task"
+placeholder="What do you need to do?"
+>
+
+<input
+type="text"
+id="subject"
+placeholder="Subject"
+>
+
+<input
+type="date"
+id="deadline"
+>
+
+<button
+class="mainButton"
+onclick="addTask()">
+
+Add Task
+
+</button>
+
+</div>
 
 
-        <button
-            id="addButton"
-            onclick="addTask()"
-        >
-            Add Task
-        </button>
+<!-- SMART STUDY MODE -->
 
-    </div>
+<div class="box">
 
+<h2>🧠 Smart Study Mode</h2>
 
-    <!-- TASKS -->
+<p style="color:#888;">
 
-    <h2>📋 My Tasks</h2>
+GOJO creates a study plan based on your
+exam date and study intensity.
 
-
-    <ul id="taskList"></ul>
+</p>
 
 
-    <footer>
+<input
+type="text"
+id="studySubject"
+placeholder="Subject e.g. Biology"
+>
 
-        GOJO • Learning today. Building tomorrow. 🇰🇪
 
-    </footer>
+<input
+type="text"
+id="studyTopic"
+placeholder="Topic e.g. Cells"
+>
+
+
+<input
+type="date"
+id="examDate"
+>
+
+
+<select id="intensity">
+
+<option value="light">
+
+🟢 Light — 30 min/day
+
+</option>
+
+<option value="normal" selected>
+
+🟡 Normal — 1 hour/day
+
+</option>
+
+<option value="intensive">
+
+🔴 Intensive — 2+ hours/day
+
+</option>
+
+</select>
+
+
+<button
+class="mainButton"
+onclick="createStudyPlan()">
+
+Create Study Plan
+
+</button>
+
+
+<div
+id="studyPlan"
+class="plan">
+
+</div>
+
+</div>
+
+
+<!-- TASKS -->
+
+<h2>📋 My Tasks</h2>
+
+<ul id="taskList"></ul>
+
+
+<footer>
+
+GOJO • Learning today. Building tomorrow. 🌍
+
+</footer>
 
 
 </div>
@@ -344,330 +416,696 @@
 <script>
 
 
-    let tasks =
-        JSON.parse(
-            localStorage.getItem("gojoTasks")
-        ) || [];
+let tasks =
+JSON.parse(
+localStorage.getItem("gojoTasks")
+) || [];
 
 
 
-    function saveTasks() {
+function saveTasks() {
 
-        localStorage.setItem(
-            "gojoTasks",
-            JSON.stringify(tasks)
-        );
+localStorage.setItem(
+"gojoTasks",
+JSON.stringify(tasks)
+);
 
-    }
+}
 
 
 
-    function updateDashboard() {
+function updateDashboard() {
 
-        let total =
-            tasks.length;
+let total = tasks.length;
 
+let completed =
+tasks.filter(function(task) {
 
-        let completed =
-            tasks.filter(function(task) {
+return task.completed;
 
-                return task.completed;
+}).length;
 
-            }).length;
+let percentage = 0;
 
+if (total > 0) {
 
-        let percentage = 0;
+percentage =
+Math.round(
+(completed / total) * 100
+);
 
+}
 
-        if (total > 0) {
+document.getElementById(
+"totalTasks"
+).textContent = total;
 
-            percentage =
-                Math.round(
-                    (completed / total) * 100
-                );
+document.getElementById(
+"completedTasks"
+).textContent = completed;
 
-        }
+document.getElementById(
+"progressText"
+).textContent =
+percentage + "%";
 
+document.getElementById(
+"progress"
+).style.width =
+percentage + "%";
 
-        document.getElementById(
-            "totalTasks"
-        ).textContent = total;
+}
 
 
-        document.getElementById(
-            "completedTasks"
-        ).textContent = completed;
 
+function displayTasks() {
 
-        document.getElementById(
-            "progressText"
-        ).textContent =
-            percentage + "%";
+let list =
+document.getElementById(
+"taskList"
+);
 
+list.innerHTML = "";
 
-        document.getElementById(
-            "progress"
-        ).style.width =
-            percentage + "%";
 
-    }
+if (tasks.length === 0) {
 
+list.innerHTML =
+'<div class="empty">No tasks yet. Add your first task! 🚀</div>';
 
+}
 
-    function displayTasks() {
 
+tasks.forEach(function(task, index) {
 
-        let list =
-            document.getElementById(
-                "taskList"
-            );
 
+let item =
+document.createElement("li");
 
-        list.innerHTML = "";
 
+let taskName =
+document.createElement("div");
 
-        if (tasks.length === 0) {
+taskName.className =
+"taskName";
 
-            list.innerHTML =
-                '<div class="empty">No tasks yet. Add your first task! 🚀</div>';
+taskName.textContent =
+task.name;
 
-        }
 
+if (task.completed) {
 
-        tasks.forEach(function(task, index) {
+taskName.classList.add(
+"complete"
+);
 
+}
 
-            let item =
-                document.createElement("li");
 
+let subject =
+document.createElement("div");
 
-            let taskName =
-                document.createElement("div");
+subject.className =
+"subject";
 
+subject.textContent =
+"📚 " + task.subject;
 
-            taskName.className =
-                "taskName";
 
+let deadline =
+document.createElement("div");
 
-            taskName.textContent =
-                task.name;
+deadline.className =
+"deadline";
 
+deadline.textContent =
+"📅 " + task.deadline;
 
-            if (task.completed) {
 
-                taskName.classList.add(
-                    "complete"
-                );
+let completeButton =
+document.createElement("button");
 
-            }
+completeButton.textContent =
+task.completed
+? "Undo"
+: "Complete";
 
+completeButton.className =
+"secondaryButton";
 
-            let subject =
-                document.createElement("div");
 
+completeButton.onclick =
+function() {
 
-            subject.className =
-                "subject";
+tasks[index].completed =
+!tasks[index].completed;
 
+saveTasks();
 
-            subject.textContent =
-                "📚 " + task.subject;
+displayTasks();
 
+};
 
-            let deadline =
-                document.createElement("div");
 
+let deleteButton =
+document.createElement("button");
 
-            deadline.className =
-                "deadline";
+deleteButton.textContent =
+"Delete";
 
+deleteButton.className =
+"secondaryButton";
 
-            deadline.textContent =
-                "📅 " + task.deadline;
 
+deleteButton.onclick =
+function() {
 
+tasks.splice(
+index,
+1
+);
 
-            let completeButton =
-                document.createElement(
-                    "button"
-                );
+saveTasks();
 
+displayTasks();
 
-            completeButton.textContent =
-                task.completed
-                ? "Undo"
-                : "Complete";
+};
 
 
-            completeButton.onclick =
-                function() {
+item.appendChild(taskName);
 
+item.appendChild(subject);
 
-                    tasks[index].completed =
-                        !tasks[index].completed;
+item.appendChild(deadline);
 
+item.appendChild(completeButton);
 
-                    saveTasks();
+item.appendChild(deleteButton);
 
-                    displayTasks();
+list.appendChild(item);
 
-                };
+});
 
 
+updateDashboard();
 
-            let deleteButton =
-                document.createElement(
-                    "button"
-                );
+}
 
 
-            deleteButton.textContent =
-                "Delete";
 
+function addTask() {
 
-            deleteButton.className =
-                "deleteButton";
+let name =
+document.getElementById(
+"task"
+).value;
 
 
-            deleteButton.onclick =
-                function() {
+let subject =
+document.getElementById(
+"subject"
+).value;
 
 
-                    tasks.splice(
-                        index,
-                        1
-                    );
+let deadline =
+document.getElementById(
+"deadline"
+).value;
 
 
-                    saveTasks();
+if (name === "") {
 
-                    displayTasks();
+alert(
+"Please enter a task!"
+);
 
-                };
+return;
 
+}
 
 
-            item.appendChild(
-                taskName
-            );
+let newTask = {
 
+name: name,
 
-            item.appendChild(
-                subject
-            );
+subject:
+subject || "General",
 
+deadline:
+deadline || "No deadline",
 
-            item.appendChild(
-                deadline
-            );
+completed: false
 
+};
 
-            item.appendChild(
-                completeButton
-            );
 
+tasks.push(newTask);
 
-            item.appendChild(
-                deleteButton
-            );
+saveTasks();
 
+displayTasks();
 
-            list.appendChild(
-                item
-            );
 
+document.getElementById(
+"task"
+).value = "";
 
-        });
+document.getElementById(
+"subject"
+).value = "";
 
+document.getElementById(
+"deadline"
+).value = "";
 
-        updateDashboard();
+}
 
-    }
 
 
+function createStudyPlan() {
 
-    function addTask() {
 
+let subject =
+document.getElementById(
+"studySubject"
+).value;
 
-        let name =
-            document.getElementById(
-                "task"
-            ).value;
 
+let topic =
+document.getElementById(
+"studyTopic"
+).value;
 
-        let subject =
-            document.getElementById(
-                "subject"
-            ).value;
 
+let examDate =
+document.getElementById(
+"examDate"
+).value;
 
-        let deadline =
-            document.getElementById(
-                "deadline"
-            ).value;
 
+let intensity =
+document.getElementById(
+"intensity"
+).value;
 
 
-        if (name === "") {
+if (
+subject === "" ||
+topic === "" ||
+examDate === ""
+) {
 
-            alert(
-                "Please enter a task!"
-            );
+alert(
+"Please fill in the subject, topic and exam date!"
+);
 
-            return;
+return;
 
-        }
+}
 
 
+let today = new Date();
 
-        let newTask = {
+today.setHours(
+0,
+0,
+0,
+0
+);
 
-            name: name,
 
-            subject:
-                subject || "General",
+let exam =
+new Date(
+examDate + "T00:00:00"
+);
 
-            deadline:
-                deadline || "No deadline",
 
-            completed: false
+let difference =
+exam.getTime() -
+today.getTime();
 
-        };
 
+let daysLeft =
+Math.ceil(
+difference /
+(1000 * 60 * 60 * 24)
+);
 
 
-        tasks.push(
-            newTask
-        );
+let plan =
+document.getElementById(
+"studyPlan"
+);
 
 
-        saveTasks();
+let studyTime;
 
 
-        displayTasks();
+if (intensity === "light") {
 
+studyTime =
+"30 minutes";
 
+}
+else if (intensity === "normal") {
 
-        document.getElementById(
-            "task"
-        ).value = "";
+studyTime =
+"1 hour";
 
+}
+else {
 
-        document.getElementById(
-            "subject"
-        ).value = "";
+studyTime =
+"2+ hours";
 
+}
 
-        document.getElementById(
-            "deadline"
-        ).value = "";
 
-    }
+if (daysLeft < 0) {
 
+plan.innerHTML = `
 
+<div class="examCountdown">
 
-    displayTasks();
+<h2>⚠️ Exam date passed</h2>
 
+<p>
+Choose a future exam date.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if (daysLeft === 0) {
+
+plan.innerHTML = `
+
+<div class="examCountdown">
+
+<h2>⚠️ EXAM TODAY</h2>
+
+<p>
+Your ${subject} exam is today.
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🎯 Final Review</h3>
+
+<p>
+
+Study for about ${studyTime}.
+Review the most important concepts
+in ${topic} and avoid trying to learn
+everything at the last minute.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if (daysLeft === 1) {
+
+plan.innerHTML = `
+
+<div class="examCountdown">
+
+<h2>⚠️ 1 DAY LEFT</h2>
+
+<p>
+Your ${subject} exam is tomorrow.
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🎯 Today</h3>
+
+<p>
+
+Study for about ${studyTime}.
+Review key concepts in ${topic},
+practice important questions and
+review your mistakes.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if (daysLeft <= 3) {
+
+plan.innerHTML = `
+
+<div class="examCountdown">
+
+<h2>🔥 ${daysLeft} DAYS LEFT</h2>
+
+<p>
+Study intensity: ${studyTime} per day.
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>📖 Learn</h3>
+
+<p>
+
+Spend about ${studyTime}
+understanding the main concepts
+of ${topic}.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>✍️ Practice</h3>
+
+<p>
+
+Practice questions and identify
+your weak areas.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🎯 Final Review</h3>
+
+<p>
+
+Review mistakes and important
+concepts before the exam.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if (daysLeft <= 7) {
+
+plan.innerHTML = `
+
+<div class="examCountdown">
+
+<h2>📅 ${daysLeft} DAYS LEFT</h2>
+
+<p>
+Study about ${studyTime} each day.
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>📖 Days 1–2 — Learn</h3>
+
+<p>
+
+Learn the main concepts of ${topic}.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>✍️ Days 3–4 — Practice</h3>
+
+<p>
+
+Practice questions and examples.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🔍 Days 5–6 — Review</h3>
+
+<p>
+
+Review mistakes and focus on weak areas.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🎯 Final Day</h3>
+
+<p>
+
+Take a practice test and review
+the most important points.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+plan.innerHTML = `
+
+<div class="examCountdown">
+
+<h2>🚀 ${daysLeft} DAYS LEFT</h2>
+
+<p>
+
+Study about ${studyTime} each day.
+You have enough time to prepare
+without cramming.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>📖 Phase 1 — Learn</h3>
+
+<p>
+
+Learn and understand the main
+concepts of ${topic}.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>✍️ Phase 2 — Practice</h3>
+
+<p>
+
+Practice questions and examples.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🔍 Phase 3 — Review</h3>
+
+<p>
+
+Review mistakes and focus on
+difficult areas.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🧪 Phase 4 — Test Yourself</h3>
+
+<p>
+
+Take practice tests without looking
+at your notes.
+
+</p>
+
+</div>
+
+
+<div class="planDay">
+
+<h3>🎯 Final Revision</h3>
+
+<p>
+
+Review the most important concepts
+before your exam.
+
+</p>
+
+</div>
+
+`;
+
+}
+
+
+
+displayTasks();
 
 </script>
 
