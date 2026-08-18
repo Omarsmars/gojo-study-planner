@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GOJO Study Planner</title>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 18px;
+        }
+
+        .form {
+            margin: 30px auto;
+            max-width: 700px;
+        }
+
+        input {
+            padding: 12px;
+            margin: 5px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #151515;
+            color: white;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #addButton {
+            background: white;
+            color: black;
+        }
+
+        .stats {
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 600px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 15px;
+        }
+
+        .progressBar {
+            width: 100%;
+            height: 15px;
+            background: #222;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            background: #151515;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .taskName {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .subject {
+            color: #aaa;
+        }
+
+        .deadline {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .complete {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .deleteButton {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📚 GOJO Study Planner</h1>
+
+    <p class="subtitle">
+        Organize your school work and stay on track.
+    </p>
+
+    <div class="form">
+
+        <input
+            type="text"
+            id="task"
+            placeholder="Task"
+        >
+
+        <input
+            type="text"
+            id="subject"
+            placeholder="Subject"
+        >
+
+        <input
+            type="date"
+            id="deadline"
+        >
+
+        <br>
+
+        <button id="addButton" onclick="addTask()">
+            Add Task
+        </button>
+
+    </div>
+
+    <div class="stats">
+
+        <h2 id="taskCount">Tasks: 0</h2>
+
+        <p id="progressText">Progress: 0%</p>
+
+        <div class="progressBar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+    </div>
+
+    <ul id="taskList"></ul>
+
+
+    <script>
+
+        let tasks =
+            JSON.parse(localStorage.getItem("gojoTasks")) || [];
+
+
+        function saveTasks() {
+
+            localStorage.setItem(
+                "gojoTasks",
+                JSON.stringify(tasks)
+            );
+
+        }
+
+
+        function updateStats() {
+
+            let total = tasks.length;
+
+            let completed =
+                tasks.filter(function(task) {
+                    return task.completed;
+                }).length;
+
+            let percentage = 0;
+
+            if (total > 0) {
+                percentage =
+                    Math.round((completed / total) * 100);
+            }
+
+            document.getElementById("taskCount").textContent =
+                "Tasks: " + total;
+
+            document.getElementById("progressText").textContent =
+                "Progress: " + percentage + "%";
+
+            document.getElementById("progress").style.width =
+                percentage + "%";
+        }
+
+
+        function displayTasks() {
+
+            let list =
+                document.getElementById("taskList");
+
+            list.innerHTML = "";
+
+
+            tasks.forEach(function(task, index) {
+
+                let item =
+                    document.createElement("li");
+
+
+                let taskName =
+                    document.createElement("div");
+
+                taskName.className = "taskName";
+
+                taskName.textContent =
+                    task.name;
+
+
+                let subject =
+                    document.createElement("div");
+
+                subject.className = "subject";
+
+                subject.textContent =
+                    "Subject: " + task.subject;
+
+
+                let deadline =
+                    document.createElement("div");
+
+                deadline.className = "deadline";
+
+                deadline.textContent =
+                    "Deadline: " + task.deadline;
+
+
+                if (task.completed) {
+
+                    taskName.classList.add("complete");
+
+                }
+
+
+                let completeButton =
+                    document.createElement("button");
+
+                completeButton.textContent =
+                    task.completed
+                    ? "Undo"
+                    : "Complete";
+
+
+                completeButton.onclick = function() {
+
+                    tasks[index].completed =
+                        !tasks[index].completed;
+
+                    saveTasks();
+
+                    displayTasks();
+
+                };
+
+
+                let deleteButton =
+                    document.createElement("button");
+
+                deleteButton.textContent =
+                    "Delete";
+
+                deleteButton.className =
+                    "deleteButton";
+
+
+                deleteButton.onclick = function() {
+
+                    tasks.splice(index, 1);
+
+                    saveTasks();
+
+                    displayTasks();
+
+                };
+
+
+                item.appendChild(taskName);
+
+                item.appendChild(subject);
+
+                item.appendChild(deadline);
+
+                item.appendChild(completeButton);
+
+                item.appendChild(deleteButton);
+
+                list.appendChild(item);
+
+            });
+
+
+            updateStats();
+
+        }
+
+
+        function addTask() {
+
+            let name =
+                document.getElementById("task").value;
+
+            let subject =
+                document.getElementById("subject").value;
+
+            let deadline =
+                document.getElementById("deadline").value;
+
+
+            if (name === "") {
+
+                alert("Please enter a task!");
+
+                return;
+
+            }
+
+
+            let newTask = {
+
+                name: name,
+
+                subject:
+                    subject || "General",
+
+                deadline:
+                    deadline || "No deadline",
+
+                completed: false
+
+            };
+
+
+            tasks.push(newTask);
+
+            saveTasks();
+
+            displayTasks();
+
+
+            document.getElementById("task").value = "";
+
+            document.getElementById("subject").value = "";
+
+            document.getElementById("deadline").value = "";
+
+        }
+
+
+        displayTasks();
+
+    </script>
+
+</body>
+</html>
