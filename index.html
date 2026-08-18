@@ -187,6 +187,57 @@ li {
     color: #aaa;
 }
 
+.todayCard {
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 12px;
+}
+
+.todayCard h3 {
+    margin-top: 0;
+}
+
+.todayInfo {
+    color: #aaa;
+    margin: 7px 0;
+}
+
+.priority {
+    display: inline-block;
+    background: #222;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.timer {
+    text-align: center;
+}
+
+.timerTask {
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.timerDisplay {
+    font-size: 64px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: 15px 0;
+}
+
+.timerButtons button {
+    min-width: 100px;
+}
+
+.timerStatus {
+    color: #888;
+    min-height: 22px;
+    margin-top: 12px;
+}
+
 .empty {
     text-align: center;
     color: #666;
@@ -211,6 +262,10 @@ footer {
 
     .box {
         padding: 17px;
+    }
+
+    .timerDisplay {
+        font-size: 48px;
     }
 
 }
@@ -280,6 +335,83 @@ footer {
 class="progress"
 id="progress">
 </div>
+
+</div>
+
+</div>
+
+
+<!-- TODAY'S STUDY -->
+
+<div class="box">
+
+<h2>🎯 Today's Study</h2>
+
+<div id="todayStudy"></div>
+
+</div>
+
+
+<!-- STUDY TIMER -->
+
+<div class="box timer">
+
+<h2>⏱️ Study Session</h2>
+
+<div
+id="timerTask"
+class="timerTask">
+
+Choose a task to begin.
+
+</div>
+
+
+<div
+id="timerDisplay"
+class="timerDisplay">
+
+25:00
+
+</div>
+
+
+<div class="timerButtons">
+
+<button
+class="mainButton"
+onclick="startTimer()">
+
+▶ Start
+
+</button>
+
+
+<button
+class="secondaryButton"
+onclick="pauseTimer()">
+
+⏸ Pause
+
+</button>
+
+
+<button
+class="secondaryButton"
+onclick="resetTimer()">
+
+🔄 Reset
+
+</button>
+
+</div>
+
+
+<div
+id="timerStatus"
+class="timerStatus">
+
+Ready to focus.
 
 </div>
 
@@ -395,7 +527,7 @@ class="plan">
 </div>
 
 
-<!-- TASKS -->
+<!-- TASK LIST -->
 
 <h2>📋 My Tasks</h2>
 
@@ -416,6 +548,11 @@ GOJO • Learning today. Building tomorrow. 🌍
 <script>
 
 
+/* =========================
+   TASK SYSTEM
+========================= */
+
+
 let tasks =
 JSON.parse(
 localStorage.getItem("gojoTasks")
@@ -432,6 +569,11 @@ JSON.stringify(tasks)
 
 }
 
+
+
+/* =========================
+   DASHBOARD
+========================= */
 
 
 function updateDashboard() {
@@ -456,18 +598,22 @@ Math.round(
 
 }
 
+
 document.getElementById(
 "totalTasks"
 ).textContent = total;
+
 
 document.getElementById(
 "completedTasks"
 ).textContent = completed;
 
+
 document.getElementById(
 "progressText"
 ).textContent =
 percentage + "%";
+
 
 document.getElementById(
 "progress"
@@ -476,6 +622,11 @@ percentage + "%";
 
 }
 
+
+
+/* =========================
+   DISPLAY TASKS
+========================= */
 
 
 function displayTasks() {
@@ -609,8 +760,224 @@ list.appendChild(item);
 
 updateDashboard();
 
+updateTodayStudy();
+
 }
 
+
+
+/* =========================
+   TODAY'S STUDY
+========================= */
+
+
+function updateTodayStudy() {
+
+let todayBox =
+document.getElementById(
+"todayStudy"
+);
+
+let incomplete =
+tasks.filter(function(task) {
+
+return !task.completed &&
+task.deadline !== "No deadline";
+
+});
+
+
+if (incomplete.length === 0) {
+
+todayBox.innerHTML = `
+
+<div class="todayCard">
+
+<h3>🎉 You're all caught up!</h3>
+
+<p class="todayInfo">
+
+No unfinished tasks with deadlines.
+
+Add a task and GOJO will help you
+decide what to study next.
+
+</p>
+
+</div>
+
+`;
+
+document.getElementById(
+"timerTask"
+).textContent =
+"Choose a task to begin.";
+
+return;
+
+}
+
+
+incomplete.sort(function(a, b) {
+
+return new Date(a.deadline) -
+new Date(b.deadline);
+
+});
+
+
+let nextTask =
+incomplete[0];
+
+
+let today =
+new Date();
+
+today.setHours(
+0,
+0,
+0,
+0
+);
+
+
+let deadline =
+new Date(
+nextTask.deadline + "T00:00:00"
+);
+
+
+let difference =
+deadline.getTime() -
+today.getTime();
+
+
+let daysLeft =
+Math.ceil(
+difference /
+(1000 * 60 * 60 * 24)
+);
+
+
+let priority;
+
+if (daysLeft <= 1) {
+
+priority = "🔥 HIGH";
+
+}
+else if (daysLeft <= 3) {
+
+priority = "⚡ MEDIUM";
+
+}
+else {
+
+priority = "🟢 NORMAL";
+
+}
+
+
+let time;
+
+if (daysLeft <= 1) {
+
+time = "1–2 hours";
+
+}
+else if (daysLeft <= 3) {
+
+time = "45–60 minutes";
+
+}
+else {
+
+time = "30–45 minutes";
+
+}
+
+
+let deadlineText;
+
+if (daysLeft === 0) {
+
+deadlineText = "Due today";
+
+}
+else if (daysLeft === 1) {
+
+deadlineText = "Due tomorrow";
+
+}
+else if (daysLeft > 1) {
+
+deadlineText =
+"Due in " +
+daysLeft +
+" days";
+
+}
+else {
+
+deadlineText = "Overdue";
+
+}
+
+
+todayBox.innerHTML = `
+
+<div class="todayCard">
+
+<h3>📚 ${nextTask.name}</h3>
+
+<p class="todayInfo">
+
+📖 Subject:
+${nextTask.subject}
+
+</p>
+
+<p class="todayInfo">
+
+📅 ${deadlineText}
+
+</p>
+
+<p class="todayInfo">
+
+⏱️ Suggested study time:
+${time}
+
+</p>
+
+<div class="priority">
+
+${priority}
+
+</div>
+
+</div>
+
+`;
+
+
+/* Tell the timer what task to study */
+
+document.getElementById(
+"timerTask"
+).textContent =
+"🎯 " +
+nextTask.name +
+" — " +
+nextTask.subject;
+
+}
+
+
+
+/* =========================
+   ADD TASK
+========================= */
 
 
 function addTask() {
@@ -682,6 +1049,159 @@ document.getElementById(
 
 
 
+/* =========================
+   STUDY TIMER
+========================= */
+
+
+let timeLeft = 25 * 60;
+
+let timerInterval = null;
+
+let timerRunning = false;
+
+
+
+function updateTimerDisplay() {
+
+let minutes =
+Math.floor(
+timeLeft / 60
+);
+
+let seconds =
+timeLeft % 60;
+
+
+let formattedMinutes =
+String(minutes).padStart(
+2,
+"0"
+);
+
+let formattedSeconds =
+String(seconds).padStart(
+2,
+"0"
+);
+
+
+document.getElementById(
+"timerDisplay"
+).textContent =
+formattedMinutes +
+":" +
+formattedSeconds;
+
+}
+
+
+
+function startTimer() {
+
+if (timerRunning) {
+
+return;
+
+}
+
+
+timerRunning = true;
+
+
+document.getElementById(
+"timerStatus"
+).textContent =
+"🔥 Focus mode active...";
+
+
+timerInterval =
+setInterval(function() {
+
+
+if (timeLeft > 0) {
+
+timeLeft--;
+
+updateTimerDisplay();
+
+}
+
+
+else {
+
+clearInterval(
+timerInterval
+);
+
+timerRunning = false;
+
+
+document.getElementById(
+"timerStatus"
+).textContent =
+"🎉 Study session complete! Great work.";
+
+}
+
+}, 1000);
+
+}
+
+
+
+function pauseTimer() {
+
+if (!timerRunning) {
+
+return;
+
+}
+
+
+clearInterval(
+timerInterval
+);
+
+timerRunning = false;
+
+
+document.getElementById(
+"timerStatus"
+).textContent =
+"⏸️ Session paused.";
+
+}
+
+
+
+function resetTimer() {
+
+clearInterval(
+timerInterval
+);
+
+timerRunning = false;
+
+timeLeft = 25 * 60;
+
+updateTimerDisplay();
+
+
+document.getElementById(
+"timerStatus"
+).textContent =
+"Ready to focus.";
+
+}
+
+
+
+/* =========================
+   SMART STUDY MODE
+========================= */
+
+
 function createStudyPlan() {
 
 
@@ -724,7 +1244,8 @@ return;
 }
 
 
-let today = new Date();
+let today =
+new Date();
 
 today.setHours(
 0,
@@ -825,8 +1346,7 @@ Your ${subject} exam is today.
 
 Study for about ${studyTime}.
 Review the most important concepts
-in ${topic} and avoid trying to learn
-everything at the last minute.
+in ${topic}.
 
 </p>
 
@@ -1023,8 +1543,6 @@ plan.innerHTML = `
 <p>
 
 Study about ${studyTime} each day.
-You have enough time to prepare
-without cramming.
 
 </p>
 
@@ -1105,10 +1623,17 @@ before your exam.
 
 
 
+/* =========================
+   START APP
+========================= */
+
+
+updateTimerDisplay();
+
 displayTasks();
 
 </script>
 
 
 </body>
-</html>
+</html>5:10 PM 8/18/2026
