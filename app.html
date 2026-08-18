@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>GOJO Study Planner</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -13,64 +17,67 @@
             background: #080808;
             color: white;
             font-family: Arial, sans-serif;
-            padding: 30px 20px;
         }
 
         .container {
+            width: 92%;
             max-width: 900px;
             margin: auto;
         }
 
         header {
             text-align: center;
-            padding: 30px 0;
+            padding: 40px 10px 25px;
         }
 
-        h1 {
+        header h1 {
             font-size: 48px;
             margin: 0;
         }
 
-        .subtitle {
+        header p {
             color: #888;
-            font-size: 18px;
+            margin-top: 8px;
         }
 
         .dashboard {
-            display: flex;
-            gap: 15px;
-            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .stat {
-            flex: 1;
             background: #141414;
             border: 1px solid #292929;
             border-radius: 15px;
-            padding: 20px;
+            padding: 18px;
             text-align: center;
         }
 
         .stat h2 {
             margin: 5px;
-            font-size: 30px;
+            font-size: 28px;
         }
 
         .stat p {
             color: #888;
             margin: 5px;
+            font-size: 14px;
         }
 
-        .progressBox {
+        .progressBox,
+        .form {
             background: #141414;
             border: 1px solid #292929;
             border-radius: 15px;
             padding: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .progressBar {
-            height: 15px;
+            width: 100%;
+            height: 14px;
             background: #252525;
             border-radius: 20px;
             overflow: hidden;
@@ -80,37 +87,39 @@
             height: 100%;
             width: 0%;
             background: white;
-            transition: 0.3s;
+            transition: width 0.3s;
         }
 
-        .form {
-            background: #141414;
-            border: 1px solid #292929;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+        .form h2 {
+            margin-top: 0;
         }
 
         input {
-            padding: 12px;
-            margin: 5px;
+            width: 100%;
+            padding: 13px;
+            margin: 6px 0;
             background: #0b0b0b;
             color: white;
             border: 1px solid #333;
-            border-radius: 8px;
+            border-radius: 9px;
+            font-size: 15px;
         }
 
         button {
-            padding: 10px 15px;
-            margin: 5px;
+            padding: 11px 15px;
+            margin: 5px 3px 0 0;
             border: none;
-            border-radius: 8px;
+            border-radius: 9px;
             cursor: pointer;
+            font-size: 14px;
         }
 
         #addButton {
+            width: 100%;
             background: white;
             color: black;
+            margin-top: 10px;
+            font-weight: bold;
         }
 
         ul {
@@ -122,12 +131,12 @@
             background: #141414;
             border: 1px solid #292929;
             border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
+            padding: 18px;
+            margin: 12px 0;
         }
 
         .taskName {
-            font-size: 21px;
+            font-size: 19px;
             font-weight: bold;
         }
 
@@ -151,75 +160,144 @@
             color: white;
         }
 
-        @media (max-width: 650px) {
+        .empty {
+            text-align: center;
+            color: #666;
+            padding: 30px;
+        }
 
-            .dashboard {
-                flex-direction: column;
+        footer {
+            text-align: center;
+            color: #555;
+            padding: 40px 0;
+            font-size: 14px;
+        }
+
+        /* PHONE DESIGN */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding-top: 25px;
             }
 
-            h1 {
+            header h1 {
                 font-size: 38px;
             }
 
-            input {
-                width: 90%;
+            .dashboard {
+                grid-template-columns: 1fr;
             }
+
+            .stat {
+                padding: 14px;
+            }
+
+            .stat h2 {
+                font-size: 25px;
+            }
+
+            .form,
+            .progressBox {
+                padding: 17px;
+            }
+
+            li {
+                padding: 16px;
+            }
+
+            button {
+                padding: 10px 13px;
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
+
     <header>
+
         <h1>📚 GOJO</h1>
-        <p class="subtitle">
+
+        <p>
             STUDY PLANNER
         </p>
+
     </header>
 
+
+    <!-- DASHBOARD -->
 
     <div class="dashboard">
 
         <div class="stat">
+
             <h2 id="totalTasks">0</h2>
+
             <p>Total Tasks</p>
+
         </div>
 
+
         <div class="stat">
+
             <h2 id="completedTasks">0</h2>
+
             <p>Completed</p>
+
         </div>
 
+
         <div class="stat">
+
             <h2 id="progressText">0%</h2>
+
             <p>Progress</p>
+
         </div>
 
     </div>
 
+
+    <!-- PROGRESS -->
 
     <div class="progressBox">
 
         <h3>🎯 Your Progress</h3>
 
         <div class="progressBar">
-            <div class="progress" id="progress"></div>
+
+            <div
+                class="progress"
+                id="progress">
+            </div>
+
         </div>
 
     </div>
 
 
+    <!-- ADD TASK -->
+
     <div class="form">
 
-        <h2>➕ Add a Task</h2>
+        <h2>➕ Add Task</h2>
+
 
         <input
             type="text"
             id="task"
-            placeholder="Task"
+            placeholder="What do you need to do?"
         >
+
 
         <input
             type="text"
@@ -227,12 +305,12 @@
             placeholder="Subject"
         >
 
+
         <input
             type="date"
             id="deadline"
         >
 
-        <br>
 
         <button
             id="addButton"
@@ -244,17 +322,33 @@
     </div>
 
 
-    <h2>📋 Your Tasks</h2>
+    <!-- TASKS -->
+
+    <h2>📋 My Tasks</h2>
+
 
     <ul id="taskList"></ul>
+
+
+    <footer>
+
+        GOJO • Learning today. Building tomorrow. 🇰🇪
+
+    </footer>
+
 
 </div>
 
 
+
 <script>
 
+
     let tasks =
-        JSON.parse(localStorage.getItem("gojoTasks")) || [];
+        JSON.parse(
+            localStorage.getItem("gojoTasks")
+        ) || [];
+
 
 
     function saveTasks() {
@@ -267,45 +361,81 @@
     }
 
 
+
     function updateDashboard() {
 
-        let total = tasks.length;
+        let total =
+            tasks.length;
+
 
         let completed =
             tasks.filter(function(task) {
+
                 return task.completed;
+
             }).length;
+
 
         let percentage = 0;
 
+
         if (total > 0) {
+
             percentage =
-                Math.round((completed / total) * 100);
+                Math.round(
+                    (completed / total) * 100
+                );
+
         }
 
-        document.getElementById("totalTasks")
-            .textContent = total;
 
-        document.getElementById("completedTasks")
-            .textContent = completed;
+        document.getElementById(
+            "totalTasks"
+        ).textContent = total;
 
-        document.getElementById("progressText")
-            .textContent = percentage + "%";
 
-        document.getElementById("progress")
-            .style.width = percentage + "%";
+        document.getElementById(
+            "completedTasks"
+        ).textContent = completed;
+
+
+        document.getElementById(
+            "progressText"
+        ).textContent =
+            percentage + "%";
+
+
+        document.getElementById(
+            "progress"
+        ).style.width =
+            percentage + "%";
+
     }
+
 
 
     function displayTasks() {
 
+
         let list =
-            document.getElementById("taskList");
+            document.getElementById(
+                "taskList"
+            );
+
 
         list.innerHTML = "";
 
 
+        if (tasks.length === 0) {
+
+            list.innerHTML =
+                '<div class="empty">No tasks yet. Add your first task! 🚀</div>';
+
+        }
+
+
         tasks.forEach(function(task, index) {
+
 
             let item =
                 document.createElement("li");
@@ -314,8 +444,10 @@
             let taskName =
                 document.createElement("div");
 
+
             taskName.className =
                 "taskName";
+
 
             taskName.textContent =
                 task.name;
@@ -323,7 +455,9 @@
 
             if (task.completed) {
 
-                taskName.classList.add("complete");
+                taskName.classList.add(
+                    "complete"
+                );
 
             }
 
@@ -331,25 +465,33 @@
             let subject =
                 document.createElement("div");
 
+
             subject.className =
                 "subject";
 
+
             subject.textContent =
-                "📚 Subject: " + task.subject;
+                "📚 " + task.subject;
 
 
             let deadline =
                 document.createElement("div");
 
+
             deadline.className =
                 "deadline";
 
+
             deadline.textContent =
-                "📅 Deadline: " + task.deadline;
+                "📅 " + task.deadline;
+
 
 
             let completeButton =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
+
 
             completeButton.textContent =
                 task.completed
@@ -360,8 +502,10 @@
             completeButton.onclick =
                 function() {
 
+
                     tasks[index].completed =
                         !tasks[index].completed;
+
 
                     saveTasks();
 
@@ -370,11 +514,16 @@
                 };
 
 
+
             let deleteButton =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
+
 
             deleteButton.textContent =
                 "Delete";
+
 
             deleteButton.className =
                 "deleteButton";
@@ -383,7 +532,12 @@
             deleteButton.onclick =
                 function() {
 
-                    tasks.splice(index, 1);
+
+                    tasks.splice(
+                        index,
+                        1
+                    );
+
 
                     saveTasks();
 
@@ -392,18 +546,36 @@
                 };
 
 
-            item.appendChild(taskName);
 
-            item.appendChild(subject);
-
-            item.appendChild(deadline);
-
-            item.appendChild(completeButton);
-
-            item.appendChild(deleteButton);
+            item.appendChild(
+                taskName
+            );
 
 
-            list.appendChild(item);
+            item.appendChild(
+                subject
+            );
+
+
+            item.appendChild(
+                deadline
+            );
+
+
+            item.appendChild(
+                completeButton
+            );
+
+
+            item.appendChild(
+                deleteButton
+            );
+
+
+            list.appendChild(
+                item
+            );
+
 
         });
 
@@ -413,25 +585,39 @@
     }
 
 
+
     function addTask() {
 
+
         let name =
-            document.getElementById("task").value;
+            document.getElementById(
+                "task"
+            ).value;
+
 
         let subject =
-            document.getElementById("subject").value;
+            document.getElementById(
+                "subject"
+            ).value;
+
 
         let deadline =
-            document.getElementById("deadline").value;
+            document.getElementById(
+                "deadline"
+            ).value;
+
 
 
         if (name === "") {
 
-            alert("Please enter a task!");
+            alert(
+                "Please enter a task!"
+            );
 
             return;
 
         }
+
 
 
         let newTask = {
@@ -449,25 +635,42 @@
         };
 
 
-        tasks.push(newTask);
+
+        tasks.push(
+            newTask
+        );
+
 
         saveTasks();
+
 
         displayTasks();
 
 
-        document.getElementById("task").value = "";
 
-        document.getElementById("subject").value = "";
+        document.getElementById(
+            "task"
+        ).value = "";
 
-        document.getElementById("deadline").value = "";
+
+        document.getElementById(
+            "subject"
+        ).value = "";
+
+
+        document.getElementById(
+            "deadline"
+        ).value = "";
 
     }
 
 
+
     displayTasks();
 
+
 </script>
+
 
 </body>
 </html>
