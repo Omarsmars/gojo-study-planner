@@ -1,0 +1,747 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GOJO // AI STUDY SYSTEM</title>
+
+<style>
+:root {
+    --bg: #030509;
+    --panel: rgba(10, 16, 28, 0.78);
+    --border: rgba(120, 190, 255, 0.20);
+    --text: #eef7ff;
+    --muted: #718096;
+    --cyan: #55dfff;
+    --blue: #6b7cff;
+    --green: #57ff9a;
+    --purple: #b56cff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: Inter, Arial, sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(85,223,255,.12), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(181,108,255,.10), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(107,124,255,.10), transparent 35%),
+        var(--bg);
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    padding: 55px 10px 35px;
+}
+
+.logo {
+    font-size: clamp(48px, 10vw, 86px);
+    font-weight: 900;
+    letter-spacing: 10px;
+    margin: 0;
+    text-shadow:
+        0 0 10px rgba(85,223,255,.65),
+        0 0 35px rgba(85,223,255,.25);
+}
+
+.subtitle {
+    color: var(--muted);
+    letter-spacing: 5px;
+    margin-top: 12px;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(10,16,28,.65);
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .35; transform: scale(.7); }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    transition: .25s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(85,223,255,.45);
+    box-shadow: 0 0 30px rgba(85,223,255,.08);
+}
+
+.stat-number {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.section {
+    margin: 20px 0;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.ai-card {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(181,108,255,.30);
+}
+
+.ai-card::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -100px;
+    top: -100px;
+    border-radius: 50%;
+    background: rgba(181,108,255,.12);
+    filter: blur(10px);
+}
+
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ai-orb {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, white, var(--cyan) 12%, var(--blue) 45%, var(--purple) 70%, transparent 72%);
+    box-shadow:
+        0 0 18px rgba(85,223,255,.55),
+        0 0 45px rgba(181,108,255,.25);
+    animation: orb 3s ease-in-out infinite;
+}
+
+@keyframes orb {
+    50% {
+        transform: scale(1.08);
+        filter: hue-rotate(20deg);
+    }
+}
+
+.ai-tools {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+}
+
+button {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 15px;
+    background: rgba(16,24,40,.8);
+    color: var(--text);
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+button:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 18px rgba(85,223,255,.12);
+    transform: translateY(-1px);
+}
+
+.primary {
+    background: linear-gradient(135deg, rgba(85,223,255,.18), rgba(107,124,255,.18));
+    border-color: rgba(85,223,255,.35);
+}
+
+textarea,
+input,
+select {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+    color: var(--text);
+    background: rgba(2,5,10,.75);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+}
+
+textarea {
+    min-height: 115px;
+    resize: vertical;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(85,223,255,.08);
+}
+
+.ai-response {
+    min-height: 120px;
+    margin-top: 15px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(0,0,0,.20);
+    white-space: pre-wrap;
+    line-height: 1.65;
+}
+
+.command-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.command {
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: rgba(8,13,22,.72);
+}
+
+.command strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.progress {
+    height: 10px;
+    background: rgba(255,255,255,.06);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--blue), var(--purple));
+    box-shadow: 0 0 14px rgba(85,223,255,.35);
+    transition: width .5s ease;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 45px 0;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 700px) {
+    .grid,
+    .command-grid,
+    .ai-tools {
+        grid-template-columns: 1fr;
+    }
+
+    .logo {
+        letter-spacing: 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+    <h1 class="logo">GOJO</h1>
+
+    <div class="subtitle">
+        NEXT-GEN STUDY SYSTEM
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        GOJO AI SYSTEM ONLINE
+    </div>
+
+</header>
+
+
+<!-- DASHBOARD -->
+
+<div class="grid">
+
+    <div class="card">
+        <div class="stat-number" id="tasks">0</div>
+        <div class="muted">TOTAL TASKS</div>
+    </div>
+
+    <div class="card">
+        <div class="stat-number" id="completed">0%</div>
+        <div class="muted">PROGRESS</div>
+    </div>
+
+    <div class="card">
+        <div class="stat-number" id="streak">0</div>
+        <div class="muted">DAY STREAK 🔥</div>
+    </div>
+
+</div>
+
+
+<!-- AI COMMAND CENTER -->
+
+<div class="section">
+
+<div class="card ai-card">
+
+    <div class="ai-header">
+
+        <div class="ai-orb"></div>
+
+        <div>
+            <h2 style="margin:0;">
+                🤖 GOJO AI
+            </h2>
+
+            <div class="muted">
+                Your intelligent study command center
+            </div>
+        </div>
+
+    </div>
+
+
+    <textarea
+        id="aiInput"
+        placeholder="Ask GOJO something... e.g. Explain photosynthesis simply.">
+    </textarea>
+
+
+    <div class="ai-tools">
+
+        <button
+            class="primary"
+            onclick="runAI('coach')">
+            🧠 AI Study Coach
+        </button>
+
+        <button
+            onclick="runAI('questions')">
+            ❓ Generate Questions
+        </button>
+
+        <button
+            onclick="runAI('explain')">
+            💡 Explain Topic
+        </button>
+
+        <button
+            onclick="runAI('quiz')">
+            📝 Build Quiz
+        </button>
+
+    </div>
+
+
+    <div
+        class="ai-response"
+        id="aiResponse">
+
+        <span class="muted">
+            GOJO AI is ready.
+            Enter a topic or question above.
+        </span>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- FUTURISTIC COMMANDS -->
+
+<div class="section">
+
+<div class="section-title">
+    <h2>⚡ SYSTEM COMMANDS</h2>
+</div>
+
+<div class="command-grid">
+
+    <div class="command">
+        <strong>🎯 SMART PLANNING</strong>
+        <span class="muted">
+            Build a revision strategy around your exam date.
+        </span>
+    </div>
+
+    <div class="command">
+        <strong>🧠 KNOWLEDGE MODE</strong>
+        <span class="muted">
+            Break difficult topics into understandable concepts.
+        </span>
+    </div>
+
+    <div class="command">
+        <strong>📊 PERFORMANCE</strong>
+        <span class="muted">
+            Track tasks, progress and study consistency.
+        </span>
+    </div>
+
+    <div class="command">
+        <strong>🔥 FOCUS MODE</strong>
+        <span class="muted">
+            Use timed study sessions to stay focused.
+        </span>
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="section">
+
+<div class="card">
+
+    <div class="section-title">
+
+        <h2>
+            📊 LEARNING PROGRESS
+        </h2>
+
+        <span
+            class="muted"
+            id="progressText">
+            0%
+        </span>
+
+    </div>
+
+    <div class="progress">
+        <div
+            class="progress-fill"
+            id="progressBar">
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+<footer>
+    GOJO // LEARNING TODAY. BUILDING TOMORROW. 🌍
+</footer>
+
+</div>
+
+
+<script>
+
+/*
+    FUTURISTIC GOJO FRONTEND
+
+    IMPORTANT:
+    This is currently a frontend prototype.
+
+    Do NOT put an OpenAI API key in this file.
+
+    The real AI connection will be added through
+    a secure backend later.
+*/
+
+
+let savedTasks =
+    JSON.parse(
+        localStorage.getItem("gojoTasks")
+    ) || [];
+
+let savedStreak =
+    Number(
+        localStorage.getItem("gojoStudyStreak")
+    ) || 0;
+
+
+function updateDashboard() {
+
+    let total =
+        savedTasks.length;
+
+    let completed =
+        savedTasks.filter(
+            task => task.completed
+        ).length;
+
+    let percentage =
+        total === 0
+        ? 0
+        : Math.round(
+            completed / total * 100
+        );
+
+
+    document.getElementById(
+        "tasks"
+    ).textContent =
+        total;
+
+    document.getElementById(
+        "completed"
+    ).textContent =
+        percentage + "%";
+
+    document.getElementById(
+        "streak"
+    ).textContent =
+        savedStreak;
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        percentage + "%";
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        percentage + "%";
+
+}
+
+
+function runAI(mode) {
+
+    let input =
+        document.getElementById(
+            "aiInput"
+        ).value.trim();
+
+    let response =
+        document.getElementById(
+            "aiResponse"
+        );
+
+
+    if (!input) {
+
+        response.textContent =
+            "⚠️ Enter a subject, topic or question first.";
+
+        return;
+
+    }
+
+
+    response.textContent =
+        "GOJO AI is processing your request...";
+
+
+    setTimeout(
+        function() {
+
+            let result = "";
+
+
+            if (mode === "coach") {
+
+                result =
+`🧠 GOJO STUDY COACH
+
+Topic:
+${input}
+
+Recommended approach:
+
+1. Learn the main concepts.
+2. Write down the important definitions.
+3. Practice questions without your notes.
+4. Identify mistakes.
+5. Review the difficult areas.
+6. Finish with a short self-test.
+
+When the real AI backend is connected,
+GOJO will generate a personalized plan
+based on your exact subject, level and exam date.`;
+
+            }
+
+
+            if (mode === "questions") {
+
+                result =
+`❓ GOJO QUESTION GENERATOR
+
+Topic:
+${input}
+
+Practice:
+
+1. What are the main concepts involved?
+
+2. Explain the topic in your own words.
+
+3. Give an example related to the topic.
+
+4. What mistake do students commonly make?
+
+5. Create a real-life application of this concept.
+
+The real AI version will generate
+questions specifically for your topic
+and chosen difficulty.`;
+
+            }
+
+
+            if (mode === "explain") {
+
+                result =
+`💡 GOJO EXPLAIN MODE
+
+Topic:
+${input}
+
+Start with the simplest idea:
+understand what the topic means,
+then learn how it works,
+then study examples,
+and finally test yourself.
+
+The real AI connection will allow GOJO
+to explain your exact topic at the level
+you choose.`;
+
+            }
+
+
+            if (mode === "quiz") {
+
+                result =
+`📝 GOJO QUIZ MODE
+
+Topic:
+${input}
+
+Question 1:
+What is the most important idea
+you should understand about this topic?
+
+Question 2:
+Explain the topic without looking
+at your notes.
+
+Question 3:
+Give one example.
+
+Question 4:
+What would happen if one important
+part of the process changed?
+
+Question 5:
+What is one difficult part of this topic
+that you still need to revise?
+
+The real AI version will generate
+a complete interactive quiz and
+evaluate your answers.`;
+
+            }
+
+
+            response.textContent =
+                result;
+
+        },
+        700
+    );
+
+}
+
+
+updateDashboard();
+
+</script>
+
+</body>
+</html>
+```
