@@ -4,36 +4,100 @@
     <title>GOJO Study Planner</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #0a0a0a;
+            margin: 0;
+            background: #080808;
             color: white;
             font-family: Arial, sans-serif;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        header {
             text-align: center;
-            padding: 50px 20px;
+            padding: 30px 0;
         }
 
         h1 {
-            font-size: 45px;
-            margin-bottom: 10px;
+            font-size: 48px;
+            margin: 0;
         }
 
         .subtitle {
-            color: #999;
+            color: #888;
             font-size: 18px;
         }
 
+        .dashboard {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            flex: 1;
+            background: #141414;
+            border: 1px solid #292929;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat h2 {
+            margin: 5px;
+            font-size: 30px;
+        }
+
+        .stat p {
+            color: #888;
+            margin: 5px;
+        }
+
+        .progressBox {
+            background: #141414;
+            border: 1px solid #292929;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .progressBar {
+            height: 15px;
+            background: #252525;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: white;
+            transition: 0.3s;
+        }
+
         .form {
-            margin: 30px auto;
-            max-width: 700px;
+            background: #141414;
+            border: 1px solid #292929;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
         }
 
         input {
             padding: 12px;
             margin: 5px;
+            background: #0b0b0b;
+            color: white;
             border: 1px solid #333;
             border-radius: 8px;
-            background: #151515;
-            color: white;
         }
 
         button {
@@ -49,54 +113,27 @@
             color: black;
         }
 
-        .stats {
-            margin: 30px auto;
-            padding: 20px;
-            max-width: 600px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 15px;
-        }
-
-        .progressBar {
-            width: 100%;
-            height: 15px;
-            background: #222;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 15px;
-        }
-
-        .progress {
-            height: 100%;
-            width: 0%;
-            background: white;
-            transition: width 0.3s;
-        }
-
         ul {
             padding: 0;
         }
 
         li {
             list-style: none;
-            background: #151515;
-            border: 1px solid #333;
-            border-radius: 12px;
+            background: #141414;
+            border: 1px solid #292929;
+            border-radius: 15px;
             padding: 20px;
-            margin: 15px auto;
-            max-width: 600px;
-            text-align: left;
+            margin: 15px 0;
         }
 
         .taskName {
-            font-size: 20px;
+            font-size: 21px;
             font-weight: bold;
-            margin-bottom: 8px;
         }
 
         .subject {
             color: #aaa;
+            margin-top: 7px;
         }
 
         .deadline {
@@ -110,21 +147,73 @@
         }
 
         .deleteButton {
-            background: #333;
+            background: #292929;
             color: white;
+        }
+
+        @media (max-width: 650px) {
+
+            .dashboard {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            input {
+                width: 90%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <h1>📚 GOJO Study Planner</h1>
+<div class="container">
 
-    <p class="subtitle">
-        Organize your school work and stay on track.
-    </p>
+    <header>
+        <h1>📚 GOJO</h1>
+        <p class="subtitle">
+            STUDY PLANNER
+        </p>
+    </header>
+
+
+    <div class="dashboard">
+
+        <div class="stat">
+            <h2 id="totalTasks">0</h2>
+            <p>Total Tasks</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="completedTasks">0</h2>
+            <p>Completed</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="progressText">0%</h2>
+            <p>Progress</p>
+        </div>
+
+    </div>
+
+
+    <div class="progressBox">
+
+        <h3>🎯 Your Progress</h3>
+
+        <div class="progressBar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+    </div>
+
 
     <div class="form">
+
+        <h2>➕ Add a Task</h2>
 
         <input
             type="text"
@@ -145,128 +234,131 @@
 
         <br>
 
-        <button id="addButton" onclick="addTask()">
+        <button
+            id="addButton"
+            onclick="addTask()"
+        >
             Add Task
         </button>
 
     </div>
 
-    <div class="stats">
 
-        <h2 id="taskCount">Tasks: 0</h2>
-
-        <p id="progressText">Progress: 0%</p>
-
-        <div class="progressBar">
-            <div class="progress" id="progress"></div>
-        </div>
-
-    </div>
+    <h2>📋 Your Tasks</h2>
 
     <ul id="taskList"></ul>
 
-
-    <script>
-
-        let tasks =
-            JSON.parse(localStorage.getItem("gojoTasks")) || [];
+</div>
 
 
-        function saveTasks() {
+<script>
 
-            localStorage.setItem(
-                "gojoTasks",
-                JSON.stringify(tasks)
-            );
+    let tasks =
+        JSON.parse(localStorage.getItem("gojoTasks")) || [];
 
+
+    function saveTasks() {
+
+        localStorage.setItem(
+            "gojoTasks",
+            JSON.stringify(tasks)
+        );
+
+    }
+
+
+    function updateDashboard() {
+
+        let total = tasks.length;
+
+        let completed =
+            tasks.filter(function(task) {
+                return task.completed;
+            }).length;
+
+        let percentage = 0;
+
+        if (total > 0) {
+            percentage =
+                Math.round((completed / total) * 100);
         }
 
+        document.getElementById("totalTasks")
+            .textContent = total;
 
-        function updateStats() {
+        document.getElementById("completedTasks")
+            .textContent = completed;
 
-            let total = tasks.length;
+        document.getElementById("progressText")
+            .textContent = percentage + "%";
 
-            let completed =
-                tasks.filter(function(task) {
-                    return task.completed;
-                }).length;
+        document.getElementById("progress")
+            .style.width = percentage + "%";
+    }
 
-            let percentage = 0;
 
-            if (total > 0) {
-                percentage =
-                    Math.round((completed / total) * 100);
+    function displayTasks() {
+
+        let list =
+            document.getElementById("taskList");
+
+        list.innerHTML = "";
+
+
+        tasks.forEach(function(task, index) {
+
+            let item =
+                document.createElement("li");
+
+
+            let taskName =
+                document.createElement("div");
+
+            taskName.className =
+                "taskName";
+
+            taskName.textContent =
+                task.name;
+
+
+            if (task.completed) {
+
+                taskName.classList.add("complete");
+
             }
 
-            document.getElementById("taskCount").textContent =
-                "Tasks: " + total;
 
-            document.getElementById("progressText").textContent =
-                "Progress: " + percentage + "%";
+            let subject =
+                document.createElement("div");
 
-            document.getElementById("progress").style.width =
-                percentage + "%";
-        }
+            subject.className =
+                "subject";
 
-
-        function displayTasks() {
-
-            let list =
-                document.getElementById("taskList");
-
-            list.innerHTML = "";
+            subject.textContent =
+                "📚 Subject: " + task.subject;
 
 
-            tasks.forEach(function(task, index) {
+            let deadline =
+                document.createElement("div");
 
-                let item =
-                    document.createElement("li");
+            deadline.className =
+                "deadline";
 
-
-                let taskName =
-                    document.createElement("div");
-
-                taskName.className = "taskName";
-
-                taskName.textContent =
-                    task.name;
+            deadline.textContent =
+                "📅 Deadline: " + task.deadline;
 
 
-                let subject =
-                    document.createElement("div");
+            let completeButton =
+                document.createElement("button");
 
-                subject.className = "subject";
-
-                subject.textContent =
-                    "Subject: " + task.subject;
-
-
-                let deadline =
-                    document.createElement("div");
-
-                deadline.className = "deadline";
-
-                deadline.textContent =
-                    "Deadline: " + task.deadline;
+            completeButton.textContent =
+                task.completed
+                ? "Undo"
+                : "Complete";
 
 
-                if (task.completed) {
-
-                    taskName.classList.add("complete");
-
-                }
-
-
-                let completeButton =
-                    document.createElement("button");
-
-                completeButton.textContent =
-                    task.completed
-                    ? "Undo"
-                    : "Complete";
-
-
-                completeButton.onclick = function() {
+            completeButton.onclick =
+                function() {
 
                     tasks[index].completed =
                         !tasks[index].completed;
@@ -278,17 +370,18 @@
                 };
 
 
-                let deleteButton =
-                    document.createElement("button");
+            let deleteButton =
+                document.createElement("button");
 
-                deleteButton.textContent =
-                    "Delete";
+            deleteButton.textContent =
+                "Delete";
 
-                deleteButton.className =
-                    "deleteButton";
+            deleteButton.className =
+                "deleteButton";
 
 
-                deleteButton.onclick = function() {
+            deleteButton.onclick =
+                function() {
 
                     tasks.splice(index, 1);
 
@@ -299,81 +392,82 @@
                 };
 
 
-                item.appendChild(taskName);
+            item.appendChild(taskName);
 
-                item.appendChild(subject);
+            item.appendChild(subject);
 
-                item.appendChild(deadline);
+            item.appendChild(deadline);
 
-                item.appendChild(completeButton);
+            item.appendChild(completeButton);
 
-                item.appendChild(deleteButton);
-
-                list.appendChild(item);
-
-            });
+            item.appendChild(deleteButton);
 
 
-            updateStats();
+            list.appendChild(item);
 
-        }
-
-
-        function addTask() {
-
-            let name =
-                document.getElementById("task").value;
-
-            let subject =
-                document.getElementById("subject").value;
-
-            let deadline =
-                document.getElementById("deadline").value;
+        });
 
 
-            if (name === "") {
+        updateDashboard();
 
-                alert("Please enter a task!");
-
-                return;
-
-            }
+    }
 
 
-            let newTask = {
+    function addTask() {
 
-                name: name,
+        let name =
+            document.getElementById("task").value;
 
-                subject:
-                    subject || "General",
+        let subject =
+            document.getElementById("subject").value;
 
-                deadline:
-                    deadline || "No deadline",
-
-                completed: false
-
-            };
+        let deadline =
+            document.getElementById("deadline").value;
 
 
-            tasks.push(newTask);
+        if (name === "") {
 
-            saveTasks();
+            alert("Please enter a task!");
 
-            displayTasks();
-
-
-            document.getElementById("task").value = "";
-
-            document.getElementById("subject").value = "";
-
-            document.getElementById("deadline").value = "";
+            return;
 
         }
 
+
+        let newTask = {
+
+            name: name,
+
+            subject:
+                subject || "General",
+
+            deadline:
+                deadline || "No deadline",
+
+            completed: false
+
+        };
+
+
+        tasks.push(newTask);
+
+        saveTasks();
 
         displayTasks();
 
-    </script>
+
+        document.getElementById("task").value = "";
+
+        document.getElementById("subject").value = "";
+
+        document.getElementById("deadline").value = "";
+
+    }
+
+
+    displayTasks();
+
+</script>
 
 </body>
 </html>
