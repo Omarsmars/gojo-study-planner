@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>GOJO Study Planner</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -15,28 +14,29 @@
 body {
     margin: 0;
     background: #080808;
-    color: white;
-    font-family: Arial, sans-serif;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
     width: 92%;
-    max-width: 900px;
+    max-width: 950px;
     margin: auto;
 }
 
 header {
     text-align: center;
-    padding: 35px 10px;
+    padding: 40px 10px 25px;
 }
 
 header h1 {
-    font-size: 48px;
+    font-size: 52px;
     margin: 0;
 }
 
 header p {
     color: #888;
+    margin-top: 8px;
 }
 
 .dashboard {
@@ -49,14 +49,14 @@ header p {
 .stat {
     background: #141414;
     border: 1px solid #292929;
-    border-radius: 15px;
-    padding: 18px;
+    border-radius: 16px;
+    padding: 20px;
     text-align: center;
 }
 
 .stat h2 {
+    font-size: 30px;
     margin: 5px;
-    font-size: 28px;
 }
 
 .stat p {
@@ -67,24 +67,28 @@ header p {
 .box {
     background: #141414;
     border: 1px solid #292929;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 22px;
     margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 0;
 }
 
 .progressBar {
     width: 100%;
     height: 14px;
-    background: #252525;
+    background: #282828;
     border-radius: 20px;
     overflow: hidden;
 }
 
 .progress {
-    height: 100%;
     width: 0%;
+    height: 100%;
     background: white;
-    transition: 0.3s;
+    transition: width 0.4s ease;
 }
 
 input,
@@ -100,11 +104,16 @@ select {
 }
 
 button {
-    padding: 11px 15px;
-    margin: 5px 3px 0 0;
     border: none;
     border-radius: 9px;
+    padding: 11px 15px;
+    margin: 5px 3px 0 0;
     cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.85;
 }
 
 .mainButton {
@@ -120,11 +129,131 @@ button {
     color: white;
 }
 
-ul {
+.dangerButton {
+    background: #292929;
+    color: white;
+}
+
+.todayCard {
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 13px;
+    padding: 18px;
+}
+
+.todayCard h3 {
+    margin-top: 0;
+}
+
+.todayInfo {
+    color: #aaa;
+    margin: 8px 0;
+}
+
+.priority {
+    display: inline-block;
+    background: #222;
+    border-radius: 8px;
+    padding: 7px 10px;
+    margin-top: 8px;
+}
+
+.timer {
+    text-align: center;
+}
+
+.timerTask {
+    color: #aaa;
+}
+
+.timerDisplay {
+    font-size: 68px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: 18px 0;
+}
+
+.timerStatus {
+    color: #888;
+    min-height: 22px;
+    margin-top: 12px;
+}
+
+.streakBox {
+    text-align: center;
+}
+
+.streakNumber {
+    font-size: 52px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.streakText {
+    color: #888;
+}
+
+.sessionStats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.miniStat {
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.miniStat strong {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.miniStat span {
+    color: #888;
+    font-size: 13px;
+}
+
+.planDay {
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 10px;
+}
+
+.planDay h3 {
+    margin-top: 0;
+}
+
+.planDay p {
+    color: #aaa;
+}
+
+.examCountdown {
+    text-align: center;
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+.examCountdown h2 {
+    font-size: 30px;
+    margin: 5px;
+}
+
+.taskList {
     padding: 0;
 }
 
-li {
+.task {
     list-style: none;
     background: #141414;
     border: 1px solid #292929;
@@ -138,104 +267,23 @@ li {
     font-weight: bold;
 }
 
-.subject {
+.taskSubject {
     color: #aaa;
     margin-top: 7px;
 }
 
-.deadline {
+.taskDeadline {
     color: #777;
     margin-top: 5px;
 }
 
-.complete {
+.completedTask .taskName {
     text-decoration: line-through;
-    opacity: 0.5;
+    opacity: 0.45;
 }
 
-.plan {
-    margin-top: 20px;
-}
-
-.examCountdown {
-    text-align: center;
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 12px;
-    padding: 18px;
-    margin: 15px 0;
-}
-
-.examCountdown h2 {
-    font-size: 32px;
-    margin: 5px;
-}
-
-.planDay {
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 12px;
-    padding: 15px;
-    margin: 10px 0;
-}
-
-.planDay h3 {
-    margin-top: 0;
-}
-
-.planDay p {
-    color: #aaa;
-}
-
-.todayCard {
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 12px;
-    padding: 18px;
-    margin-top: 12px;
-}
-
-.todayCard h3 {
-    margin-top: 0;
-}
-
-.todayInfo {
-    color: #aaa;
-    margin: 7px 0;
-}
-
-.priority {
-    display: inline-block;
-    background: #222;
-    padding: 6px 10px;
-    border-radius: 8px;
-    margin-top: 8px;
-}
-
-.timer {
-    text-align: center;
-}
-
-.timerTask {
-    color: #aaa;
-    margin-bottom: 10px;
-}
-
-.timerDisplay {
-    font-size: 64px;
-    font-weight: bold;
-    letter-spacing: 3px;
-    margin: 15px 0;
-}
-
-.timerButtons button {
-    min-width: 100px;
-}
-
-.timerStatus {
-    color: #888;
-    min-height: 22px;
-    margin-top: 12px;
+.completedTask {
+    opacity: 0.75;
 }
 
 .empty {
@@ -244,49 +292,52 @@ li {
     padding: 25px;
 }
 
+.message {
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: #0d0d0d;
+    color: #aaa;
+    margin-top: 10px;
+}
+
 footer {
     text-align: center;
     color: #555;
     padding: 35px 0;
 }
 
-@media (max-width: 600px) {
-
+@media (max-width: 650px) {
     header h1 {
-        font-size: 38px;
+        font-size: 40px;
     }
 
     .dashboard {
         grid-template-columns: 1fr;
     }
 
+    .timerDisplay {
+        font-size: 50px;
+    }
+
+    .sessionStats {
+        grid-template-columns: 1fr;
+    }
+
     .box {
         padding: 17px;
     }
-
-    .timerDisplay {
-        font-size: 48px;
-    }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
-
 <header>
-
-<h1>📚 GOJO</h1>
-
-<p>STUDY PLANNER</p>
-
+    <h1>📚 GOJO</h1>
+    <p>STUDY PLANNER</p>
 </header>
 
 
@@ -294,31 +345,20 @@ footer {
 
 <div class="dashboard">
 
-<div class="stat">
+    <div class="stat">
+        <h2 id="totalTasks">0</h2>
+        <p>Total Tasks</p>
+    </div>
 
-<h2 id="totalTasks">0</h2>
+    <div class="stat">
+        <h2 id="completedTasks">0</h2>
+        <p>Completed</p>
+    </div>
 
-<p>Total Tasks</p>
-
-</div>
-
-
-<div class="stat">
-
-<h2 id="completedTasks">0</h2>
-
-<p>Completed</p>
-
-</div>
-
-
-<div class="stat">
-
-<h2 id="progressText">0%</h2>
-
-<p>Progress</p>
-
-</div>
+    <div class="stat">
+        <h2 id="progressText">0%</h2>
+        <p>Progress</p>
+    </div>
 
 </div>
 
@@ -327,16 +367,40 @@ footer {
 
 <div class="box">
 
-<h3>🎯 Your Progress</h3>
+    <h3>🎯 Your Progress</h3>
 
-<div class="progressBar">
-
-<div
-class="progress"
-id="progress">
-</div>
+    <div class="progressBar">
+        <div class="progress" id="progress"></div>
+    </div>
 
 </div>
+
+
+<!-- STREAK -->
+
+<div class="box streakBox">
+
+    <h2>🔥 Study Streak</h2>
+
+    <div class="streakNumber" id="streakNumber">0</div>
+
+    <div class="streakText">
+        days in a row
+    </div>
+
+    <div class="sessionStats">
+
+        <div class="miniStat">
+            <strong id="totalSessions">0</strong>
+            <span>Completed Sessions</span>
+        </div>
+
+        <div class="miniStat">
+            <strong id="totalMinutes">0</strong>
+            <span>Study Minutes</span>
+        </div>
+
+    </div>
 
 </div>
 
@@ -345,75 +409,58 @@ id="progress">
 
 <div class="box">
 
-<h2>🎯 Today's Study</h2>
+    <h2>🎯 Today's Study</h2>
 
-<div id="todayStudy"></div>
+    <div id="todayStudy"></div>
 
 </div>
 
 
-<!-- STUDY TIMER -->
+<!-- TIMER -->
 
 <div class="box timer">
 
-<h2>⏱️ Study Session</h2>
+    <h2>⏱️ Study Session</h2>
 
-<div
-id="timerTask"
-class="timerTask">
+    <div
+        id="timerTask"
+        class="timerTask">
+        Choose a task to begin.
+    </div>
 
-Choose a task to begin.
+    <div
+        id="timerDisplay"
+        class="timerDisplay">
+        25:00
+    </div>
 
-</div>
+    <div>
 
+        <button
+            class="mainButton"
+            onclick="startTimer()">
+            ▶ Start
+        </button>
 
-<div
-id="timerDisplay"
-class="timerDisplay">
+        <button
+            class="secondaryButton"
+            onclick="pauseTimer()">
+            ⏸ Pause
+        </button>
 
-25:00
+        <button
+            class="secondaryButton"
+            onclick="resetTimer()">
+            🔄 Reset
+        </button>
 
-</div>
+    </div>
 
-
-<div class="timerButtons">
-
-<button
-class="mainButton"
-onclick="startTimer()">
-
-▶ Start
-
-</button>
-
-
-<button
-class="secondaryButton"
-onclick="pauseTimer()">
-
-⏸ Pause
-
-</button>
-
-
-<button
-class="secondaryButton"
-onclick="resetTimer()">
-
-🔄 Reset
-
-</button>
-
-</div>
-
-
-<div
-id="timerStatus"
-class="timerStatus">
-
-Ready to focus.
-
-</div>
+    <div
+        id="timerStatus"
+        class="timerStatus">
+        Ready to focus.
+    </div>
 
 </div>
 
@@ -422,32 +469,27 @@ Ready to focus.
 
 <div class="box">
 
-<h2>➕ Add Task</h2>
+    <h2>➕ Add Task</h2>
 
-<input
-type="text"
-id="task"
-placeholder="What do you need to do?"
->
+    <input
+        type="text"
+        id="task"
+        placeholder="What do you need to do?">
 
-<input
-type="text"
-id="subject"
-placeholder="Subject"
->
+    <input
+        type="text"
+        id="subject"
+        placeholder="Subject">
 
-<input
-type="date"
-id="deadline"
->
+    <input
+        type="date"
+        id="deadline">
 
-<button
-class="mainButton"
-onclick="addTask()">
-
-Add Task
-
-</button>
+    <button
+        class="mainButton"
+        onclick="addTask()">
+        Add Task
+    </button>
 
 </div>
 
@@ -456,1184 +498,1433 @@ Add Task
 
 <div class="box">
 
-<h2>🧠 Smart Study Mode</h2>
+    <h2>🧠 Smart Study Mode</h2>
 
-<p style="color:#888;">
+    <p style="color:#888;">
+        GOJO creates a study plan based on your
+        exam date and study intensity.
+    </p>
 
-GOJO creates a study plan based on your
-exam date and study intensity.
+    <input
+        type="text"
+        id="studySubject"
+        placeholder="Subject e.g. Biology">
 
-</p>
+    <input
+        type="text"
+        id="studyTopic"
+        placeholder="Topic e.g. Cells">
 
+    <input
+        type="date"
+        id="examDate">
 
-<input
-type="text"
-id="studySubject"
-placeholder="Subject e.g. Biology"
->
+    <select id="intensity">
 
+        <option value="light">
+            🟢 Light — 30 min/day
+        </option>
 
-<input
-type="text"
-id="studyTopic"
-placeholder="Topic e.g. Cells"
->
+        <option value="normal" selected>
+            🟡 Normal — 1 hour/day
+        </option>
 
+        <option value="intensive">
+            🔴 Intensive — 2+ hours/day
+        </option>
 
-<input
-type="date"
-id="examDate"
->
+    </select>
 
+    <button
+        class="mainButton"
+        onclick="createStudyPlan()">
+        Create Study Plan
+    </button>
 
-<select id="intensity">
-
-<option value="light">
-
-🟢 Light — 30 min/day
-
-</option>
-
-<option value="normal" selected>
-
-🟡 Normal — 1 hour/day
-
-</option>
-
-<option value="intensive">
-
-🔴 Intensive — 2+ hours/day
-
-</option>
-
-</select>
-
-
-<button
-class="mainButton"
-onclick="createStudyPlan()">
-
-Create Study Plan
-
-</button>
-
-
-<div
-id="studyPlan"
-class="plan">
-
-</div>
+    <div
+        id="studyPlan">
+    </div>
 
 </div>
 
 
-<!-- TASK LIST -->
+<!-- TASKS -->
 
 <h2>📋 My Tasks</h2>
 
-<ul id="taskList"></ul>
+<ul
+    id="taskList"
+    class="taskList">
+</ul>
 
 
 <footer>
-
-GOJO • Learning today. Building tomorrow. 🌍
-
+    GOJO • Learning today. Building tomorrow. 🌍
 </footer>
 
-
 </div>
-
 
 
 <script>
 
-
-/* =========================
-   TASK SYSTEM
-========================= */
-
+/* =========================================
+   DATA
+========================================= */
 
 let tasks =
-JSON.parse(
-localStorage.getItem("gojoTasks")
-) || [];
+    JSON.parse(
+        localStorage.getItem("gojoTasks")
+    ) || [];
 
+let totalSessions =
+    Number(
+        localStorage.getItem("gojoTotalSessions")
+    ) || 0;
 
+let totalMinutes =
+    Number(
+        localStorage.getItem("gojoTotalMinutes")
+    ) || 0;
 
-function saveTasks() {
+let studyStreak =
+    Number(
+        localStorage.getItem("gojoStudyStreak")
+    ) || 0;
 
-localStorage.setItem(
-"gojoTasks",
-JSON.stringify(tasks)
-);
+let lastStudyDate =
+    localStorage.getItem("gojoLastStudyDate")
+    || "";
 
-}
 
+/* =========================================
+   TIMER
+========================================= */
 
+const SESSION_LENGTH = 25 * 60;
 
-/* =========================
-   DASHBOARD
-========================= */
-
-
-function updateDashboard() {
-
-let total = tasks.length;
-
-let completed =
-tasks.filter(function(task) {
-
-return task.completed;
-
-}).length;
-
-let percentage = 0;
-
-if (total > 0) {
-
-percentage =
-Math.round(
-(completed / total) * 100
-);
-
-}
-
-
-document.getElementById(
-"totalTasks"
-).textContent = total;
-
-
-document.getElementById(
-"completedTasks"
-).textContent = completed;
-
-
-document.getElementById(
-"progressText"
-).textContent =
-percentage + "%";
-
-
-document.getElementById(
-"progress"
-).style.width =
-percentage + "%";
-
-}
-
-
-
-/* =========================
-   DISPLAY TASKS
-========================= */
-
-
-function displayTasks() {
-
-let list =
-document.getElementById(
-"taskList"
-);
-
-list.innerHTML = "";
-
-
-if (tasks.length === 0) {
-
-list.innerHTML =
-'<div class="empty">No tasks yet. Add your first task! 🚀</div>';
-
-}
-
-
-tasks.forEach(function(task, index) {
-
-
-let item =
-document.createElement("li");
-
-
-let taskName =
-document.createElement("div");
-
-taskName.className =
-"taskName";
-
-taskName.textContent =
-task.name;
-
-
-if (task.completed) {
-
-taskName.classList.add(
-"complete"
-);
-
-}
-
-
-let subject =
-document.createElement("div");
-
-subject.className =
-"subject";
-
-subject.textContent =
-"📚 " + task.subject;
-
-
-let deadline =
-document.createElement("div");
-
-deadline.className =
-"deadline";
-
-deadline.textContent =
-"📅 " + task.deadline;
-
-
-let completeButton =
-document.createElement("button");
-
-completeButton.textContent =
-task.completed
-? "Undo"
-: "Complete";
-
-completeButton.className =
-"secondaryButton";
-
-
-completeButton.onclick =
-function() {
-
-tasks[index].completed =
-!tasks[index].completed;
-
-saveTasks();
-
-displayTasks();
-
-};
-
-
-let deleteButton =
-document.createElement("button");
-
-deleteButton.textContent =
-"Delete";
-
-deleteButton.className =
-"secondaryButton";
-
-
-deleteButton.onclick =
-function() {
-
-tasks.splice(
-index,
-1
-);
-
-saveTasks();
-
-displayTasks();
-
-};
-
-
-item.appendChild(taskName);
-
-item.appendChild(subject);
-
-item.appendChild(deadline);
-
-item.appendChild(completeButton);
-
-item.appendChild(deleteButton);
-
-list.appendChild(item);
-
-});
-
-
-updateDashboard();
-
-updateTodayStudy();
-
-}
-
-
-
-/* =========================
-   TODAY'S STUDY
-========================= */
-
-
-function updateTodayStudy() {
-
-let todayBox =
-document.getElementById(
-"todayStudy"
-);
-
-let incomplete =
-tasks.filter(function(task) {
-
-return !task.completed &&
-task.deadline !== "No deadline";
-
-});
-
-
-if (incomplete.length === 0) {
-
-todayBox.innerHTML = `
-
-<div class="todayCard">
-
-<h3>🎉 You're all caught up!</h3>
-
-<p class="todayInfo">
-
-No unfinished tasks with deadlines.
-
-Add a task and GOJO will help you
-decide what to study next.
-
-</p>
-
-</div>
-
-`;
-
-document.getElementById(
-"timerTask"
-).textContent =
-"Choose a task to begin.";
-
-return;
-
-}
-
-
-incomplete.sort(function(a, b) {
-
-return new Date(a.deadline) -
-new Date(b.deadline);
-
-});
-
-
-let nextTask =
-incomplete[0];
-
-
-let today =
-new Date();
-
-today.setHours(
-0,
-0,
-0,
-0
-);
-
-
-let deadline =
-new Date(
-nextTask.deadline + "T00:00:00"
-);
-
-
-let difference =
-deadline.getTime() -
-today.getTime();
-
-
-let daysLeft =
-Math.ceil(
-difference /
-(1000 * 60 * 60 * 24)
-);
-
-
-let priority;
-
-if (daysLeft <= 1) {
-
-priority = "🔥 HIGH";
-
-}
-else if (daysLeft <= 3) {
-
-priority = "⚡ MEDIUM";
-
-}
-else {
-
-priority = "🟢 NORMAL";
-
-}
-
-
-let time;
-
-if (daysLeft <= 1) {
-
-time = "1–2 hours";
-
-}
-else if (daysLeft <= 3) {
-
-time = "45–60 minutes";
-
-}
-else {
-
-time = "30–45 minutes";
-
-}
-
-
-let deadlineText;
-
-if (daysLeft === 0) {
-
-deadlineText = "Due today";
-
-}
-else if (daysLeft === 1) {
-
-deadlineText = "Due tomorrow";
-
-}
-else if (daysLeft > 1) {
-
-deadlineText =
-"Due in " +
-daysLeft +
-" days";
-
-}
-else {
-
-deadlineText = "Overdue";
-
-}
-
-
-todayBox.innerHTML = `
-
-<div class="todayCard">
-
-<h3>📚 ${nextTask.name}</h3>
-
-<p class="todayInfo">
-
-📖 Subject:
-${nextTask.subject}
-
-</p>
-
-<p class="todayInfo">
-
-📅 ${deadlineText}
-
-</p>
-
-<p class="todayInfo">
-
-⏱️ Suggested study time:
-${time}
-
-</p>
-
-<div class="priority">
-
-${priority}
-
-</div>
-
-</div>
-
-`;
-
-
-/* Tell the timer what task to study */
-
-document.getElementById(
-"timerTask"
-).textContent =
-"🎯 " +
-nextTask.name +
-" — " +
-nextTask.subject;
-
-}
-
-
-
-/* =========================
-   ADD TASK
-========================= */
-
-
-function addTask() {
-
-let name =
-document.getElementById(
-"task"
-).value;
-
-
-let subject =
-document.getElementById(
-"subject"
-).value;
-
-
-let deadline =
-document.getElementById(
-"deadline"
-).value;
-
-
-if (name === "") {
-
-alert(
-"Please enter a task!"
-);
-
-return;
-
-}
-
-
-let newTask = {
-
-name: name,
-
-subject:
-subject || "General",
-
-deadline:
-deadline || "No deadline",
-
-completed: false
-
-};
-
-
-tasks.push(newTask);
-
-saveTasks();
-
-displayTasks();
-
-
-document.getElementById(
-"task"
-).value = "";
-
-document.getElementById(
-"subject"
-).value = "";
-
-document.getElementById(
-"deadline"
-).value = "";
-
-}
-
-
-
-/* =========================
-   STUDY TIMER
-========================= */
-
-
-let timeLeft = 25 * 60;
+let timeLeft = SESSION_LENGTH;
 
 let timerInterval = null;
 
 let timerRunning = false;
 
 
+/* =========================================
+   SAVE DATA
+========================================= */
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "gojoTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+function saveStats() {
+
+    localStorage.setItem(
+        "gojoTotalSessions",
+        totalSessions
+    );
+
+    localStorage.setItem(
+        "gojoTotalMinutes",
+        totalMinutes
+    );
+
+    localStorage.setItem(
+        "gojoStudyStreak",
+        studyStreak
+    );
+
+    localStorage.setItem(
+        "gojoLastStudyDate",
+        lastStudyDate
+    );
+
+}
+
+
+/* =========================================
+   DATE HELPERS
+========================================= */
+
+function getTodayString() {
+
+    let date = new Date();
+
+    let year =
+        date.getFullYear();
+
+    let month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    let day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+function getYesterdayString() {
+
+    let date = new Date();
+
+    date.setDate(
+        date.getDate() - 1
+    );
+
+    let year =
+        date.getFullYear();
+
+    let month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    let day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function updateDashboard() {
+
+    let total =
+        tasks.length;
+
+    let completed =
+        tasks.filter(
+            task => task.completed
+        ).length;
+
+    let percentage = 0;
+
+    if (total > 0) {
+
+        percentage =
+            Math.round(
+                (completed / total) * 100
+            );
+
+    }
+
+    document.getElementById(
+        "totalTasks"
+    ).textContent = total;
+
+    document.getElementById(
+        "completedTasks"
+    ).textContent = completed;
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        percentage + "%";
+
+    document.getElementById(
+        "progress"
+    ).style.width =
+        percentage + "%";
+
+    document.getElementById(
+        "streakNumber"
+    ).textContent =
+        studyStreak;
+
+    document.getElementById(
+        "totalSessions"
+    ).textContent =
+        totalSessions;
+
+    document.getElementById(
+        "totalMinutes"
+    ).textContent =
+        totalMinutes;
+
+}
+
+
+/* =========================================
+   DISPLAY TASKS
+========================================= */
+
+function displayTasks() {
+
+    let list =
+        document.getElementById(
+            "taskList"
+        );
+
+    list.innerHTML = "";
+
+
+    if (tasks.length === 0) {
+
+        list.innerHTML =
+            '<div class="empty">' +
+            'No tasks yet. Add your first task! 🚀' +
+            '</div>';
+
+        updateDashboard();
+        updateTodayStudy();
+
+        return;
+    }
+
+
+    tasks.forEach(
+        function(task, index) {
+
+            let item =
+                document.createElement("li");
+
+            item.className =
+                "task";
+
+            if (task.completed) {
+
+                item.classList.add(
+                    "completedTask"
+                );
+
+            }
+
+
+            let taskName =
+                document.createElement("div");
+
+            taskName.className =
+                "taskName";
+
+            taskName.textContent =
+                task.name;
+
+
+            let subject =
+                document.createElement("div");
+
+            subject.className =
+                "taskSubject";
+
+            subject.textContent =
+                "📚 " +
+                task.subject;
+
+
+            let deadline =
+                document.createElement("div");
+
+            deadline.className =
+                "taskDeadline";
+
+            deadline.textContent =
+                "📅 " +
+                task.deadline;
+
+
+            let completeButton =
+                document.createElement("button");
+
+            completeButton.className =
+                "secondaryButton";
+
+            completeButton.textContent =
+                task.completed
+                ? "Undo"
+                : "Complete";
+
+
+            completeButton.onclick =
+                function() {
+
+                    tasks[index].completed =
+                        !tasks[index].completed;
+
+                    saveTasks();
+
+                    displayTasks();
+
+                };
+
+
+            let deleteButton =
+                document.createElement("button");
+
+            deleteButton.className =
+                "dangerButton";
+
+            deleteButton.textContent =
+                "Delete";
+
+
+            deleteButton.onclick =
+                function() {
+
+                    tasks.splice(
+                        index,
+                        1
+                    );
+
+                    saveTasks();
+
+                    displayTasks();
+
+                };
+
+
+            item.appendChild(taskName);
+
+            item.appendChild(subject);
+
+            item.appendChild(deadline);
+
+            item.appendChild(
+                completeButton
+            );
+
+            item.appendChild(
+                deleteButton
+            );
+
+            list.appendChild(item);
+
+        }
+    );
+
+
+    updateDashboard();
+
+    updateTodayStudy();
+
+}
+
+
+/* =========================================
+   TODAY'S STUDY
+========================================= */
+
+function getNextTask() {
+
+    let unfinished =
+        tasks.filter(
+            task =>
+                !task.completed &&
+                task.deadline !==
+                "No deadline"
+        );
+
+
+    if (
+        unfinished.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    unfinished.sort(
+        function(a, b) {
+
+            return (
+                new Date(a.deadline) -
+                new Date(b.deadline)
+            );
+
+        }
+    );
+
+
+    return unfinished[0];
+
+}
+
+
+function updateTodayStudy() {
+
+    let todayBox =
+        document.getElementById(
+            "todayStudy"
+        );
+
+    let nextTask =
+        getNextTask();
+
+
+    if (!nextTask) {
+
+        todayBox.innerHTML = `
+
+            <div class="todayCard">
+
+                <h3>
+                    🎉 You're all caught up!
+                </h3>
+
+                <p class="todayInfo">
+                    No unfinished tasks with
+                    deadlines.
+                </p>
+
+                <p class="todayInfo">
+                    Add a task and GOJO will
+                    choose your next study focus.
+                </p>
+
+            </div>
+
+        `;
+
+        document.getElementById(
+            "timerTask"
+        ).textContent =
+            "Choose a task to begin.";
+
+        return;
+
+    }
+
+
+    let today =
+        new Date();
+
+    today.setHours(
+        0, 0, 0, 0
+    );
+
+
+    let deadline =
+        new Date(
+            nextTask.deadline +
+            "T00:00:00"
+        );
+
+
+    let difference =
+        deadline.getTime() -
+        today.getTime();
+
+
+    let daysLeft =
+        Math.ceil(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    let priority;
+
+    if (daysLeft <= 1) {
+
+        priority =
+            "🔥 HIGH";
+
+    }
+    else if (daysLeft <= 3) {
+
+        priority =
+            "⚡ MEDIUM";
+
+    }
+    else {
+
+        priority =
+            "🟢 NORMAL";
+
+    }
+
+
+    let studyTime;
+
+    if (daysLeft <= 1) {
+
+        studyTime =
+            "1–2 hours";
+
+    }
+    else if (daysLeft <= 3) {
+
+        studyTime =
+            "45–60 minutes";
+
+    }
+    else {
+
+        studyTime =
+            "30–45 minutes";
+
+    }
+
+
+    let deadlineText;
+
+    if (daysLeft < 0) {
+
+        deadlineText =
+            "⚠️ Overdue";
+
+    }
+    else if (daysLeft === 0) {
+
+        deadlineText =
+            "Due today";
+
+    }
+    else if (daysLeft === 1) {
+
+        deadlineText =
+            "Due tomorrow";
+
+    }
+    else {
+
+        deadlineText =
+            "Due in " +
+            daysLeft +
+            " days";
+
+    }
+
+
+    todayBox.innerHTML = `
+
+        <div class="todayCard">
+
+            <h3>
+                📚 ${escapeHTML(nextTask.name)}
+            </h3>
+
+            <p class="todayInfo">
+                📖 Subject:
+                ${escapeHTML(nextTask.subject)}
+            </p>
+
+            <p class="todayInfo">
+                📅 ${deadlineText}
+            </p>
+
+            <p class="todayInfo">
+                ⏱️ Suggested study time:
+                ${studyTime}
+            </p>
+
+            <div class="priority">
+                ${priority}
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "timerTask"
+    ).textContent =
+        "🎯 " +
+        nextTask.name +
+        " — " +
+        nextTask.subject;
+
+}
+
+
+/* =========================================
+   ADD TASK
+========================================= */
+
+function addTask() {
+
+    let name =
+        document.getElementById(
+            "task"
+        ).value.trim();
+
+    let subject =
+        document.getElementById(
+            "subject"
+        ).value.trim();
+
+    let deadline =
+        document.getElementById(
+            "deadline"
+        ).value;
+
+
+    if (name === "") {
+
+        alert(
+            "Please enter a task!"
+        );
+
+        return;
+
+    }
+
+
+    let newTask = {
+
+        name: name,
+
+        subject:
+            subject ||
+            "General",
+
+        deadline:
+            deadline ||
+            "No deadline",
+
+        completed: false
+
+    };
+
+
+    tasks.push(
+        newTask
+    );
+
+    saveTasks();
+
+    displayTasks();
+
+
+    document.getElementById(
+        "task"
+    ).value = "";
+
+    document.getElementById(
+        "subject"
+    ).value = "";
+
+    document.getElementById(
+        "deadline"
+    ).value = "";
+
+}
+
+
+/* =========================================
+   TIMER DISPLAY
+========================================= */
 
 function updateTimerDisplay() {
 
-let minutes =
-Math.floor(
-timeLeft / 60
-);
+    let minutes =
+        Math.floor(
+            timeLeft / 60
+        );
 
-let seconds =
-timeLeft % 60;
-
-
-let formattedMinutes =
-String(minutes).padStart(
-2,
-"0"
-);
-
-let formattedSeconds =
-String(seconds).padStart(
-2,
-"0"
-);
+    let seconds =
+        timeLeft % 60;
 
 
-document.getElementById(
-"timerDisplay"
-).textContent =
-formattedMinutes +
-":" +
-formattedSeconds;
+    document.getElementById(
+        "timerDisplay"
+    ).textContent =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
 
 }
 
 
+/* =========================================
+   START TIMER
+========================================= */
 
 function startTimer() {
 
-if (timerRunning) {
+    if (timerRunning) {
 
-return;
+        return;
+
+    }
+
+
+    let nextTask =
+        getNextTask();
+
+
+    if (nextTask) {
+
+        document.getElementById(
+            "timerTask"
+        ).textContent =
+            "🎯 " +
+            nextTask.name +
+            " — " +
+            nextTask.subject;
+
+    }
+    else {
+
+        document.getElementById(
+            "timerTask"
+        ).textContent =
+            "🎯 General Study Session";
+
+    }
+
+
+    timerRunning = true;
+
+
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
+        "🔥 Focus mode active...";
+
+
+    timerInterval =
+        setInterval(
+            function() {
+
+                if (timeLeft > 0) {
+
+                    timeLeft--;
+
+                    updateTimerDisplay();
+
+                }
+                else {
+
+                    finishSession();
+
+                }
+
+            },
+            1000
+        );
 
 }
 
 
-timerRunning = true;
-
-
-document.getElementById(
-"timerStatus"
-).textContent =
-"🔥 Focus mode active...";
-
-
-timerInterval =
-setInterval(function() {
-
-
-if (timeLeft > 0) {
-
-timeLeft--;
-
-updateTimerDisplay();
-
-}
-
-
-else {
-
-clearInterval(
-timerInterval
-);
-
-timerRunning = false;
-
-
-document.getElementById(
-"timerStatus"
-).textContent =
-"🎉 Study session complete! Great work.";
-
-}
-
-}, 1000);
-
-}
-
-
+/* =========================================
+   PAUSE TIMER
+========================================= */
 
 function pauseTimer() {
 
-if (!timerRunning) {
+    if (!timerRunning) {
 
-return;
+        return;
+
+    }
+
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning = false;
+
+
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
+        "⏸️ Session paused.";
 
 }
 
 
-clearInterval(
-timerInterval
-);
-
-timerRunning = false;
-
-
-document.getElementById(
-"timerStatus"
-).textContent =
-"⏸️ Session paused.";
-
-}
-
-
+/* =========================================
+   RESET TIMER
+========================================= */
 
 function resetTimer() {
 
-clearInterval(
-timerInterval
-);
+    clearInterval(
+        timerInterval
+    );
 
-timerRunning = false;
+    timerRunning = false;
 
-timeLeft = 25 * 60;
+    timeLeft =
+        SESSION_LENGTH;
 
-updateTimerDisplay();
+    updateTimerDisplay();
 
 
-document.getElementById(
-"timerStatus"
-).textContent =
-"Ready to focus.";
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
+        "Ready to focus.";
 
 }
 
 
+/* =========================================
+   FINISH SESSION
+========================================= */
 
-/* =========================
+function finishSession() {
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning = false;
+
+
+    totalSessions++;
+
+    totalMinutes += 25;
+
+
+    updateStreak();
+
+    saveStats();
+
+    updateDashboard();
+
+
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
+        "🎉 Study session complete! Great work.";
+
+
+    alert(
+        "🎉 Study session complete! Great work."
+    );
+
+
+    timeLeft =
+        SESSION_LENGTH;
+
+    updateTimerDisplay();
+
+}
+
+
+/* =========================================
+   STREAK SYSTEM
+========================================= */
+
+function updateStreak() {
+
+    let today =
+        getTodayString();
+
+    let yesterday =
+        getYesterdayString();
+
+
+    if (
+        lastStudyDate === today
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        lastStudyDate === yesterday
+    ) {
+
+        studyStreak++;
+
+    }
+    else {
+
+        studyStreak = 1;
+
+    }
+
+
+    lastStudyDate =
+        today;
+
+}
+
+
+/* =========================================
    SMART STUDY MODE
-========================= */
-
+========================================= */
 
 function createStudyPlan() {
 
+    let subject =
+        document.getElementById(
+            "studySubject"
+        ).value.trim();
 
-let subject =
-document.getElementById(
-"studySubject"
-).value;
+    let topic =
+        document.getElementById(
+            "studyTopic"
+        ).value.trim();
 
+    let examDate =
+        document.getElementById(
+            "examDate"
+        ).value;
 
-let topic =
-document.getElementById(
-"studyTopic"
-).value;
-
-
-let examDate =
-document.getElementById(
-"examDate"
-).value;
-
-
-let intensity =
-document.getElementById(
-"intensity"
-).value;
+    let intensity =
+        document.getElementById(
+            "intensity"
+        ).value;
 
 
-if (
-subject === "" ||
-topic === "" ||
-examDate === ""
-) {
+    if (
+        subject === "" ||
+        topic === "" ||
+        examDate === ""
+    ) {
 
-alert(
-"Please fill in the subject, topic and exam date!"
-);
+        alert(
+            "Please fill in the subject, topic and exam date!"
+        );
 
-return;
+        return;
+
+    }
+
+
+    let today =
+        new Date();
+
+    today.setHours(
+        0, 0, 0, 0
+    );
+
+
+    let exam =
+        new Date(
+            examDate +
+            "T00:00:00"
+        );
+
+
+    let difference =
+        exam.getTime() -
+        today.getTime();
+
+
+    let daysLeft =
+        Math.ceil(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    let plan =
+        document.getElementById(
+            "studyPlan"
+        );
+
+
+    let studyTime;
+
+
+    if (intensity === "light") {
+
+        studyTime =
+            "30 minutes";
+
+    }
+    else if (
+        intensity === "normal"
+    ) {
+
+        studyTime =
+            "1 hour";
+
+    }
+    else {
+
+        studyTime =
+            "2+ hours";
+
+    }
+
+
+    if (daysLeft < 0) {
+
+        plan.innerHTML = `
+
+            <div class="examCountdown">
+
+                <h2>
+                    ⚠️ Exam date passed
+                </h2>
+
+                <p>
+                    Choose a future exam date.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if (daysLeft === 0) {
+
+        plan.innerHTML = `
+
+            <div class="examCountdown">
+
+                <h2>
+                    ⚠️ EXAM TODAY
+                </h2>
+
+                <p>
+                    Your ${escapeHTML(subject)}
+                    exam is today.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    🎯 Final Review
+                </h3>
+
+                <p>
+                    Study for about
+                    ${studyTime}.
+                    Review the most important
+                    concepts in
+                    ${escapeHTML(topic)}.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if (daysLeft === 1) {
+
+        plan.innerHTML = `
+
+            <div class="examCountdown">
+
+                <h2>
+                    ⚠️ 1 DAY LEFT
+                </h2>
+
+                <p>
+                    Your ${escapeHTML(subject)}
+                    exam is tomorrow.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    🎯 Today
+                </h3>
+
+                <p>
+                    Study for about
+                    ${studyTime}.
+                    Review key concepts in
+                    ${escapeHTML(topic)},
+                    practice important questions
+                    and review your mistakes.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if (daysLeft <= 3) {
+
+        plan.innerHTML = `
+
+            <div class="examCountdown">
+
+                <h2>
+                    🔥 ${daysLeft} DAYS LEFT
+                </h2>
+
+                <p>
+                    Study intensity:
+                    ${studyTime} per day.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    📖 Learn
+                </h3>
+
+                <p>
+                    Understand the main concepts
+                    of ${escapeHTML(topic)}.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    ✍️ Practice
+                </h3>
+
+                <p>
+                    Practice questions and
+                    identify weak areas.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    🎯 Final Review
+                </h3>
+
+                <p>
+                    Review mistakes and important
+                    concepts before the exam.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if (daysLeft <= 7) {
+
+        plan.innerHTML = `
+
+            <div class="examCountdown">
+
+                <h2>
+                    📅 ${daysLeft} DAYS LEFT
+                </h2>
+
+                <p>
+                    Study about
+                    ${studyTime}
+                    each day.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    📖 Days 1–2 — Learn
+                </h3>
+
+                <p>
+                    Learn the main concepts
+                    of ${escapeHTML(topic)}.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    ✍️ Days 3–4 — Practice
+                </h3>
+
+                <p>
+                    Practice questions
+                    and examples.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    🔍 Days 5–6 — Review
+                </h3>
+
+                <p>
+                    Review mistakes and
+                    focus on weak areas.
+                </p>
+
+            </div>
+
+            <div class="planDay">
+
+                <h3>
+                    🎯 Final Day
+                </h3>
+
+                <p>
+                    Take a practice test and
+                    review the most important
+                    points.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    plan.innerHTML = `
+
+        <div class="examCountdown">
+
+            <h2>
+                🚀 ${daysLeft} DAYS LEFT
+            </h2>
+
+            <p>
+                Study about
+                ${studyTime}
+                each day.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>
+                📖 Phase 1 — Learn
+            </h3>
+
+            <p>
+                Learn and understand the
+                main concepts of
+                ${escapeHTML(topic)}.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>
+                ✍️ Phase 2 — Practice
+            </h3>
+
+            <p>
+                Practice questions and
+                examples.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>
+                🔍 Phase 3 — Review
+            </h3>
+
+            <p>
+                Review mistakes and focus
+                on difficult areas.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>
+                🧪 Phase 4 — Test Yourself
+            </h3>
+
+            <p>
+                Take practice tests without
+                looking at your notes.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>
+                🎯 Final Revision
+            </h3>
+
+            <p>
+                Review the most important
+                concepts before your exam.
+            </p>
+
+        </div>
+
+    `;
 
 }
 
 
-let today =
-new Date();
+/* =========================================
+   BASIC SECURITY
+========================================= */
 
-today.setHours(
-0,
-0,
-0,
-0
-);
+function escapeHTML(value) {
 
-
-let exam =
-new Date(
-examDate + "T00:00:00"
-);
-
-
-let difference =
-exam.getTime() -
-today.getTime();
-
-
-let daysLeft =
-Math.ceil(
-difference /
-(1000 * 60 * 60 * 24)
-);
-
-
-let plan =
-document.getElementById(
-"studyPlan"
-);
-
-
-let studyTime;
-
-
-if (intensity === "light") {
-
-studyTime =
-"30 minutes";
-
-}
-else if (intensity === "normal") {
-
-studyTime =
-"1 hour";
-
-}
-else {
-
-studyTime =
-"2+ hours";
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
-if (daysLeft < 0) {
-
-plan.innerHTML = `
-
-<div class="examCountdown">
-
-<h2>⚠️ Exam date passed</h2>
-
-<p>
-Choose a future exam date.
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-if (daysLeft === 0) {
-
-plan.innerHTML = `
-
-<div class="examCountdown">
-
-<h2>⚠️ EXAM TODAY</h2>
-
-<p>
-Your ${subject} exam is today.
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🎯 Final Review</h3>
-
-<p>
-
-Study for about ${studyTime}.
-Review the most important concepts
-in ${topic}.
-
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-if (daysLeft === 1) {
-
-plan.innerHTML = `
-
-<div class="examCountdown">
-
-<h2>⚠️ 1 DAY LEFT</h2>
-
-<p>
-Your ${subject} exam is tomorrow.
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🎯 Today</h3>
-
-<p>
-
-Study for about ${studyTime}.
-Review key concepts in ${topic},
-practice important questions and
-review your mistakes.
-
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-if (daysLeft <= 3) {
-
-plan.innerHTML = `
-
-<div class="examCountdown">
-
-<h2>🔥 ${daysLeft} DAYS LEFT</h2>
-
-<p>
-Study intensity: ${studyTime} per day.
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>📖 Learn</h3>
-
-<p>
-
-Spend about ${studyTime}
-understanding the main concepts
-of ${topic}.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>✍️ Practice</h3>
-
-<p>
-
-Practice questions and identify
-your weak areas.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🎯 Final Review</h3>
-
-<p>
-
-Review mistakes and important
-concepts before the exam.
-
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-if (daysLeft <= 7) {
-
-plan.innerHTML = `
-
-<div class="examCountdown">
-
-<h2>📅 ${daysLeft} DAYS LEFT</h2>
-
-<p>
-Study about ${studyTime} each day.
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>📖 Days 1–2 — Learn</h3>
-
-<p>
-
-Learn the main concepts of ${topic}.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>✍️ Days 3–4 — Practice</h3>
-
-<p>
-
-Practice questions and examples.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🔍 Days 5–6 — Review</h3>
-
-<p>
-
-Review mistakes and focus on weak areas.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🎯 Final Day</h3>
-
-<p>
-
-Take a practice test and review
-the most important points.
-
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-plan.innerHTML = `
-
-<div class="examCountdown">
-
-<h2>🚀 ${daysLeft} DAYS LEFT</h2>
-
-<p>
-
-Study about ${studyTime} each day.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>📖 Phase 1 — Learn</h3>
-
-<p>
-
-Learn and understand the main
-concepts of ${topic}.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>✍️ Phase 2 — Practice</h3>
-
-<p>
-
-Practice questions and examples.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🔍 Phase 3 — Review</h3>
-
-<p>
-
-Review mistakes and focus on
-difficult areas.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🧪 Phase 4 — Test Yourself</h3>
-
-<p>
-
-Take practice tests without looking
-at your notes.
-
-</p>
-
-</div>
-
-
-<div class="planDay">
-
-<h3>🎯 Final Revision</h3>
-
-<p>
-
-Review the most important concepts
-before your exam.
-
-</p>
-
-</div>
-
-`;
-
-}
-
-
-
-/* =========================
+/* =========================================
    START APP
-========================= */
-
+========================================= */
 
 updateTimerDisplay();
 
 displayTasks();
 
-</script>
+updateDashboard();
 
+</script>
 
 </body>
 </html>
