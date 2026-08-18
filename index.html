@@ -1,74 +1,1420 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>GOJO | Developer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            background-color: #0a0a0a;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-        }
+<title>GOJO Study Planner</title>
 
-        h1 {
-            font-size: 60px;
-            margin-bottom: 10px;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        p {
-            font-size: 20px;
-            color: #aaaaaa;
-        }
+body {
+    margin: 0;
+    background: #080808;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        h2 {
-            margin-top: 80px;
-            font-size: 35px;
-        }
+.container {
+    width: 92%;
+    max-width: 950px;
+    margin: auto;
+}
 
-        .project {
-            width: 500px;
-            margin: 30px auto;
-            padding: 25px;
-            background-color: #151515;
-            border: 1px solid #333;
-            border-radius: 15px;
-            transition: 0.3s;
-        }
+header {
+    text-align: center;
+    padding: 40px 10px 25px;
+}
 
-        .project:hover {
-            transform: translateY(-10px);
-            border-color: white;
-        }
+header h1 {
+    font-size: 55px;
+    margin: 0;
+}
 
-        .project h3 {
-            font-size: 25px;
-        }
+header p {
+    color: #888;
+}
 
-        .project p {
-            font-size: 17px;
-        }
-    </style>
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat,
+.box {
+    background: #141414;
+    border: 1px solid #292929;
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat h2 {
+    font-size: 30px;
+    margin: 5px;
+}
+
+.stat p {
+    color: #888;
+}
+
+.progressBar {
+    width: 100%;
+    height: 14px;
+    background: #282828;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: white;
+    transition: width .4s;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    margin: 6px 0;
+    background: #0b0b0b;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 11px 15px;
+    margin: 5px 3px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: .8;
+}
+
+.mainButton {
+    width: 100%;
+    background: white;
+    color: black;
+    font-weight: bold;
+}
+
+.secondaryButton {
+    background: #292929;
+    color: white;
+}
+
+.subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.subjectButton {
+    background: #191919;
+    color: white;
+    border: 1px solid #333;
+}
+
+.subjectButton.active {
+    background: white;
+    color: black;
+}
+
+.modeButtons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.modeButton {
+    background: #191919;
+    color: white;
+}
+
+.modeButton.active {
+    background: white;
+    color: black;
+}
+
+.aiOutput {
+    margin-top: 18px;
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 14px;
+    padding: 20px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.xpBox {
+    text-align: center;
+}
+
+.xpNumber {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.levelNumber {
+    color: #aaa;
+}
+
+.streakBox {
+    text-align: center;
+}
+
+.streakNumber {
+    font-size: 52px;
+    font-weight: bold;
+}
+
+.timer {
+    text-align: center;
+}
+
+.timerDisplay {
+    font-size: 68px;
+    font-weight: bold;
+    margin: 18px 0;
+}
+
+.task {
+    list-style: none;
+    background: #141414;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 18px;
+    margin: 12px 0;
+}
+
+.taskName {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.taskSubject,
+.taskDeadline {
+    color: #aaa;
+    margin-top: 7px;
+}
+
+.completedTask {
+    opacity: .55;
+}
+
+.completedTask .taskName {
+    text-decoration: line-through;
+}
+
+.todayCard,
+.planDay,
+.examCountdown {
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 13px;
+    padding: 18px;
+    margin-top: 10px;
+}
+
+.todayInfo,
+.planDay p {
+    color: #aaa;
+}
+
+.priority {
+    display: inline-block;
+    background: #222;
+    border-radius: 8px;
+    padding: 7px 10px;
+}
+
+.empty {
+    text-align: center;
+    color: #666;
+    padding: 25px;
+}
+
+footer {
+    text-align: center;
+    color: #555;
+    padding: 35px;
+}
+
+@media(max-width:650px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 42px;
+    }
+
+    .timerDisplay {
+        font-size: 50px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>GOJO</h1>
+<div class="container">
 
-    <p>Beginner Developer 🇰🇪</p>
+<header>
+    <h1>📚 GOJO</h1>
+    <p>YOUR PERSONAL STUDY ASSISTANT</p>
+</header>
 
-    <p>Learning today. Building tomorrow.</p>
+<!-- DASHBOARD -->
 
-    <h2>MY PROJECTS</h2>
+<div class="dashboard">
 
-    <div class="project">
-        <h3>Number Guessing Game</h3>
-        <p>A Python game where players guess a randomly generated number.</p>
+    <div class="stat">
+        <h2 id="totalTasks">0</h2>
+        <p>Total Tasks</p>
     </div>
-<div class="project">
-    <h3>My Future App</h3>
-    <p>A project I will build as I learn more about programming.</p>
+
+    <div class="stat">
+        <h2 id="completedTasks">0</h2>
+        <p>Completed</p>
+    </div>
+
+    <div class="stat">
+        <h2 id="progressText">0%</h2>
+        <p>Progress</p>
+    </div>
+
 </div>
+
+<!-- XP -->
+
+<div class="box xpBox">
+
+    <h2>⚡ GOJO XP</h2>
+
+    <div class="xpNumber" id="xp">0</div>
+
+    <div class="levelNumber">
+        Level <span id="level">1</span>
+    </div>
+
+</div>
+
+<!-- PROGRESS -->
+
+<div class="box">
+
+    <h3>🎯 Your Progress</h3>
+
+    <div class="progressBar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+</div>
+
+<!-- STREAK -->
+
+<div class="box streakBox">
+
+    <h2>🔥 Study Streak</h2>
+
+    <div class="streakNumber" id="streak">0</div>
+
+    <p style="color:#888;">days in a row</p>
+
+</div>
+
+<!-- AI -->
+
+<div class="box">
+
+    <h2>🤖 GOJO AI</h2>
+
+    <p style="color:#888;">
+        Your free local study assistant. Learn, practise,
+        test yourself and level up.
+    </p>
+
+    <h3>Choose Mode</h3>
+
+    <div class="modeButtons">
+
+        <button
+            class="modeButton active"
+            id="coachMode"
+            onclick="setMode('coach')">
+            🎯 Study Coach
+        </button>
+
+        <button
+            class="modeButton"
+            id="explainMode"
+            onclick="setMode('explain')">
+            📚 Explainer
+        </button>
+
+        <button
+            class="modeButton"
+            id="quizMode"
+            onclick="setMode('quiz')">
+            🧠 Quiz Mode
+        </button>
+
+    </div>
+
+    <h3>Choose Subject</h3>
+
+    <div class="subjects">
+
+        <button class="subjectButton active"
+            onclick="setSubject('General',this)">
+            📚 General
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Biology',this)">
+            🧬 Biology
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Chemistry',this)">
+            🧪 Chemistry
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Physics',this)">
+            ⚡ Physics
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Mathematics',this)">
+            ➗ Mathematics
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('History',this)">
+            📖 History
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Geography',this)">
+            🌍 Geography
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('English',this)">
+            🇬🇧 English
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Kiswahili',this)">
+            🇰🇪 Kiswahili
+        </button>
+
+    </div>
+
+    <textarea
+        id="aiQuestion"
+        placeholder="Ask GOJO about studying, revision, subjects, exams, or anything you want to learn..."></textarea>
+
+    <button
+        class="mainButton"
+        onclick="askGojo()">
+        🤖 Ask GOJO AI
+    </button>
+
+    <div
+        id="aiOutput"
+        class="aiOutput">
+        🎯 GOJO STUDY COACH
+
+        Tell me what you are studying and I'll help you make a realistic study strategy.
+    </div>
+
+</div>
+
+<!-- TODAY -->
+
+<div class="box">
+
+    <h2>🎯 Today's Study</h2>
+
+    <div id="todayStudy"></div>
+
+</div>
+
+<!-- TIMER -->
+
+<div class="box timer">
+
+    <h2>⏱️ Study Session</h2>
+
+    <div id="timerTask">
+        Choose a task to begin.
+    </div>
+
+    <div id="timerDisplay" class="timerDisplay">
+        25:00
+    </div>
+
+    <button class="mainButton"
+        onclick="startTimer()">
+        ▶ Start
+    </button>
+
+    <button class="secondaryButton"
+        onclick="pauseTimer()">
+        ⏸ Pause
+    </button>
+
+    <button class="secondaryButton"
+        onclick="resetTimer()">
+        🔄 Reset
+    </button>
+
+    <p id="timerStatus" style="color:#888;">
+        Ready to focus.
+    </p>
+
+</div>
+
+<!-- ADD TASK -->
+
+<div class="box">
+
+    <h2>➕ Add Task</h2>
+
+    <input
+        id="task"
+        placeholder="What do you need to do?">
+
+    <input
+        id="subject"
+        placeholder="Subject">
+
+    <input
+        id="deadline"
+        type="date">
+
+    <button
+        class="mainButton"
+        onclick="addTask()">
+        Add Task
+    </button>
+
+</div>
+
+<!-- SMART STUDY -->
+
+<div class="box">
+
+    <h2>🧠 Smart Study Mode</h2>
+
+    <p style="color:#888;">
+        Create a realistic revision plan based on your exam date.
+    </p>
+
+    <input
+        id="studySubject"
+        placeholder="Subject e.g. Biology">
+
+    <input
+        id="studyTopic"
+        placeholder="Topic e.g. Cells">
+
+    <input
+        id="examDate"
+        type="date">
+
+    <select id="intensity">
+
+        <option value="light">
+            🟢 Light — 30 min/day
+        </option>
+
+        <option value="normal" selected>
+            🟡 Normal — 1 hour/day
+        </option>
+
+        <option value="intensive">
+            🔴 Intensive — 2+ hours/day
+        </option>
+
+    </select>
+
+    <button
+        class="mainButton"
+        onclick="createPlan()">
+        Create Study Plan
+    </button>
+
+    <div id="studyPlan"></div>
+
+</div>
+
+<!-- TASKS -->
+
+<h2>📋 My Tasks</h2>
+
+<ul id="taskList"></ul>
+
+<footer>
+    GOJO • Learning today. Building tomorrow. 🌍
+</footer>
+
+</div>
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+let tasks =
+    JSON.parse(localStorage.getItem("gojoTasks")) || [];
+
+let xp =
+    Number(localStorage.getItem("gojoXP")) || 0;
+
+let streak =
+    Number(localStorage.getItem("gojoStreak")) || 0;
+
+let lastStudy =
+    localStorage.getItem("gojoLastStudy") || "";
+
+let selectedMode = "coach";
+
+let selectedSubject = "General";
+
+
+/* =========================
+   SAVE
+========================= */
+
+function save() {
+
+    localStorage.setItem(
+        "gojoTasks",
+        JSON.stringify(tasks)
+    );
+
+    localStorage.setItem(
+        "gojoXP",
+        xp
+    );
+
+    localStorage.setItem(
+        "gojoStreak",
+        streak
+    );
+
+    localStorage.setItem(
+        "gojoLastStudy",
+        lastStudy
+    );
+
+}
+
+
+/* =========================
+   XP
+========================= */
+
+function addXP(amount) {
+
+    xp += amount;
+
+    save();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function updateDashboard() {
+
+    let total = tasks.length;
+
+    let completed =
+        tasks.filter(t => t.completed).length;
+
+    let percent =
+        total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
+
+    document.getElementById("totalTasks")
+        .textContent = total;
+
+    document.getElementById("completedTasks")
+        .textContent = completed;
+
+    document.getElementById("progressText")
+        .textContent = percent + "%";
+
+    document.getElementById("progress")
+        .style.width = percent + "%";
+
+    document.getElementById("xp")
+        .textContent = xp;
+
+    document.getElementById("level")
+        .textContent =
+        Math.floor(xp / 100) + 1;
+
+    document.getElementById("streak")
+        .textContent = streak;
+
+}
+
+
+/* =========================
+   TASKS
+========================= */
+
+function addTask() {
+
+    let name =
+        document.getElementById("task")
+        .value.trim();
+
+    let subject =
+        document.getElementById("subject")
+        .value.trim();
+
+    let deadline =
+        document.getElementById("deadline")
+        .value;
+
+    if (!name) {
+
+        alert("Enter a task first.");
+
+        return;
+
+    }
+
+    tasks.push({
+
+        name:name,
+
+        subject:
+            subject || "General",
+
+        deadline:
+            deadline || "No deadline",
+
+        completed:false
+
+    });
+
+    save();
+
+    displayTasks();
+
+    document.getElementById("task").value = "";
+
+    document.getElementById("subject").value = "";
+
+    document.getElementById("deadline").value = "";
+
+}
+
+
+function displayTasks() {
+
+    let list =
+        document.getElementById("taskList");
+
+    list.innerHTML = "";
+
+    if (tasks.length === 0) {
+
+        list.innerHTML =
+            '<div class="empty">No tasks yet. Add your first task! 🚀</div>';
+
+        updateToday();
+
+        updateDashboard();
+
+        return;
+
+    }
+
+    tasks.forEach((task,index) => {
+
+        let li =
+            document.createElement("li");
+
+        li.className = "task";
+
+        if (task.completed)
+            li.classList.add("completedTask");
+
+        li.innerHTML = `
+
+            <div class="taskName">
+                ${escapeHTML(task.name)}
+            </div>
+
+            <div class="taskSubject">
+                📚 ${escapeHTML(task.subject)}
+            </div>
+
+            <div class="taskDeadline">
+                📅 ${escapeHTML(task.deadline)}
+            </div>
+
+            <button class="secondaryButton"
+                onclick="completeTask(${index})">
+                ${task.completed ? "Undo" : "Complete"}
+            </button>
+
+            <button class="secondaryButton"
+                onclick="deleteTask(${index})">
+                Delete
+            </button>
+
+        `;
+
+        list.appendChild(li);
+
+    });
+
+    updateDashboard();
+
+    updateToday();
+
+}
+
+
+function completeTask(index) {
+
+    if (!tasks[index].completed) {
+
+        tasks[index].completed = true;
+
+        addXP(25);
+
+        updateStreak();
+
+    }
+    else {
+
+        tasks[index].completed = false;
+
+    }
+
+    save();
+
+    displayTasks();
+
+}
+
+
+function deleteTask(index) {
+
+    tasks.splice(index,1);
+
+    save();
+
+    displayTasks();
+
+}
+
+
+/* =========================
+   STREAK
+========================= */
+
+function updateStreak() {
+
+    let today =
+        new Date().toISOString().split("T")[0];
+
+    if (lastStudy === today)
+        return;
+
+    let yesterday =
+        new Date();
+
+    yesterday.setDate(
+        yesterday.getDate() - 1
+    );
+
+    let yesterdayString =
+        yesterday.toISOString().split("T")[0];
+
+    if (lastStudy === yesterdayString)
+        streak++;
+    else
+        streak = 1;
+
+    lastStudy = today;
+
+    save();
+
+}
+
+
+/* =========================
+   TODAY
+========================= */
+
+function updateToday() {
+
+    let box =
+        document.getElementById("todayStudy");
+
+    let unfinished =
+        tasks.filter(t => !t.completed);
+
+    if (unfinished.length === 0) {
+
+        box.innerHTML = `
+
+            <div class="todayCard">
+
+                <h3>🎉 You're all caught up!</h3>
+
+                <p class="todayInfo">
+                    Add a task and GOJO will help you decide what to study next.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    let task = unfinished[0];
+
+    box.innerHTML = `
+
+        <div class="todayCard">
+
+            <h3>
+                📚 ${escapeHTML(task.name)}
+            </h3>
+
+            <p class="todayInfo">
+                📖 Subject: ${escapeHTML(task.subject)}
+            </p>
+
+            <p class="todayInfo">
+                📅 ${escapeHTML(task.deadline)}
+            </p>
+
+            <p class="todayInfo">
+                ⏱️ Suggested study time: 25–60 minutes
+            </p>
+
+            <div class="priority">
+                🔥 FOCUS
+            </div>
+
+        </div>
+
+    `;
+
+    document.getElementById("timerTask")
+        .textContent =
+        "🎯 " + task.name + " — " + task.subject;
+
+}
+
+
+/* =========================
+   AI MODES
+========================= */
+
+function setMode(mode) {
+
+    selectedMode = mode;
+
+    document.querySelectorAll(".modeButton")
+        .forEach(button =>
+            button.classList.remove("active")
+        );
+
+    if (mode === "coach")
+        document.getElementById("coachMode")
+            .classList.add("active");
+
+    if (mode === "explain")
+        document.getElementById("explainMode")
+            .classList.add("active");
+
+    if (mode === "quiz")
+        document.getElementById("quizMode")
+            .classList.add("active");
+
+}
+
+
+function setSubject(subject,button) {
+
+    selectedSubject = subject;
+
+    document.querySelectorAll(".subjectButton")
+        .forEach(b =>
+            b.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+}
+
+
+/* =========================
+   FREE GOJO AI
+========================= */
+
+function askGojo() {
+
+    let question =
+        document.getElementById("aiQuestion")
+        .value.trim();
+
+    let output =
+        document.getElementById("aiOutput");
+
+    if (!question) {
+
+        output.textContent =
+            "Tell GOJO what you want to learn first.";
+
+        return;
+
+    }
+
+    output.textContent =
+        "🤖 GOJO is thinking...";
+
+    setTimeout(() => {
+
+        let answer = generateAnswer(
+            question,
+            selectedSubject,
+            selectedMode
+        );
+
+        output.textContent = answer;
+
+        addXP(5);
+
+    },500);
+
+}
+
+
+function generateAnswer(question,subject,mode) {
+
+    let q = question.toLowerCase();
+
+    if (mode === "quiz") {
+
+        if (subject === "Biology") {
+
+            return `🧠 GOJO QUIZ MODE
+
+Question 1️⃣
+
+What is photosynthesis?
+
+A) The process plants use to make food
+B) The process animals use to breathe
+C) The movement of water
+D) The breaking of rocks
+
+💡 Choose A, B, C or D.
+
+After you answer, check your understanding and explain why your choice is correct.`;
+
+        }
+
+        if (subject === "Mathematics") {
+
+            return `🧠 GOJO QUIZ MODE
+
+Question 1️⃣
+
+What is 12 × 8?
+
+A) 86
+B) 96
+C) 108
+D) 112
+
+💡 Choose A, B, C or D.`;
+
+        }
+
+        return `🧠 GOJO QUIZ MODE
+
+Question 1️⃣
+
+Tell me one important fact you know about ${subject}.
+
+Then I'll help you test whether you really understand it.`;
+
+    }
+
+
+    if (mode === "explain") {
+
+        return `📚 GOJO EXPLAINER
+
+You asked about:
+
+"${question}"
+
+Subject: ${subject}
+
+Here's a simple way to approach it:
+
+1️⃣ Start with the definition.
+2️⃣ Understand the main idea.
+3️⃣ Look at a simple example.
+4️⃣ Try explaining it without your notes.
+5️⃣ Practise a question about it.
+
+🧠 Remember:
+
+If you can explain a topic in your own words without looking at your notes, you're much more likely to actually understand it.
+
+For a deeper explanation, break "${question}" into smaller ideas and study one idea at a time.`;
+
+    }
+
+
+    return `🎯 GOJO STUDY COACH
+
+You're studying ${subject}.
+
+For "${question}", try this realistic strategy:
+
+📌 Step 1 — Choose ONE specific part of the topic.
+
+📖 Step 2 — Study the main idea for about 10 minutes.
+
+🧠 Step 3 — Close your notes and recall what you remember.
+
+✍️ Step 4 — Do 3–5 practice questions.
+
+🔍 Step 5 — Check your mistakes carefully.
+
+🔁 Step 6 — Revisit only the parts you struggled with.
+
+⏱️ Step 7 — Finish with a 25-minute focused session.
+
+🔥 GOJO TIP:
+
+Don't judge your studying only by how long you sit at your desk.
+
+Judge it by what you can actually remember, explain and use afterwards.`;
+
+}
+
+
+/* =========================
+   SMART PLAN
+========================= */
+
+function createPlan() {
+
+    let subject =
+        document.getElementById("studySubject")
+        .value.trim();
+
+    let topic =
+        document.getElementById("studyTopic")
+        .value.trim();
+
+    let exam =
+        document.getElementById("examDate")
+        .value;
+
+    let intensity =
+        document.getElementById("intensity")
+        .value;
+
+    if (!subject || !topic || !exam) {
+
+        alert(
+            "Fill in the subject, topic and exam date."
+        );
+
+        return;
+
+    }
+
+    let today = new Date();
+
+    today.setHours(0,0,0,0);
+
+    let examDate =
+        new Date(exam + "T00:00:00");
+
+    let days =
+        Math.ceil(
+            (examDate - today) /
+            86400000
+        );
+
+    let time =
+        intensity === "light"
+        ? "30 minutes"
+        : intensity === "normal"
+        ? "1 hour"
+        : "2+ hours";
+
+    let plan =
+        document.getElementById("studyPlan");
+
+    if (days < 0) {
+
+        plan.innerHTML = `
+            <div class="examCountdown">
+                ⚠️ That exam date has already passed.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    plan.innerHTML = `
+
+        <div class="examCountdown">
+
+            <h2>
+                🎯 ${days} DAYS LEFT
+            </h2>
+
+            <p>
+                Recommended study time:
+                ${time} per day.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>📖 Learn</h3>
+
+            <p>
+                Understand the main concepts
+                of ${escapeHTML(topic)}.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>🧠 Recall</h3>
+
+            <p>
+                Close your notes and explain
+                ${escapeHTML(topic)}
+                from memory.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>✍️ Practice</h3>
+
+            <p>
+                Complete practice questions
+                and identify weak areas.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>🔍 Review</h3>
+
+            <p>
+                Review mistakes and spend extra
+                time on difficult concepts.
+            </p>
+
+        </div>
+
+        <div class="planDay">
+
+            <h3>🎯 Final Revision</h3>
+
+            <p>
+                Test yourself without notes
+                before the exam.
+            </p>
+
+        </div>
+
+    `;
+
+    addXP(10);
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+let timeLeft = 25 * 60;
+
+let timer = null;
+
+function updateTimer() {
+
+    let minutes =
+        Math.floor(timeLeft / 60);
+
+    let seconds =
+        timeLeft % 60;
+
+    document.getElementById("timerDisplay")
+        .textContent =
+        String(minutes).padStart(2,"0")
+        + ":" +
+        String(seconds).padStart(2,"0");
+
+}
+
+
+function startTimer() {
+
+    if (timer)
+        return;
+
+    document.getElementById("timerStatus")
+        .textContent =
+        "🔥 Focus mode active...";
+
+    timer = setInterval(() => {
+
+        timeLeft--;
+
+        updateTimer();
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timer);
+
+            timer = null;
+
+            timeLeft = 25 * 60;
+
+            updateTimer();
+
+            addXP(25);
+
+            updateStreak();
+
+            document.getElementById("timerStatus")
+                .textContent =
+                "🎉 Session complete! +25 XP";
+
+            alert(
+                "🎉 Study session complete! You earned 25 XP."
+            );
+
+        }
+
+    },1000);
+
+}
+
+
+function pauseTimer() {
+
+    clearInterval(timer);
+
+    timer = null;
+
+    document.getElementById("timerStatus")
+        .textContent =
+        "⏸️ Session paused.";
+
+}
+
+
+function resetTimer() {
+
+    clearInterval(timer);
+
+    timer = null;
+
+    timeLeft = 25 * 60;
+
+    updateTimer();
+
+    document.getElementById("timerStatus")
+        .textContent =
+        "Ready to focus.";
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+updateTimer();
+
+displayTasks();
+
+updateDashboard();
+
+</script>
+
 </body>
 </html>
