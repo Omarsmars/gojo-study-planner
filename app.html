@@ -1,10 +1,9 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>GOJO Study Planner</title>
 
 <style>
@@ -276,7 +275,6 @@ footer {
     }
 }
 </style>
-
 </head>
 
 <body>
@@ -290,286 +288,268 @@ footer {
 
 <div class="dashboard">
 
-```
-<div class="stat">
-    <h2 id="totalTasks">0</h2>
-    <p>Total Tasks</p>
-</div>
+    <div class="stat">
+        <h2 id="totalTasks">0</h2>
+        <p>Total Tasks</p>
+    </div>
 
-<div class="stat">
-    <h2 id="completedTasks">0</h2>
-    <p>Completed</p>
-</div>
+    <div class="stat">
+        <h2 id="completedTasks">0</h2>
+        <p>Completed</p>
+    </div>
 
-<div class="stat">
-    <h2 id="progressText">0%</h2>
-    <p>Progress</p>
-</div>
-```
+    <div class="stat">
+        <h2 id="progressText">0%</h2>
+        <p>Progress</p>
+    </div>
 
 </div>
 
 <div class="box xpBox">
 
-```
-<h2>⚡ GOJO XP</h2>
+    <h2>⚡ GOJO XP</h2>
 
-<div class="xpNumber" id="xp">0</div>
+    <div class="xpNumber" id="xp">0</div>
 
-<div class="levelNumber">
-    Level <span id="level">1</span>
-</div>
-```
+    <div class="levelNumber">
+        Level <span id="level">1</span>
+    </div>
 
 </div>
 
 <div class="box">
 
-```
-<h3>🎯 Your Progress</h3>
+    <h3>🎯 Your Progress</h3>
 
-<div class="progressBar">
-    <div class="progress" id="progress"></div>
-</div>
-```
+    <div class="progressBar">
+        <div class="progress" id="progress"></div>
+    </div>
 
 </div>
 
 <div class="box streakBox">
 
-```
-<h2>🔥 Study Streak</h2>
+    <h2>🔥 Study Streak</h2>
 
-<div class="streakNumber" id="streak">0</div>
+    <div class="streakNumber" id="streak">0</div>
 
-<p style="color:#888;">days in a row</p>
-```
+    <p style="color:#888;">days in a row</p>
 
 </div>
 
 <div class="box">
 
-```
-<h2>🤖 GOJO AI</h2>
+    <h2>🤖 GOJO AI</h2>
 
-<p style="color:#888;">
-    Your personal study assistant. Learn, practise,
-    test yourself and level up.
-</p>
+    <p style="color:#888;">
+        Your free local study assistant. Learn, practise,
+        test yourself and level up.
+    </p>
 
-<h3>Choose Mode</h3>
+    <h3>Choose Mode</h3>
 
-<div class="modeButtons">
+    <div class="modeButtons">
+
+        <button
+            class="modeButton active"
+            id="coachMode"
+            onclick="setMode('coach')">
+            🎯 Study Coach
+        </button>
+
+        <button
+            class="modeButton"
+            id="explainMode"
+            onclick="setMode('explain')">
+            📚 Explainer
+        </button>
+
+        <button
+            class="modeButton"
+            id="quizMode"
+            onclick="setMode('quiz')">
+            🧠 Quiz Mode
+        </button>
+
+    </div>
+
+    <h3>Choose Subject</h3>
+
+    <div class="subjects">
+
+        <button class="subjectButton active"
+            onclick="setSubject('General',this)">
+            📚 General
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Biology',this)">
+            🧬 Biology
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Chemistry',this)">
+            🧪 Chemistry
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Physics',this)">
+            ⚡ Physics
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Mathematics',this)">
+            ➗ Mathematics
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('History',this)">
+            📖 History
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Geography',this)">
+            🌍 Geography
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('English',this)">
+            🇬🇧 English
+        </button>
+
+        <button class="subjectButton"
+            onclick="setSubject('Kiswahili',this)">
+            🇰🇪 Kiswahili
+        </button>
+
+    </div>
+
+    <textarea
+        id="aiQuestion"
+        placeholder="Ask GOJO about studying, revision, subjects, exams, or anything you want to learn..."></textarea>
 
     <button
-        class="modeButton active"
-        id="coachMode"
-        onclick="setMode('coach')">
-        🎯 Study Coach
+        class="mainButton"
+        onclick="askGojo()">
+        🤖 Ask GOJO AI
     </button>
 
-    <button
-        class="modeButton"
-        id="explainMode"
-        onclick="setMode('explain')">
-        📚 Explainer
-    </button>
+    <div id="aiOutput" class="aiOutput">
+        🎯 GOJO STUDY COACH
 
-    <button
-        class="modeButton"
-        id="quizMode"
-        onclick="setMode('quiz')">
-        🧠 Quiz Mode
-    </button>
-
-</div>
-
-<h3>Choose Subject</h3>
-
-<div class="subjects">
-
-    <button class="subjectButton active"
-        onclick="setSubject('General',this)">
-        📚 General
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('Biology',this)">
-        🧬 Biology
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('Chemistry',this)">
-        🧪 Chemistry
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('Physics',this)">
-        ⚡ Physics
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('Mathematics',this)">
-        ➗ Mathematics
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('History',this)">
-        📖 History
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('Geography',this)">
-        🌍 Geography
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('English',this)">
-        🇬🇧 English
-    </button>
-
-    <button class="subjectButton"
-        onclick="setSubject('Kiswahili',this)">
-        🇰🇪 Kiswahili
-    </button>
-
-</div>
-
-<textarea
-    id="aiQuestion"
-    placeholder="Ask GOJO about studying, revision, subjects, exams, or anything you want to learn..."></textarea>
-
-<button
-    class="mainButton"
-    onclick="askGojo()">
-    🤖 Ask GOJO AI
-</button>
-
-<div id="aiOutput" class="aiOutput">
-    🎯 GOJO STUDY COACH
-
-    Tell me what you are studying and I'll help you make a realistic study strategy.
-</div>
-```
+        Tell me what you are studying and I'll help you make a realistic study strategy.
+    </div>
 
 </div>
 
 <div class="box">
 
-```
-<h2>🎯 Today's Study</h2>
+    <h2>🎯 Today's Study</h2>
 
-<div id="todayStudy"></div>
-```
+    <div id="todayStudy"></div>
 
 </div>
 
 <div class="box timer">
 
-```
-<h2>⏱️ Study Session</h2>
+    <h2>⏱️ Study Session</h2>
 
-<div id="timerTask">
-    Choose a task to begin.
-</div>
+    <div id="timerTask">
+        Choose a task to begin.
+    </div>
 
-<div id="timerDisplay" class="timerDisplay">
-    25:00
-</div>
+    <div id="timerDisplay" class="timerDisplay">
+        25:00
+    </div>
 
-<button class="mainButton"
-    onclick="startTimer()">
-    ▶ Start
-</button>
+    <button class="mainButton"
+        onclick="startTimer()">
+        ▶ Start
+    </button>
 
-<button class="secondaryButton"
-    onclick="pauseTimer()">
-    ⏸ Pause
-</button>
+    <button class="secondaryButton"
+        onclick="pauseTimer()">
+        ⏸ Pause
+    </button>
 
-<button class="secondaryButton"
-    onclick="resetTimer()">
-    🔄 Reset
-</button>
+    <button class="secondaryButton"
+        onclick="resetTimer()">
+        🔄 Reset
+    </button>
 
-<p id="timerStatus" style="color:#888;">
-    Ready to focus.
-</p>
-```
+    <p id="timerStatus" style="color:#888;">
+        Ready to focus.
+    </p>
 
 </div>
 
 <div class="box">
 
-```
-<h2>➕ Add Task</h2>
+    <h2>➕ Add Task</h2>
 
-<input
-    id="task"
-    placeholder="What do you need to do?">
+    <input
+        id="task"
+        placeholder="What do you need to do?">
 
-<input
-    id="subject"
-    placeholder="Subject">
+    <input
+        id="subject"
+        placeholder="Subject">
 
-<input
-    id="deadline"
-    type="date">
+    <input
+        id="deadline"
+        type="date">
 
-<button
-    class="mainButton"
-    onclick="addTask()">
-    Add Task
-</button>
-```
+    <button
+        class="mainButton"
+        onclick="addTask()">
+        Add Task
+    </button>
 
 </div>
 
 <div class="box">
 
-```
-<h2>🧠 Smart Study Mode</h2>
+    <h2>🧠 Smart Study Mode</h2>
 
-<p style="color:#888;">
-    Create a realistic revision plan based on your exam date.
-</p>
+    <p style="color:#888;">
+        Create a realistic revision plan based on your exam date.
+    </p>
 
-<input
-    id="studySubject"
-    placeholder="Subject e.g. Biology">
+    <input
+        id="studySubject"
+        placeholder="Subject e.g. Biology">
 
-<input
-    id="studyTopic"
-    placeholder="Topic e.g. Cells">
+    <input
+        id="studyTopic"
+        placeholder="Topic e.g. Cells">
 
-<input
-    id="examDate"
-    type="date">
+    <input
+        id="examDate"
+        type="date">
 
-<select id="intensity">
+    <select id="intensity">
 
-    <option value="light">
-        🟢 Light — 30 min/day
-    </option>
+        <option value="light">
+            🟢 Light — 30 min/day
+        </option>
 
-    <option value="normal" selected>
-        🟡 Normal — 1 hour/day
-    </option>
+        <option value="normal" selected>
+            🟡 Normal — 1 hour/day
+        </option>
 
-    <option value="intensive">
-        🔴 Intensive — 2+ hours/day
-    </option>
+        <option value="intensive">
+            🔴 Intensive — 2+ hours/day
+        </option>
 
-</select>
+    </select>
 
-<button
-    class="mainButton"
-    onclick="createPlan()">
-    Create Study Plan
-</button>
+    <button
+        class="mainButton"
+        onclick="createPlan()">
+        Create Study Plan
+    </button>
 
-<div id="studyPlan"></div>
-```
+    <div id="studyPlan"></div>
 
 </div>
 
@@ -598,6 +578,7 @@ let lastStudy =
     localStorage.getItem("gojoLastStudy") || "";
 
 let selectedMode = "coach";
+
 let selectedSubject = "General";
 
 
@@ -608,9 +589,20 @@ function save() {
         JSON.stringify(tasks)
     );
 
-    localStorage.setItem("gojoXP", xp);
-    localStorage.setItem("gojoStreak", streak);
-    localStorage.setItem("gojoLastStudy", lastStudy);
+    localStorage.setItem(
+        "gojoXP",
+        xp
+    );
+
+    localStorage.setItem(
+        "gojoStreak",
+        streak
+    );
+
+    localStorage.setItem(
+        "gojoLastStudy",
+        lastStudy
+    );
 
 }
 
@@ -686,10 +678,17 @@ function addTask() {
     }
 
     tasks.push({
-        name: name,
-        subject: subject || "General",
-        deadline: deadline || "No deadline",
-        completed: false
+
+        name:name,
+
+        subject:
+            subject || "General",
+
+        deadline:
+            deadline || "No deadline",
+
+        completed:false
+
     });
 
     save();
@@ -697,7 +696,9 @@ function addTask() {
     displayTasks();
 
     document.getElementById("task").value = "";
+
     document.getElementById("subject").value = "";
+
     document.getElementById("deadline").value = "";
 
 }
@@ -716,6 +717,7 @@ function displayTasks() {
             '<div class="empty">No tasks yet. Add your first task! 🚀</div>';
 
         updateToday();
+
         updateDashboard();
 
         return;
@@ -763,6 +765,7 @@ function displayTasks() {
     });
 
     updateDashboard();
+
     updateToday();
 
 }
@@ -778,13 +781,15 @@ function completeTask(index) {
 
         updateStreak();
 
-    } else {
+    }
+    else {
 
         tasks[index].completed = false;
 
     }
 
     save();
+
     displayTasks();
 
 }
@@ -935,16 +940,16 @@ function setSubject(subject,button) {
 
 
 /* =========================
-   GOJO AI CONNECTION
+   PUBLIC GOJO AI
 ========================= */
 
 async function askGojo() {
 
-    const question =
+    let question =
         document.getElementById("aiQuestion")
         .value.trim();
 
-    const output =
+    let output =
         document.getElementById("aiOutput");
 
     if (!question) {
@@ -962,7 +967,7 @@ async function askGojo() {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/api/ai",
+            "https://gojo-ai-backend.onrender.com/api/ai",
             {
                 method: "POST",
 
@@ -971,45 +976,143 @@ async function askGojo() {
                 },
 
                 body: JSON.stringify({
-
                     message: question,
-
-                    mode: selectedMode,
-
-                    subject: selectedSubject
-
+                    mode: selectedMode || "coach"
                 })
             }
         );
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
         if (!response.ok || !data.success) {
 
             throw new Error(
-                data.error ||
-                "GOJO AI request failed."
+                data.error || "GOJO AI request failed."
             );
 
         }
 
-        output.textContent =
-            data.answer;
+        output.textContent = data.answer;
 
         addXP(5);
 
     } catch (error) {
 
-        console.error(
-            "GOJO AI error:",
-            error
-        );
+        console.error("GOJO AI error:", error);
 
         output.textContent =
-            "⚠️ GOJO AI could not connect. Make sure the GOJO backend is running on port 3000.";
+            "⚠️ GOJO AI could not connect. Please try again in a moment.";
 
     }
+
+}
+
+
+function generateAnswer(question,subject,mode) {
+
+    let q = question.toLowerCase();
+
+    if (mode === "quiz") {
+
+        if (subject === "Biology") {
+
+            return `🧠 GOJO QUIZ MODE
+
+Question 1️⃣
+
+What is photosynthesis?
+
+A) The process plants use to make food
+B) The process animals use to breathe
+C) The movement of water
+D) The breaking of rocks
+
+💡 Choose A, B, C or D.
+
+After you answer, check your understanding and explain why your choice is correct.`;
+
+        }
+
+        if (subject === "Mathematics") {
+
+            return `🧠 GOJO QUIZ MODE
+
+Question 1️⃣
+
+What is 12 × 8?
+
+A) 86
+B) 96
+C) 108
+D) 112
+
+💡 Choose A, B, C or D.`;
+
+        }
+
+        return `🧠 GOJO QUIZ MODE
+
+Question 1️⃣
+
+Tell me one important fact you know about ${subject}.
+
+Then I'll help you test whether you really understand it.`;
+
+    }
+
+
+    if (mode === "explain") {
+
+        return `📚 GOJO EXPLAINER
+
+You asked about:
+
+"${question}"
+
+Subject: ${subject}
+
+Here's a simple way to approach it:
+
+1️⃣ Start with the definition.
+2️⃣ Understand the main idea.
+3️⃣ Look at a simple example.
+4️⃣ Try explaining it without your notes.
+5️⃣ Practise a question about it.
+
+🧠 Remember:
+
+If you can explain a topic in your own words without looking at your notes, you're much more likely to actually understand it.
+
+For a deeper explanation, break "${question}" into smaller ideas and study one idea at a time.`;
+
+    }
+
+
+    return `🎯 GOJO STUDY COACH
+
+You're studying ${subject}.
+
+For "${question}", try this realistic strategy:
+
+📌 Step 1 — Choose ONE specific part of the topic.
+
+📖 Step 2 — Study the main idea for about 10 minutes.
+
+🧠 Step 3 — Close your notes and recall what you remember.
+
+✍️ Step 4 — Do 3–5 practice questions.
+
+🔍 Step 5 — Check your mistakes carefully.
+
+🔁 Step 6 — Revisit only the parts you struggled with.
+
+⏱️ Step 7 — Finish with a 25-minute focused session.
+
+🔥 GOJO TIP:
+
+Don't judge your studying only by how long you sit at your desk.
+
+Judge it by what you can actually remember, explain and use afterwards.`;
 
 }
 
@@ -1042,8 +1145,7 @@ function createPlan() {
 
     }
 
-    let today =
-        new Date();
+    let today = new Date();
 
     today.setHours(0,0,0,0);
 
@@ -1157,6 +1259,7 @@ function createPlan() {
 
 
 let timeLeft = 25 * 60;
+
 let timer = null;
 
 
@@ -1264,10 +1367,13 @@ function escapeHTML(value) {
 
 
 updateTimer();
+
 displayTasks();
+
 updateDashboard();
 
 </script>
 
 </body>
 </html>
+```
