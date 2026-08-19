@@ -1,11 +1,13 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<link rel="manifest" href="manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GOJO Study Planner</title>
+<title>Akim Study Planner</title>
 
 <style>
 * {
@@ -283,7 +285,7 @@ footer {
 <div class="container">
 
 <header>
-    <h1>📚 GOJO</h1>
+    <h1>📚 AKIM</h1>
     <p>YOUR PERSONAL STUDY ASSISTANT</p>
 </header>
 
@@ -308,7 +310,7 @@ footer {
 
 <div class="box xpBox">
 
-    <h2>⚡ GOJO XP</h2>
+    <h2>⚡ AKIM XP</h2>
 
     <div class="xpNumber" id="xp">0</div>
 
@@ -340,7 +342,7 @@ footer {
 
 <div class="box">
 
-    <h2>🤖 GOJO AI</h2>
+    <h2>🤖 AKIM AI</h2>
 
     <p style="color:#888;">
         Your personal study assistant. Learn, practise,
@@ -351,22 +353,19 @@ footer {
 
     <div class="modeButtons">
 
-        <button
-            class="modeButton active"
+        <button class="modeButton active"
             id="coachMode"
             onclick="setMode('coach')">
             🎯 Study Coach
         </button>
 
-        <button
-            class="modeButton"
+        <button class="modeButton"
             id="explainMode"
             onclick="setMode('explain')">
             📚 Explainer
         </button>
 
-        <button
-            class="modeButton"
+        <button class="modeButton"
             id="quizMode"
             onclick="setMode('quiz')">
             🧠 Quiz Mode
@@ -427,18 +426,15 @@ footer {
 
     <textarea
         id="aiQuestion"
-        placeholder="Ask GOJO about studying, revision, subjects, exams, or anything you want to learn..."></textarea>
+        placeholder="Ask AKIM about studying, revision, subjects, exams, or anything you want to learn..."></textarea>
 
-    <button
-        class="mainButton"
+    <button class="mainButton"
         onclick="askGojo()">
-        🤖 Ask GOJO AI
+        🤖 Ask AKIM AI
     </button>
 
-    <div
-        id="aiOutput"
-        class="aiOutput">
-        🎯 GOJO STUDY COACH
+    <div id="aiOutput" class="aiOutput">
+        🎯 AKIM STUDY COACH
 
         Tell me what you are studying and I'll help you make a realistic study strategy.
     </div>
@@ -490,20 +486,16 @@ footer {
 
     <h2>➕ Add Task</h2>
 
-    <input
-        id="task"
+    <input id="task"
         placeholder="What do you need to do?">
 
-    <input
-        id="subject"
+    <input id="subject"
         placeholder="Subject">
 
-    <input
-        id="deadline"
+    <input id="deadline"
         type="date">
 
-    <button
-        class="mainButton"
+    <button class="mainButton"
         onclick="addTask()">
         Add Task
     </button>
@@ -518,16 +510,13 @@ footer {
         Create a realistic revision plan based on your exam date.
     </p>
 
-    <input
-        id="studySubject"
+    <input id="studySubject"
         placeholder="Subject e.g. Biology">
 
-    <input
-        id="studyTopic"
+    <input id="studyTopic"
         placeholder="Topic e.g. Cells">
 
-    <input
-        id="examDate"
+    <input id="examDate"
         type="date">
 
     <select id="intensity">
@@ -546,8 +535,7 @@ footer {
 
     </select>
 
-    <button
-        class="mainButton"
+    <button class="mainButton"
         onclick="createPlan()">
         Create Study Plan
     </button>
@@ -561,7 +549,7 @@ footer {
 <ul id="taskList"></ul>
 
 <footer>
-    GOJO • Learning today. Building tomorrow. 🌍
+    AKIM • Learning today. Building tomorrow. 🌍
 </footer>
 
 </div>
@@ -856,7 +844,7 @@ function updateToday() {
                 <h3>🎉 You're all caught up!</h3>
 
                 <p class="todayInfo">
-                    Add a task and GOJO will help you decide what to study next.
+                    Add a task and AKIM will help you decide what to study next.
                 </p>
 
             </div>
@@ -944,7 +932,7 @@ function setSubject(subject,button) {
 
 /*
 ==========================================================
-GOJO AI
+AKIM AI
 PUBLIC ONLINE BACKEND
 ==========================================================
 */
@@ -961,14 +949,14 @@ async function askGojo() {
     if (!question) {
 
         output.textContent =
-            "Tell GOJO what you want to learn first.";
+            "Tell AKIM what you want to learn first.";
 
         return;
 
     }
 
     output.textContent =
-        "🤖 GOJO is thinking...";
+        "🤖 AKIM is thinking...";
 
     try {
 
@@ -1002,7 +990,7 @@ async function askGojo() {
 
             throw new Error(
                 data.error ||
-                "GOJO AI request failed."
+                "AKIM AI request failed."
             );
 
         }
@@ -1017,12 +1005,12 @@ async function askGojo() {
     catch (error) {
 
         console.error(
-            "GOJO AI error:",
+            "AKIM AI error:",
             error
         );
 
         output.textContent =
-            "⚠️ GOJO AI could not connect right now. Please try again in a moment.";
+            "⚠️ AKIM AI could not connect right now. Please try again in a moment.";
 
     }
 
@@ -1341,3 +1329,7 @@ updateDashboard();
 </body>
 </html>
 ```
+
+**Copy everything inside that block → replace the entire contents of `index.html` on GitHub → Commit changes.**
+
+Then we'll do **one more step** to make the Akim logo appear properly as the app icon. 🔥
