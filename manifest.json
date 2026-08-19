@@ -1,6 +1,7 @@
+```json
 {
-  "name": "GOJO Study Planner",
-  "short_name": "GOJO",
+  "name": "Akim Study Planner",
+  "short_name": "Akim",
   "description": "Your personal AI study assistant and revision planner.",
   "start_url": "./index.html",
   "display": "standalone",
@@ -20,3 +21,4 @@
     }
   ]
 }
+```
