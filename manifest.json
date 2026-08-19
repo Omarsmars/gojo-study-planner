@@ -1,24 +1,18 @@
-```json
 {
   "name": "Akim Study Planner",
   "short_name": "Akim",
-  "description": "Your personal AI study assistant and revision planner.",
+  "description": "Your personal AI study assistant",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080808",
-  "theme_color": "#080808",
-  "orientation": "portrait",
+  "theme_color": "#0b1f3a",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "Akim.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "Akim.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
-```
