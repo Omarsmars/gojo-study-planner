@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GOJO Study Planner</title>
 
 <style>
@@ -342,7 +343,7 @@ footer {
     <h2>🤖 GOJO AI</h2>
 
     <p style="color:#888;">
-        Your free local study assistant. Learn, practise,
+        Your personal study assistant. Learn, practise,
         test yourself and level up.
     </p>
 
@@ -434,7 +435,9 @@ footer {
         🤖 Ask GOJO AI
     </button>
 
-    <div id="aiOutput" class="aiOutput">
+    <div
+        id="aiOutput"
+        class="aiOutput">
         🎯 GOJO STUDY COACH
 
         Tell me what you are studying and I'll help you make a realistic study strategy.
@@ -939,9 +942,12 @@ function setSubject(subject,button) {
 }
 
 
-/* =========================
-   PUBLIC GOJO AI
-========================= */
+/*
+==========================================================
+GOJO AI
+PUBLIC ONLINE BACKEND
+==========================================================
+*/
 
 async function askGojo() {
 
@@ -976,146 +982,58 @@ async function askGojo() {
                 },
 
                 body: JSON.stringify({
+
                     message: question,
-                    mode: selectedMode || "coach"
+
+                    mode:
+                        selectedMode || "coach",
+
+                    subject:
+                        selectedSubject || "General"
+
                 })
             }
         );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!response.ok || !data.success) {
 
             throw new Error(
-                data.error || "GOJO AI request failed."
+                data.error ||
+                "GOJO AI request failed."
             );
 
         }
 
-        output.textContent = data.answer;
+        output.textContent =
+            data.answer;
 
         addXP(5);
 
-    } catch (error) {
+    }
 
-        console.error("GOJO AI error:", error);
+    catch (error) {
+
+        console.error(
+            "GOJO AI error:",
+            error
+        );
 
         output.textContent =
-            "⚠️ GOJO AI could not connect. Please try again in a moment.";
+            "⚠️ GOJO AI could not connect right now. Please try again in a moment.";
 
     }
 
 }
 
 
-function generateAnswer(question,subject,mode) {
-
-    let q = question.toLowerCase();
-
-    if (mode === "quiz") {
-
-        if (subject === "Biology") {
-
-            return `🧠 GOJO QUIZ MODE
-
-Question 1️⃣
-
-What is photosynthesis?
-
-A) The process plants use to make food
-B) The process animals use to breathe
-C) The movement of water
-D) The breaking of rocks
-
-💡 Choose A, B, C or D.
-
-After you answer, check your understanding and explain why your choice is correct.`;
-
-        }
-
-        if (subject === "Mathematics") {
-
-            return `🧠 GOJO QUIZ MODE
-
-Question 1️⃣
-
-What is 12 × 8?
-
-A) 86
-B) 96
-C) 108
-D) 112
-
-💡 Choose A, B, C or D.`;
-
-        }
-
-        return `🧠 GOJO QUIZ MODE
-
-Question 1️⃣
-
-Tell me one important fact you know about ${subject}.
-
-Then I'll help you test whether you really understand it.`;
-
-    }
-
-
-    if (mode === "explain") {
-
-        return `📚 GOJO EXPLAINER
-
-You asked about:
-
-"${question}"
-
-Subject: ${subject}
-
-Here's a simple way to approach it:
-
-1️⃣ Start with the definition.
-2️⃣ Understand the main idea.
-3️⃣ Look at a simple example.
-4️⃣ Try explaining it without your notes.
-5️⃣ Practise a question about it.
-
-🧠 Remember:
-
-If you can explain a topic in your own words without looking at your notes, you're much more likely to actually understand it.
-
-For a deeper explanation, break "${question}" into smaller ideas and study one idea at a time.`;
-
-    }
-
-
-    return `🎯 GOJO STUDY COACH
-
-You're studying ${subject}.
-
-For "${question}", try this realistic strategy:
-
-📌 Step 1 — Choose ONE specific part of the topic.
-
-📖 Step 2 — Study the main idea for about 10 minutes.
-
-🧠 Step 3 — Close your notes and recall what you remember.
-
-✍️ Step 4 — Do 3–5 practice questions.
-
-🔍 Step 5 — Check your mistakes carefully.
-
-🔁 Step 6 — Revisit only the parts you struggled with.
-
-⏱️ Step 7 — Finish with a 25-minute focused session.
-
-🔥 GOJO TIP:
-
-Don't judge your studying only by how long you sit at your desk.
-
-Judge it by what you can actually remember, explain and use afterwards.`;
-
-}
-
+/*
+==========================================================
+SMART STUDY PLAN
+==========================================================
+*/
 
 function createPlan() {
 
@@ -1145,12 +1063,20 @@ function createPlan() {
 
     }
 
-    let today = new Date();
+    let today =
+        new Date();
 
-    today.setHours(0,0,0,0);
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
 
     let examDate =
-        new Date(exam + "T00:00:00");
+        new Date(
+            exam + "T00:00:00"
+        );
 
     let days =
         Math.ceil(
@@ -1166,14 +1092,20 @@ function createPlan() {
         : "2+ hours";
 
     let plan =
-        document.getElementById("studyPlan");
+        document.getElementById(
+            "studyPlan"
+        );
 
     if (days < 0) {
 
         plan.innerHTML = `
+
             <div class="examCountdown">
+
                 ⚠️ That exam date has already passed.
+
             </div>
+
         `;
 
         return;
@@ -1258,24 +1190,37 @@ function createPlan() {
 }
 
 
-let timeLeft = 25 * 60;
+/*
+==========================================================
+TIMER
+==========================================================
+*/
 
-let timer = null;
+let timeLeft =
+    25 * 60;
+
+let timer =
+    null;
 
 
 function updateTimer() {
 
     let minutes =
-        Math.floor(timeLeft / 60);
+        Math.floor(
+            timeLeft / 60
+        );
 
     let seconds =
         timeLeft % 60;
 
-    document.getElementById("timerDisplay")
-        .textContent =
-        String(minutes).padStart(2,"0")
+    document.getElementById(
+        "timerDisplay"
+    ).textContent =
+        String(minutes)
+        .padStart(2,"0")
         + ":" +
-        String(seconds).padStart(2,"0");
+        String(seconds)
+        .padStart(2,"0");
 
 }
 
@@ -1285,41 +1230,45 @@ function startTimer() {
     if (timer)
         return;
 
-    document.getElementById("timerStatus")
-        .textContent =
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
         "🔥 Focus mode active...";
 
-    timer = setInterval(() => {
+    timer =
+        setInterval(() => {
 
-        timeLeft--;
-
-        updateTimer();
-
-        if (timeLeft <= 0) {
-
-            clearInterval(timer);
-
-            timer = null;
-
-            timeLeft = 25 * 60;
+            timeLeft--;
 
             updateTimer();
 
-            addXP(25);
+            if (timeLeft <= 0) {
 
-            updateStreak();
+                clearInterval(timer);
 
-            document.getElementById("timerStatus")
-                .textContent =
-                "🎉 Session complete! +25 XP";
+                timer = null;
 
-            alert(
-                "🎉 Study session complete! You earned 25 XP."
-            );
+                timeLeft =
+                    25 * 60;
 
-        }
+                updateTimer();
 
-    },1000);
+                addXP(25);
+
+                updateStreak();
+
+                document.getElementById(
+                    "timerStatus"
+                ).textContent =
+                    "🎉 Session complete! +25 XP";
+
+                alert(
+                    "🎉 Study session complete! You earned 25 XP."
+                );
+
+            }
+
+        },1000);
 
 }
 
@@ -1330,8 +1279,9 @@ function pauseTimer() {
 
     timer = null;
 
-    document.getElementById("timerStatus")
-        .textContent =
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
         "⏸️ Session paused.";
 
 }
@@ -1343,16 +1293,24 @@ function resetTimer() {
 
     timer = null;
 
-    timeLeft = 25 * 60;
+    timeLeft =
+        25 * 60;
 
     updateTimer();
 
-    document.getElementById("timerStatus")
-        .textContent =
+    document.getElementById(
+        "timerStatus"
+    ).textContent =
         "Ready to focus.";
 
 }
 
+
+/*
+==========================================================
+SECURITY
+==========================================================
+*/
 
 function escapeHTML(value) {
 
@@ -1365,6 +1323,12 @@ function escapeHTML(value) {
 
 }
 
+
+/*
+==========================================================
+START
+==========================================================
+*/
 
 updateTimer();
 
