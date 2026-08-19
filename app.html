@@ -997,7 +997,7 @@ function setSubject(subject,button) {
    FREE GOJO AI
 ========================= */
 
-function askGojo() {
+async function askGojo() {
 
     let question =
         document.getElementById("aiQuestion")
@@ -1018,19 +1018,44 @@ function askGojo() {
     output.textContent =
         "🤖 GOJO is thinking...";
 
-    setTimeout(() => {
+    try {
 
-        let answer = generateAnswer(
-            question,
-            selectedSubject,
-            selectedMode
+        const response = await fetch(
+            "http://localhost:3000/api/ai",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    message: question,
+                    mode: selectedMode || "coach"
+                })
+            }
         );
 
-        output.textContent = answer;
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.error || "GOJO AI request failed."
+            );
+        }
+
+        output.textContent = data.answer;
 
         addXP(5);
 
-    },500);
+    } catch (error) {
+
+        console.error("GOJO AI error:", error);
+
+        output.textContent =
+            "⚠️ GOJO AI could not connect. Make sure the GOJO AI backend is running on port 3000.";
+
+    }
 
 }
 
