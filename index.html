@@ -1981,6 +1981,21 @@ displayTasks();
 updateDashboard();
 
 </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => {
+                console.log("AKIM service worker registered");
+            })
+            .catch(error => {
+                console.error(
+                    "AKIM service worker failed:",
+                    error
+                );
+            });
+    });
+}
+</script>
 </body>
 </html>
