@@ -1,62 +1,80 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="Akim.png">
 <link rel="apple-touch-icon" href="Akim.png">
+
 <meta name="theme-color" content="#0b1f3a">
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Akim Study Planner</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    background: #080808;
-    color: white;
+    background:
+        radial-gradient(circle at top, #102a4c 0%, #070b12 38%, #05070b 100%);
+    color: #f5f7fb;
     font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
 }
 
 .container {
     width: 92%;
-    max-width: 950px;
+    max-width: 1000px;
     margin: auto;
 }
 
+/* HEADER */
+
 header {
     text-align: center;
-    padding: 40px 10px 25px;
+    padding: 42px 10px 28px;
 }
 
 header h1 {
-    font-size: 55px;
+    font-size: 58px;
     margin: 0;
+    letter-spacing: 3px;
 }
 
 header p {
-    color: #888;
+    color: #8090a5;
+    font-size: 13px;
+    letter-spacing: 2px;
 }
+
+/* DASHBOARD */
 
 .dashboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 14px;
+    margin-bottom: 18px;
 }
 
 .stat,
 .box {
-    background: #141414;
-    border: 1px solid #292929;
-    border-radius: 16px;
+    background: rgba(13, 21, 32, .94);
+    border: 1px solid #1c3552;
+    border-radius: 18px;
     padding: 22px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
 }
 
 .stat {
@@ -64,18 +82,22 @@ header p {
 }
 
 .stat h2 {
-    font-size: 30px;
+    font-size: 31px;
     margin: 5px;
 }
 
 .stat p {
-    color: #888;
+    color: #7f8da0;
+    margin-bottom: 0;
 }
+
+/* PROGRESS */
 
 .progressBar {
     width: 100%;
-    height: 14px;
-    background: #282828;
+    height: 13px;
+    background: #101a27;
+    border: 1px solid #213952;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -83,69 +105,140 @@ header p {
 .progress {
     width: 0%;
     height: 100%;
-    background: white;
+    background: linear-gradient(90deg, #ffffff, #76aeea);
     transition: width .4s;
 }
+
+/* INPUTS */
 
 input,
 select,
 textarea {
     width: 100%;
-    padding: 13px;
-    margin: 6px 0;
-    background: #0b0b0b;
+    padding: 14px;
+    margin: 7px 0;
+    background: #080e17;
     color: white;
-    border: 1px solid #333;
-    border-radius: 9px;
+    border: 1px solid #27405d;
+    border-radius: 11px;
     font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #5c9bd8;
+    box-shadow: 0 0 0 2px rgba(92,155,216,.12);
 }
 
 textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
 }
 
+/* BUTTONS */
+
 button {
     border: none;
-    border-radius: 9px;
-    padding: 11px 15px;
+    border-radius: 10px;
+    padding: 12px 16px;
     margin: 5px 3px 0 0;
     cursor: pointer;
     font-size: 14px;
+    transition: .2s;
 }
 
 button:hover {
-    opacity: .8;
+    transform: translateY(-1px);
+    opacity: .9;
 }
 
 .mainButton {
     width: 100%;
-    background: white;
-    color: black;
+    background: linear-gradient(135deg, #ffffff, #cddcf0);
+    color: #07101c;
     font-weight: bold;
+    padding: 14px;
 }
 
 .secondaryButton {
-    background: #292929;
+    background: #172537;
     color: white;
+    border: 1px solid #28435f;
 }
 
-.subjects {
+/* XP */
+
+.xpBox {
+    text-align: center;
+}
+
+.xpNumber {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.levelNumber {
+    color: #91a0b2;
+}
+
+/* STREAK */
+
+.streakBox {
+    text-align: center;
+}
+
+.streakNumber {
+    font-size: 54px;
+    font-weight: bold;
+}
+
+/* AI SECTION */
+
+.aiBox {
+    background:
+        linear-gradient(145deg, rgba(14,32,54,.98), rgba(8,15,25,.98));
+    border: 1px solid #31577e;
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.aiHeader {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
 }
 
-.subjectButton {
-    background: #191919;
-    color: white;
-    border: 1px solid #333;
+.aiIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #132c49;
+    border: 1px solid #31577e;
+    font-size: 24px;
 }
 
-.subjectButton.active {
-    background: white;
-    color: black;
+.aiTitle {
+    margin: 0;
 }
+
+.aiSubtitle {
+    color: #8495aa;
+    margin-top: 5px;
+}
+
+.sectionTitle {
+    color: #dce8f5;
+    margin-top: 24px;
+}
+
+/* MODE BUTTONS */
 
 .modeButtons {
     display: flex;
@@ -154,62 +247,70 @@ button:hover {
 }
 
 .modeButton {
-    background: #191919;
-    color: white;
+    background: #0c1622;
+    color: #b9c8d8;
+    border: 1px solid #263f59;
 }
 
 .modeButton.active {
-    background: white;
-    color: black;
+    background: #eaf3ff;
+    color: #07111e;
+    border-color: white;
 }
+
+/* SUBJECTS */
+
+.subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.subjectButton {
+    background: #0c1622;
+    color: #b9c8d8;
+    border: 1px solid #263f59;
+}
+
+.subjectButton.active {
+    background: #eaf3ff;
+    color: #07111e;
+}
+
+/* AI OUTPUT */
 
 .aiOutput {
     margin-top: 18px;
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 14px;
+    background: #070d15;
+    border: 1px solid #27415e;
+    border-radius: 15px;
     padding: 20px;
-    line-height: 1.7;
+    line-height: 1.75;
     white-space: pre-wrap;
+    min-height: 110px;
+    color: #dce7f3;
 }
 
-.xpBox {
-    text-align: center;
-}
-
-.xpNumber {
-    font-size: 45px;
-    font-weight: bold;
-}
-
-.levelNumber {
-    color: #aaa;
-}
-
-.streakBox {
-    text-align: center;
-}
-
-.streakNumber {
-    font-size: 52px;
-    font-weight: bold;
-}
+/* TIMER */
 
 .timer {
     text-align: center;
 }
 
 .timerDisplay {
-    font-size: 68px;
+    font-size: 70px;
     font-weight: bold;
     margin: 18px 0;
+    letter-spacing: 2px;
 }
+
+/* TASKS */
 
 .task {
     list-style: none;
-    background: #141414;
-    border: 1px solid #292929;
-    border-radius: 15px;
+    background: #0d1621;
+    border: 1px solid #1f3852;
+    border-radius: 16px;
     padding: 18px;
     margin: 12px 0;
 }
@@ -221,65 +322,150 @@ button:hover {
 
 .taskSubject,
 .taskDeadline {
-    color: #aaa;
+    color: #8797aa;
     margin-top: 7px;
 }
 
 .completedTask {
-    opacity: .55;
+    opacity: .5;
 }
 
 .completedTask .taskName {
     text-decoration: line-through;
 }
 
+/* STUDY CARDS */
+
 .todayCard,
 .planDay,
 .examCountdown {
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 13px;
+    background: #080f18;
+    border: 1px solid #213b56;
+    border-radius: 14px;
     padding: 18px;
     margin-top: 10px;
 }
 
 .todayInfo,
 .planDay p {
-    color: #aaa;
+    color: #8797aa;
 }
 
 .priority {
     display: inline-block;
-    background: #222;
+    background: #15283d;
+    border: 1px solid #284968;
     border-radius: 8px;
     padding: 7px 10px;
 }
 
 .empty {
     text-align: center;
-    color: #666;
+    color: #66768a;
     padding: 25px;
 }
 
+/* FOOTER */
+
 footer {
     text-align: center;
-    color: #555;
+    color: #526174;
     padding: 35px;
 }
 
+/* MOBILE */
+
 @media(max-width:650px) {
-    .dashboard {
-        grid-template-columns: 1fr;
+
+    .container {
+        width: 94%;
+    }
+
+    header {
+        padding: 28px 5px 20px;
     }
 
     header h1 {
-        font-size: 42px;
+        font-size: 43px;
+        letter-spacing: 2px;
+    }
+
+    header p {
+        font-size: 11px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .stat,
+    .box {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .stat h2 {
+        font-size: 27px;
+    }
+
+    .aiHeader {
+        align-items: flex-start;
+    }
+
+    .aiIcon {
+        min-width: 45px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .modeButtons,
+    .subjects {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+    }
+
+    .modeButton,
+    .subjectButton {
+        width: 100%;
+        margin: 0;
+        min-height: 46px;
+    }
+
+    textarea {
+        min-height: 145px;
+        font-size: 16px;
+    }
+
+    input,
+    select {
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .mainButton {
+        min-height: 50px;
+        font-size: 15px;
     }
 
     .timerDisplay {
-        font-size: 50px;
+        font-size: 52px;
+    }
+
+    .task {
+        padding: 16px;
+    }
+
+    .task button {
+        min-height: 43px;
+    }
+
+    footer {
+        padding: 28px 10px;
     }
 }
+
 </style>
 </head>
 
@@ -288,161 +474,305 @@ footer {
 <div class="container">
 
 <header>
+
     <h1>📚 AKIM</h1>
-    <p>YOUR PERSONAL STUDY ASSISTANT</p>
+
+    <p>
+        YOUR PERSONAL STUDY ASSISTANT
+    </p>
+
 </header>
+
+
+<!-- DASHBOARD -->
 
 <div class="dashboard">
 
     <div class="stat">
+
         <h2 id="totalTasks">0</h2>
+
         <p>Total Tasks</p>
+
     </div>
 
     <div class="stat">
+
         <h2 id="completedTasks">0</h2>
+
         <p>Completed</p>
+
     </div>
 
     <div class="stat">
+
         <h2 id="progressText">0%</h2>
+
         <p>Progress</p>
+
     </div>
 
 </div>
+
+
+<!-- XP -->
 
 <div class="box xpBox">
 
     <h2>⚡ AKIM XP</h2>
 
-    <div class="xpNumber" id="xp">0</div>
+    <div
+        class="xpNumber"
+        id="xp">
+        0
+    </div>
 
     <div class="levelNumber">
-        Level <span id="level">1</span>
+
+        Level
+        <span id="level">
+            1
+        </span>
+
     </div>
 
 </div>
+
+
+<!-- PROGRESS -->
 
 <div class="box">
 
     <h3>🎯 Your Progress</h3>
 
     <div class="progressBar">
-        <div class="progress" id="progress"></div>
+
+        <div
+            class="progress"
+            id="progress">
+        </div>
+
     </div>
 
 </div>
+
+
+<!-- STREAK -->
 
 <div class="box streakBox">
 
     <h2>🔥 Study Streak</h2>
 
-    <div class="streakNumber" id="streak">0</div>
+    <div
+        class="streakNumber"
+        id="streak">
+        0
+    </div>
 
-    <p style="color:#888;">days in a row</p>
+    <p style="color:#8190a2;">
+        days in a row
+    </p>
 
 </div>
 
-<div class="box">
 
-    <h2>🤖 AKIM AI</h2>
+<!-- AKIM AI -->
 
-    <p style="color:#888;">
-        Your personal study assistant. Learn, practise,
-        test yourself and level up.
+<div class="box aiBox">
+
+    <div class="aiHeader">
+
+        <div class="aiIcon">
+            🤖
+        </div>
+
+        <div>
+
+            <h2 class="aiTitle">
+                AKIM AI
+            </h2>
+
+            <div class="aiSubtitle">
+                Your personal study assistant
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <p style="color:#91a0b2;">
+
+        Learn smarter. Ask questions,
+        understand difficult topics,
+        practise and prepare for exams.
+
     </p>
 
-    <h3>Choose Mode</h3>
+
+    <h3 class="sectionTitle">
+        🎯 Choose Mode
+    </h3>
+
 
     <div class="modeButtons">
 
-        <button class="modeButton active"
+        <button
+            class="modeButton active"
             id="coachMode"
             onclick="setMode('coach')">
+
             🎯 Study Coach
+
         </button>
 
-        <button class="modeButton"
+
+        <button
+            class="modeButton"
             id="explainMode"
             onclick="setMode('explain')">
+
             📚 Explainer
+
         </button>
 
-        <button class="modeButton"
+
+        <button
+            class="modeButton"
             id="quizMode"
             onclick="setMode('quiz')">
+
             🧠 Quiz Mode
+
         </button>
 
     </div>
 
-    <h3>Choose Subject</h3>
+
+    <h3 class="sectionTitle">
+        📚 Choose Subject
+    </h3>
+
 
     <div class="subjects">
 
-        <button class="subjectButton active"
+        <button
+            class="subjectButton active"
             onclick="setSubject('General',this)">
+
             📚 General
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('Biology',this)">
+
             🧬 Biology
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('Chemistry',this)">
+
             🧪 Chemistry
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('Physics',this)">
+
             ⚡ Physics
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('Mathematics',this)">
+
             ➗ Mathematics
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('History',this)">
+
             📖 History
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('Geography',this)">
+
             🌍 Geography
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('English',this)">
+
             🇬🇧 English
+
         </button>
 
-        <button class="subjectButton"
+
+        <button
+            class="subjectButton"
             onclick="setSubject('Kiswahili',this)">
+
             🇰🇪 Kiswahili
+
         </button>
 
     </div>
+
+
+    <h3 class="sectionTitle">
+        💬 Ask AKIM
+    </h3>
+
 
     <textarea
         id="aiQuestion"
-        placeholder="Ask AKIM about studying, revision, subjects, exams, or anything you want to learn..."></textarea>
+        placeholder="Ask AKIM anything you want to learn...">
+    </textarea>
 
-    <button class="mainButton"
+
+    <button
+        class="mainButton"
         onclick="askGojo()">
+
         🤖 Ask AKIM AI
+
     </button>
 
-    <div id="aiOutput" class="aiOutput">
+
+    <div
+        id="aiOutput"
+        class="aiOutput">
+
         🎯 AKIM STUDY COACH
 
         Tell me what you are studying and I'll help you make a realistic study strategy.
+
     </div>
 
 </div>
+
+
+<!-- TODAY -->
 
 <div class="box">
 
@@ -452,6 +782,9 @@ footer {
 
 </div>
 
+
+<!-- TIMER -->
+
 <div class="box timer">
 
     <h2>⏱️ Study Session</h2>
@@ -460,67 +793,110 @@ footer {
         Choose a task to begin.
     </div>
 
-    <div id="timerDisplay" class="timerDisplay">
+    <div
+        id="timerDisplay"
+        class="timerDisplay">
+
         25:00
+
     </div>
 
-    <button class="mainButton"
+
+    <button
+        class="mainButton"
         onclick="startTimer()">
+
         ▶ Start
+
     </button>
 
-    <button class="secondaryButton"
+
+    <button
+        class="secondaryButton"
         onclick="pauseTimer()">
+
         ⏸ Pause
+
     </button>
 
-    <button class="secondaryButton"
+
+    <button
+        class="secondaryButton"
         onclick="resetTimer()">
+
         🔄 Reset
+
     </button>
 
-    <p id="timerStatus" style="color:#888;">
+
+    <p
+        id="timerStatus"
+        style="color:#8190a2;">
+
         Ready to focus.
+
     </p>
 
 </div>
+
+
+<!-- ADD TASK -->
 
 <div class="box">
 
     <h2>➕ Add Task</h2>
 
-    <input id="task"
+    <input
+        id="task"
         placeholder="What do you need to do?">
 
-    <input id="subject"
+    <input
+        id="subject"
         placeholder="Subject">
 
-    <input id="deadline"
+    <input
+        id="deadline"
         type="date">
 
-    <button class="mainButton"
+    <button
+        class="mainButton"
         onclick="addTask()">
+
         Add Task
+
     </button>
 
 </div>
+
+
+<!-- SMART STUDY -->
 
 <div class="box">
 
     <h2>🧠 Smart Study Mode</h2>
 
-    <p style="color:#888;">
-        Create a realistic revision plan based on your exam date.
+    <p style="color:#8190a2;">
+
+        Create a realistic revision plan
+        based on your exam date.
+
     </p>
 
-    <input id="studySubject"
+
+    <input
+        id="studySubject"
         placeholder="Subject e.g. Biology">
 
-    <input id="studyTopic"
+
+    <input
+        id="studyTopic"
         placeholder="Topic e.g. Cells">
 
-    <input id="examDate"
+
+    <input
+        id="examDate"
         type="date">
+
 
     <select id="intensity">
 
@@ -528,52 +904,86 @@ footer {
             🟢 Light — 30 min/day
         </option>
 
-        <option value="normal" selected>
+        <option
+            value="normal"
+            selected>
+
             🟡 Normal — 1 hour/day
+
         </option>
 
         <option value="intensive">
+
             🔴 Intensive — 2+ hours/day
+
         </option>
 
     </select>
 
-    <button class="mainButton"
+
+    <button
+        class="mainButton"
         onclick="createPlan()">
+
         Create Study Plan
+
     </button>
+
 
     <div id="studyPlan"></div>
 
 </div>
 
+
+<!-- TASKS -->
+
 <h2>📋 My Tasks</h2>
 
 <ul id="taskList"></ul>
 
+
 <footer>
-    AKIM • Learning today. Building tomorrow. 🌍
+
+    AKIM • Learning today.
+    Building tomorrow. 🌍
+
 </footer>
 
 </div>
 
+
 <script>
 
 let tasks =
-    JSON.parse(localStorage.getItem("gojoTasks")) || [];
+    JSON.parse(
+        localStorage.getItem("gojoTasks")
+    ) || [];
+
 
 let xp =
-    Number(localStorage.getItem("gojoXP")) || 0;
+    Number(
+        localStorage.getItem("gojoXP")
+    ) || 0;
+
 
 let streak =
-    Number(localStorage.getItem("gojoStreak")) || 0;
+    Number(
+        localStorage.getItem("gojoStreak")
+    ) || 0;
+
 
 let lastStudy =
-    localStorage.getItem("gojoLastStudy") || "";
+    localStorage.getItem(
+        "gojoLastStudy"
+    ) || "";
 
-let selectedMode = "coach";
 
-let selectedSubject = "General";
+let selectedMode =
+    "coach";
+
+
+let selectedSubject =
+    "General";
 
 
 function save() {
@@ -614,37 +1024,61 @@ function addXP(amount) {
 
 function updateDashboard() {
 
-    let total = tasks.length;
+    let total =
+        tasks.length;
+
 
     let completed =
-        tasks.filter(t => t.completed).length;
+        tasks.filter(
+            t => t.completed
+        ).length;
+
 
     let percent =
         total === 0
         ? 0
-        : Math.round((completed / total) * 100);
+        : Math.round(
+            (completed / total) * 100
+        );
 
-    document.getElementById("totalTasks")
-        .textContent = total;
 
-    document.getElementById("completedTasks")
-        .textContent = completed;
+    document.getElementById(
+        "totalTasks"
+    ).textContent = total;
 
-    document.getElementById("progressText")
-        .textContent = percent + "%";
 
-    document.getElementById("progress")
-        .style.width = percent + "%";
+    document.getElementById(
+        "completedTasks"
+    ).textContent = completed;
 
-    document.getElementById("xp")
-        .textContent = xp;
 
-    document.getElementById("level")
-        .textContent =
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        percent + "%";
+
+
+    document.getElementById(
+        "progress"
+    ).style.width =
+        percent + "%";
+
+
+    document.getElementById(
+        "xp"
+    ).textContent = xp;
+
+
+    document.getElementById(
+        "level"
+    ).textContent =
         Math.floor(xp / 100) + 1;
 
-    document.getElementById("streak")
-        .textContent = streak;
+
+    document.getElementById(
+        "streak"
+    ).textContent =
+        streak;
 
 }
 
@@ -652,24 +1086,33 @@ function updateDashboard() {
 function addTask() {
 
     let name =
-        document.getElementById("task")
-        .value.trim();
+        document.getElementById(
+            "task"
+        ).value.trim();
+
 
     let subject =
-        document.getElementById("subject")
-        .value.trim();
+        document.getElementById(
+            "subject"
+        ).value.trim();
+
 
     let deadline =
-        document.getElementById("deadline")
-        .value;
+        document.getElementById(
+            "deadline"
+        ).value;
+
 
     if (!name) {
 
-        alert("Enter a task first.");
+        alert(
+            "Enter a task first."
+        );
 
         return;
 
     }
+
 
     tasks.push({
 
@@ -685,15 +1128,25 @@ function addTask() {
 
     });
 
+
     save();
 
     displayTasks();
 
-    document.getElementById("task").value = "";
 
-    document.getElementById("subject").value = "";
+    document.getElementById(
+        "task"
+    ).value = "";
 
-    document.getElementById("deadline").value = "";
+
+    document.getElementById(
+        "subject"
+    ).value = "";
+
+
+    document.getElementById(
+        "deadline"
+    ).value = "";
 
 }
 
@@ -701,9 +1154,13 @@ function addTask() {
 function displayTasks() {
 
     let list =
-        document.getElementById("taskList");
+        document.getElementById(
+            "taskList"
+        );
+
 
     list.innerHTML = "";
+
 
     if (tasks.length === 0) {
 
@@ -718,15 +1175,25 @@ function displayTasks() {
 
     }
 
-    tasks.forEach((task,index) => {
+
+    tasks.forEach(
+        (task,index) => {
 
         let li =
-            document.createElement("li");
+            document.createElement(
+                "li"
+            );
 
-        li.className = "task";
+
+        li.className =
+            "task";
+
 
         if (task.completed)
-            li.classList.add("completedTask");
+            li.classList.add(
+                "completedTask"
+            );
+
 
         li.innerHTML = `
 
@@ -742,21 +1209,32 @@ function displayTasks() {
                 📅 ${escapeHTML(task.deadline)}
             </div>
 
-            <button class="secondaryButton"
+            <button
+                class="secondaryButton"
                 onclick="completeTask(${index})">
-                ${task.completed ? "Undo" : "Complete"}
+
+                ${task.completed
+                    ? "Undo"
+                    : "Complete"}
+
             </button>
 
-            <button class="secondaryButton"
+
+            <button
+                class="secondaryButton"
                 onclick="deleteTask(${index})">
+
                 Delete
+
             </button>
 
         `;
 
+
         list.appendChild(li);
 
     });
+
 
     updateDashboard();
 
@@ -769,18 +1247,22 @@ function completeTask(index) {
 
     if (!tasks[index].completed) {
 
-        tasks[index].completed = true;
+        tasks[index].completed =
+            true;
 
         addXP(25);
 
         updateStreak();
 
     }
+
     else {
 
-        tasks[index].completed = false;
+        tasks[index].completed =
+            false;
 
     }
+
 
     save();
 
@@ -791,7 +1273,10 @@ function completeTask(index) {
 
 function deleteTask(index) {
 
-    tasks.splice(index,1);
+    tasks.splice(
+        index,
+        1
+    );
 
     save();
 
@@ -803,27 +1288,43 @@ function deleteTask(index) {
 function updateStreak() {
 
     let today =
-        new Date().toISOString().split("T")[0];
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
 
     if (lastStudy === today)
         return;
 
+
     let yesterday =
         new Date();
+
 
     yesterday.setDate(
         yesterday.getDate() - 1
     );
 
-    let yesterdayString =
-        yesterday.toISOString().split("T")[0];
 
-    if (lastStudy === yesterdayString)
+    let yesterdayString =
+        yesterday
+        .toISOString()
+        .split("T")[0];
+
+
+    if (
+        lastStudy ===
+        yesterdayString
+    )
         streak++;
+
     else
         streak = 1;
 
-    lastStudy = today;
+
+    lastStudy =
+        today;
+
 
     save();
 
@@ -833,21 +1334,35 @@ function updateStreak() {
 function updateToday() {
 
     let box =
-        document.getElementById("todayStudy");
+        document.getElementById(
+            "todayStudy"
+        );
+
 
     let unfinished =
-        tasks.filter(t => !t.completed);
+        tasks.filter(
+            t => !t.completed
+        );
 
-    if (unfinished.length === 0) {
+
+    if (
+        unfinished.length === 0
+    ) {
 
         box.innerHTML = `
 
             <div class="todayCard">
 
-                <h3>🎉 You're all caught up!</h3>
+                <h3>
+                    🎉 You're all caught up!
+                </h3>
 
                 <p class="todayInfo">
-                    Add a task and AKIM will help you decide what to study next.
+
+                    Add a task and AKIM
+                    will help you decide
+                    what to study next.
+
                 </p>
 
             </div>
@@ -858,7 +1373,10 @@ function updateToday() {
 
     }
 
-    let task = unfinished[0];
+
+    let task =
+        unfinished[0];
+
 
     box.innerHTML = `
 
@@ -869,7 +1387,8 @@ function updateToday() {
             </h3>
 
             <p class="todayInfo">
-                📖 Subject: ${escapeHTML(task.subject)}
+                📖 Subject:
+                ${escapeHTML(task.subject)}
             </p>
 
             <p class="todayInfo">
@@ -877,7 +1396,8 @@ function updateToday() {
             </p>
 
             <p class="todayInfo">
-                ⏱️ Suggested study time: 25–60 minutes
+                ⏱️ Suggested study time:
+                25–60 minutes
             </p>
 
             <div class="priority">
@@ -888,66 +1408,111 @@ function updateToday() {
 
     `;
 
-    document.getElementById("timerTask")
-        .textContent =
-        "🎯 " + task.name + " — " + task.subject;
+
+    document.getElementById(
+        "timerTask"
+    ).textContent =
+        "🎯 " +
+        task.name +
+        " — " +
+        task.subject;
 
 }
 
 
 function setMode(mode) {
 
-    selectedMode = mode;
+    selectedMode =
+        mode;
 
-    document.querySelectorAll(".modeButton")
-        .forEach(button =>
-            button.classList.remove("active")
+
+    document
+        .querySelectorAll(
+            ".modeButton"
+        )
+        .forEach(
+            button =>
+                button.classList.remove(
+                    "active"
+                )
         );
+
 
     if (mode === "coach")
-        document.getElementById("coachMode")
-            .classList.add("active");
+        document
+            .getElementById(
+                "coachMode"
+            )
+            .classList.add(
+                "active"
+            );
+
 
     if (mode === "explain")
-        document.getElementById("explainMode")
-            .classList.add("active");
+        document
+            .getElementById(
+                "explainMode"
+            )
+            .classList.add(
+                "active"
+            );
+
 
     if (mode === "quiz")
-        document.getElementById("quizMode")
-            .classList.add("active");
+        document
+            .getElementById(
+                "quizMode"
+            )
+            .classList.add(
+                "active"
+            );
 
 }
 
 
-function setSubject(subject,button) {
+function setSubject(
+    subject,
+    button
+) {
 
-    selectedSubject = subject;
+    selectedSubject =
+        subject;
 
-    document.querySelectorAll(".subjectButton")
-        .forEach(b =>
-            b.classList.remove("active")
+
+    document
+        .querySelectorAll(
+            ".subjectButton"
+        )
+        .forEach(
+            b =>
+                b.classList.remove(
+                    "active"
+                )
         );
 
-    button.classList.add("active");
+
+    button.classList.add(
+        "active"
+    );
 
 }
 
 
-/*
-==========================================================
-AKIM AI
-PUBLIC ONLINE BACKEND
-==========================================================
-*/
+/* AKIM AI */
 
 async function askGojo() {
 
     let question =
-        document.getElementById("aiQuestion")
-        .value.trim();
+        document.getElementById(
+            "aiQuestion"
+        ).value.trim();
+
 
     let output =
-        document.getElementById("aiOutput");
+        document.getElementById(
+            "aiOutput"
+        );
+
 
     if (!question) {
 
@@ -958,38 +1523,56 @@ async function askGojo() {
 
     }
 
+
     output.textContent =
         "🤖 AKIM is thinking...";
 
+
     try {
 
-        const response = await fetch(
-            "https://gojo-ai-backend.onrender.com/api/ai",
-            {
-                method: "POST",
+        const response =
+            await fetch(
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                "https://gojo-ai-backend.onrender.com/api/ai",
 
-                body: JSON.stringify({
+                {
 
-                    message: question,
+                    method:"POST",
 
-                    mode:
-                        selectedMode || "coach",
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                    subject:
-                        selectedSubject || "General"
+                    body:
+                        JSON.stringify({
 
-                })
-            }
-        );
+                            message:
+                                question,
+
+                            mode:
+                                selectedMode ||
+                                "coach",
+
+                            subject:
+                                selectedSubject ||
+                                "General"
+
+                        })
+
+                }
+
+            );
+
 
         const data =
             await response.json();
 
-        if (!response.ok || !data.success) {
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
 
             throw new Error(
                 data.error ||
@@ -998,19 +1581,23 @@ async function askGojo() {
 
         }
 
+
         output.textContent =
             data.answer;
+
 
         addXP(5);
 
     }
 
-    catch (error) {
+
+    catch(error) {
 
         console.error(
             "AKIM AI error:",
             error
         );
+
 
         output.textContent =
             "⚠️ AKIM AI could not connect right now. Please try again in a moment.";
@@ -1020,31 +1607,39 @@ async function askGojo() {
 }
 
 
-/*
-==========================================================
-SMART STUDY PLAN
-==========================================================
-*/
+/* SMART STUDY PLAN */
 
 function createPlan() {
 
     let subject =
-        document.getElementById("studySubject")
-        .value.trim();
+        document.getElementById(
+            "studySubject"
+        ).value.trim();
+
 
     let topic =
-        document.getElementById("studyTopic")
-        .value.trim();
+        document.getElementById(
+            "studyTopic"
+        ).value.trim();
+
 
     let exam =
-        document.getElementById("examDate")
-        .value;
+        document.getElementById(
+            "examDate"
+        ).value;
+
 
     let intensity =
-        document.getElementById("intensity")
-        .value;
+        document.getElementById(
+            "intensity"
+        ).value;
 
-    if (!subject || !topic || !exam) {
+
+    if (
+        !subject ||
+        !topic ||
+        !exam
+    ) {
 
         alert(
             "Fill in the subject, topic and exam date."
@@ -1054,8 +1649,10 @@ function createPlan() {
 
     }
 
+
     let today =
         new Date();
+
 
     today.setHours(
         0,
@@ -1064,16 +1661,19 @@ function createPlan() {
         0
     );
 
+
     let examDate =
         new Date(
             exam + "T00:00:00"
         );
+
 
     let days =
         Math.ceil(
             (examDate - today) /
             86400000
         );
+
 
     let time =
         intensity === "light"
@@ -1082,10 +1682,12 @@ function createPlan() {
         ? "1 hour"
         : "2+ hours";
 
+
     let plan =
         document.getElementById(
             "studyPlan"
         );
+
 
     if (days < 0) {
 
@@ -1093,7 +1695,8 @@ function createPlan() {
 
             <div class="examCountdown">
 
-                ⚠️ That exam date has already passed.
+                ⚠️ That exam date
+                has already passed.
 
             </div>
 
@@ -1102,6 +1705,7 @@ function createPlan() {
         return;
 
     }
+
 
     plan.innerHTML = `
 
@@ -1118,77 +1722,84 @@ function createPlan() {
 
         </div>
 
+
         <div class="planDay">
 
             <h3>📖 Learn</h3>
 
             <p>
-                Understand the main concepts
-                of ${escapeHTML(topic)}.
+                Understand the main
+                concepts of
+                ${escapeHTML(topic)}.
             </p>
 
         </div>
+
 
         <div class="planDay">
 
             <h3>🧠 Recall</h3>
 
             <p>
-                Close your notes and explain
+                Close your notes and
+                explain
                 ${escapeHTML(topic)}
                 from memory.
             </p>
 
         </div>
 
+
         <div class="planDay">
 
             <h3>✍️ Practice</h3>
 
             <p>
-                Complete practice questions
-                and identify weak areas.
+                Complete practice
+                questions and identify
+                weak areas.
             </p>
 
         </div>
+
 
         <div class="planDay">
 
             <h3>🔍 Review</h3>
 
             <p>
-                Review mistakes and spend extra
-                time on difficult concepts.
+                Review mistakes and
+                spend extra time on
+                difficult concepts.
             </p>
 
         </div>
+
 
         <div class="planDay">
 
             <h3>🎯 Final Revision</h3>
 
             <p>
-                Test yourself without notes
-                before the exam.
+                Test yourself without
+                notes before the exam.
             </p>
 
         </div>
 
     `;
 
+
     addXP(10);
 
 }
 
 
-/*
-==========================================================
-TIMER
-==========================================================
-*/
+/* TIMER */
 
 let timeLeft =
     25 * 60;
+
 
 let timer =
     null;
@@ -1201,15 +1812,22 @@ function updateTimer() {
             timeLeft / 60
         );
 
+
     let seconds =
         timeLeft % 60;
+
 
     document.getElementById(
         "timerDisplay"
     ).textContent =
+
         String(minutes)
         .padStart(2,"0")
-        + ":" +
+
+        + ":"
+
+        +
+
         String(seconds)
         .padStart(2,"0");
 
@@ -1221,54 +1839,72 @@ function startTimer() {
     if (timer)
         return;
 
+
     document.getElementById(
         "timerStatus"
     ).textContent =
         "🔥 Focus mode active...";
 
+
     timer =
-        setInterval(() => {
+        setInterval(
+            () => {
 
-            timeLeft--;
-
-            updateTimer();
-
-            if (timeLeft <= 0) {
-
-                clearInterval(timer);
-
-                timer = null;
-
-                timeLeft =
-                    25 * 60;
+                timeLeft--;
 
                 updateTimer();
 
-                addXP(25);
 
-                updateStreak();
+                if (
+                    timeLeft <= 0
+                ) {
 
-                document.getElementById(
-                    "timerStatus"
-                ).textContent =
-                    "🎉 Session complete! +25 XP";
+                    clearInterval(
+                        timer
+                    );
 
-                alert(
-                    "🎉 Study session complete! You earned 25 XP."
-                );
+                    timer = null;
 
-            }
 
-        },1000);
+                    timeLeft =
+                        25 * 60;
+
+
+                    updateTimer();
+
+
+                    addXP(25);
+
+                    updateStreak();
+
+
+                    document.getElementById(
+                        "timerStatus"
+                    ).textContent =
+                        "🎉 Session complete! +25 XP";
+
+
+                    alert(
+                        "🎉 Study session complete! You earned 25 XP."
+                    );
+
+                }
+
+            },
+            1000
+        );
 
 }
 
 
 function pauseTimer() {
 
-    clearInterval(timer);
+    clearInterval(
+        timer
+    );
 
     timer = null;
+
 
     document.getElementById(
         "timerStatus"
@@ -1280,14 +1916,19 @@ function pauseTimer() {
 
 function resetTimer() {
 
-    clearInterval(timer);
+    clearInterval(
+        timer
+    );
 
     timer = null;
+
 
     timeLeft =
         25 * 60;
 
+
     updateTimer();
+
 
     document.getElementById(
         "timerStatus"
@@ -1297,29 +1938,41 @@ function resetTimer() {
 }
 
 
-/*
-==========================================================
-SECURITY
-==========================================================
-*/
+/* SECURITY */
 
 function escapeHTML(value) {
 
     return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-/*
-==========================================================
-START
-==========================================================
-*/
+/* START */
 
 updateTimer();
 
@@ -1331,8 +1984,3 @@ updateDashboard();
 
 </body>
 </html>
-```
-
-**Copy everything inside that block → replace the entire contents of `index.html` on GitHub → Commit changes.**
-
-Then we'll do **one more step** to make the Akim logo appear properly as the app icon. 🔥
