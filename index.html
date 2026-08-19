@@ -144,8 +144,8 @@ button:hover {
 }
 
 button:disabled {
-    cursor: not-allowed;
-    opacity: .55;
+    cursor: wait;
+    opacity: .65;
     transform: none;
 }
 
@@ -274,33 +274,6 @@ button:disabled {
     color: #dce7f3;
 }
 
-.aiLoading {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #9db5cf;
-}
-
-.aiDot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #76aeea;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%,100% {
-        opacity: .3;
-        transform: scale(.8);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
 .timer {
     text-align: center;
 }
@@ -367,6 +340,20 @@ button:disabled {
     text-align: center;
     color: #66768a;
     padding: 25px;
+}
+
+.aiLoading {
+    color: #91bce8;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0%,100% {
+        opacity: .55;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 footer {
@@ -665,15 +652,13 @@ footer {
 
     <textarea
         id="aiQuestion"
-        placeholder="Ask AKIM anything you want to learn..."
-        autocomplete="off">
-    </textarea>
+        placeholder="Ask AKIM anything you want to learn..."></textarea>
 
     <button
-        class="mainButton"
         id="askButton"
+        class="mainButton"
         onclick="askAkim()">
-        🤖 Ask AKIM AI
+        ⚡ Ask AKIM
     </button>
 
     <div id="aiOutput" class="aiOutput">
@@ -806,7 +791,8 @@ footer {
 <ul id="taskList"></ul>
 
 <footer>
-    AKIM • Learning today. Building tomorrow. 🌍
+    AKIM • Learning today.
+    Building tomorrow. 🌍
 </footer>
 
 </div>
@@ -818,54 +804,34 @@ footer {
 ========================= */
 
 let tasks =
-    JSON.parse(localStorage.getItem("gojoTasks")) || [];
+    JSON.parse(
+        localStorage.getItem("akimTasks") ||
+        localStorage.getItem("gojoTasks") ||
+        "[]"
+    );
 
 let xp =
-    Number(localStorage.getItem("gojoXP")) || 0;
+    Number(
+        localStorage.getItem("akimXP") ||
+        localStorage.getItem("gojoXP") ||
+        0
+    );
 
 let streak =
-    Number(localStorage.getItem("gojoStreak")) || 0;
+    Number(
+        localStorage.getItem("akimStreak") ||
+        localStorage.getItem("gojoStreak") ||
+        0
+    );
 
 let lastStudy =
-    localStorage.getItem("gojoLastStudy") || "";
+    localStorage.getItem("akimLastStudy") ||
+    localStorage.getItem("gojoLastStudy") ||
+    "";
 
 let selectedMode = "coach";
 
 let selectedSubject = "General";
-
-let aiBusy = false;
-
-
-/* =========================
-   AI CACHE
-========================= */
-
-const AI_CACHE_KEY = "akimAiCache";
-
-function getAICache() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(AI_CACHE_KEY)
-        ) || {};
-
-    } catch {
-
-        return {};
-
-    }
-
-}
-
-function saveAICache(cache) {
-
-    localStorage.setItem(
-        AI_CACHE_KEY,
-        JSON.stringify(cache)
-    );
-
-}
 
 
 /* =========================
@@ -875,25 +841,24 @@ function saveAICache(cache) {
 function save() {
 
     localStorage.setItem(
-        "gojoTasks",
+        "akimTasks",
         JSON.stringify(tasks)
     );
 
     localStorage.setItem(
-        "gojoXP",
+        "akimXP",
         xp
     );
 
     localStorage.setItem(
-        "gojoStreak",
+        "akimStreak",
         streak
     );
 
     localStorage.setItem(
-        "gojoLastStudy",
+        "akimLastStudy",
         lastStudy
     );
-
 }
 
 
@@ -908,7 +873,6 @@ function addXP(amount) {
     save();
 
     updateDashboard();
-
 }
 
 
@@ -961,14 +925,12 @@ function updateDashboard() {
 
     document.getElementById(
         "streak"
-    ).textContent =
-        streak;
-
+    ).textContent = streak;
 }
 
 
 /* =========================
-   TASKS
+   ADD TASK
 ========================= */
 
 function addTask() {
@@ -995,12 +957,11 @@ function addTask() {
         );
 
         return;
-
     }
 
     tasks.push({
 
-        name,
+        name: name,
 
         subject:
             subject || "General",
@@ -1009,7 +970,6 @@ function addTask() {
             deadline || "No deadline",
 
         completed: false
-
     });
 
     save();
@@ -1027,9 +987,12 @@ function addTask() {
     document.getElementById(
         "deadline"
     ).value = "";
-
 }
 
+
+/* =========================
+   DISPLAY TASKS
+========================= */
 
 function displayTasks() {
 
@@ -1050,11 +1013,10 @@ function displayTasks() {
         updateDashboard();
 
         return;
-
     }
 
     tasks.forEach(
-        (task,index) => {
+        (task, index) => {
 
             const li =
                 document.createElement(
@@ -1068,7 +1030,6 @@ function displayTasks() {
                 li.classList.add(
                     "completedTask"
                 );
-
             }
 
             li.innerHTML = `
@@ -1089,9 +1050,11 @@ function displayTasks() {
                     class="secondaryButton"
                     onclick="completeTask(${index})">
 
-                    ${task.completed
+                    ${
+                        task.completed
                         ? "Undo"
-                        : "Complete"}
+                        : "Complete"
+                    }
 
                 </button>
 
@@ -1102,20 +1065,21 @@ function displayTasks() {
                     Delete
 
                 </button>
-
             `;
 
             list.appendChild(li);
-
         }
     );
 
     updateDashboard();
 
     updateToday();
-
 }
 
+
+/* =========================
+   COMPLETE TASK
+========================= */
 
 function completeTask(index) {
 
@@ -1130,24 +1094,25 @@ function completeTask(index) {
     } else {
 
         tasks[index].completed = false;
-
     }
 
     save();
 
     displayTasks();
-
 }
 
 
+/* =========================
+   DELETE TASK
+========================= */
+
 function deleteTask(index) {
 
-    tasks.splice(index,1);
+    tasks.splice(index, 1);
 
     save();
 
     displayTasks();
-
 }
 
 
@@ -1188,13 +1153,11 @@ function updateStreak() {
     } else {
 
         streak = 1;
-
     }
 
     lastStudy = today;
 
     save();
-
 }
 
 
@@ -1235,11 +1198,14 @@ function updateToday() {
                 </p>
 
             </div>
-
         `;
 
-        return;
+        document.getElementById(
+            "timerTask"
+        ).textContent =
+            "Choose a task to begin.";
 
+        return;
     }
 
     const task =
@@ -1272,7 +1238,6 @@ function updateToday() {
             </div>
 
         </div>
-
     `;
 
     document.getElementById(
@@ -1282,12 +1247,11 @@ function updateToday() {
         task.name +
         " — " +
         task.subject;
-
 }
 
 
 /* =========================
-   AI MODE
+   MODES
 ========================= */
 
 function setMode(mode) {
@@ -1314,7 +1278,6 @@ function setMode(mode) {
             .classList.add(
                 "active"
             );
-
     }
 
     if (mode === "explain") {
@@ -1326,7 +1289,6 @@ function setMode(mode) {
             .classList.add(
                 "active"
             );
-
     }
 
     if (mode === "quiz") {
@@ -1338,11 +1300,13 @@ function setMode(mode) {
             .classList.add(
                 "active"
             );
-
     }
-
 }
 
+
+/* =========================
+   SUBJECT
+========================= */
 
 function setSubject(
     subject,
@@ -1365,7 +1329,6 @@ function setSubject(
     button.classList.add(
         "active"
     );
-
 }
 
 
@@ -1375,27 +1338,20 @@ function setSubject(
 
 async function askAkim() {
 
-    if (aiBusy) {
-        return;
-    }
-
-    const input =
+    const question =
         document.getElementById(
             "aiQuestion"
-        );
+        ).value.trim();
 
     const output =
         document.getElementById(
             "aiOutput"
         );
 
-    const button =
+    const askButton =
         document.getElementById(
             "askButton"
         );
-
-    const question =
-        input.value.trim();
 
     if (!question) {
 
@@ -1403,74 +1359,25 @@ async function askAkim() {
             "Tell AKIM what you want to learn first.";
 
         return;
-
     }
 
-    const cacheKey =
-        JSON.stringify({
+    askButton.disabled = true;
 
-            question:
-                question.toLowerCase(),
+    askButton.textContent =
+        "⚡ AKIM is thinking...";
 
-            mode:
-                selectedMode,
+    output.innerHTML =
+        '<span class="aiLoading">🤖 AKIM is thinking...</span>';
 
-            subject:
-                selectedSubject
-
-        });
-
-    const cache =
-        getAICache();
-
-    /* Instant answer if already asked */
-
-    if (cache[cacheKey]) {
-
-        output.textContent =
-            cache[cacheKey];
-
-        return;
-
-    }
-
-    aiBusy = true;
-
-    button.disabled = true;
-
-    button.textContent =
-        "🤖 AKIM is thinking...";
-
-    output.innerHTML = `
-
-        <div class="aiLoading">
-
-            <div class="aiDot"></div>
-
-            AKIM is thinking...
-
-        </div>
-
-    `;
-
-    const controller =
-        new AbortController();
-
-    const timeout =
-        setTimeout(
-            () => controller.abort(),
-            30000
-        );
+    const startTime =
+        Date.now();
 
     try {
 
         const response =
             await fetch(
-
                 "https://gojo-ai-backend.onrender.com/api/ai",
-
                 {
-
                     method: "POST",
 
                     headers: {
@@ -1489,16 +1396,9 @@ async function askAkim() {
                         subject:
                             selectedSubject
 
-                    }),
-
-                    signal:
-                        controller.signal
-
+                    })
                 }
-
             );
-
-        clearTimeout(timeout);
 
         const data =
             await response.json();
@@ -1512,104 +1412,37 @@ async function askAkim() {
                 data.error ||
                 "AKIM AI request failed."
             );
-
         }
-
-        const answer =
-            data.answer ||
-            "AKIM did not receive an answer.";
 
         output.textContent =
-            answer;
-
-        /* Save answer for instant repeat questions */
-
-        cache[cacheKey] = answer;
-
-        /* Keep cache small */
-
-        const cacheKeys =
-            Object.keys(cache);
-
-        if (cacheKeys.length > 20) {
-
-            delete cache[
-                cacheKeys[0]
-            ];
-
-        }
-
-        saveAICache(cache);
+            data.answer;
 
         addXP(5);
 
-    }
+        console.log(
+            "AKIM response time:",
+            Date.now() - startTime,
+            "ms"
+        );
 
-    catch(error) {
+    } catch (error) {
 
         console.error(
             "AKIM AI error:",
             error
         );
 
-        if (
-            error.name ===
-            "AbortError"
-        ) {
+        output.textContent =
+            "⚠️ AKIM AI could not connect right now. Please try again.";
 
-            output.textContent =
-                "⏳ AKIM took too long to respond. Please try again.";
+    } finally {
 
-        } else {
+        askButton.disabled = false;
 
-            output.textContent =
-                "⚠️ AKIM AI could not connect right now. Please try again.";
-
-        }
-
+        askButton.textContent =
+            "⚡ Ask AKIM";
     }
-
-    finally {
-
-        clearTimeout(timeout);
-
-        aiBusy = false;
-
-        button.disabled = false;
-
-        button.textContent =
-            "🤖 Ask AKIM AI";
-
-    }
-
 }
-
-
-/* =========================
-   ENTER TO ASK
-========================= */
-
-document
-    .getElementById(
-        "aiQuestion"
-    )
-    .addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                askAkim();
-
-            }
-
-        }
-    );
 
 
 /* =========================
@@ -1649,14 +1482,16 @@ function createPlan() {
         );
 
         return;
-
     }
 
     const today =
         new Date();
 
     today.setHours(
-        0,0,0,0
+        0,
+        0,
+        0,
+        0
     );
 
     const examDate =
@@ -1692,11 +1527,9 @@ function createPlan() {
                 has already passed.
 
             </div>
-
         `;
 
         return;
-
     }
 
     plan.innerHTML = `
@@ -1719,8 +1552,7 @@ function createPlan() {
             <h3>📖 Learn</h3>
 
             <p>
-                Understand the main
-                concepts of
+                Understand the main concepts of
                 ${escapeHTML(topic)}.
             </p>
 
@@ -1731,8 +1563,7 @@ function createPlan() {
             <h3>🧠 Recall</h3>
 
             <p>
-                Close your notes and
-                explain
+                Close your notes and explain
                 ${escapeHTML(topic)}
                 from memory.
             </p>
@@ -1744,9 +1575,8 @@ function createPlan() {
             <h3>✍️ Practice</h3>
 
             <p>
-                Complete practice
-                questions and identify
-                weak areas.
+                Complete practice questions
+                and identify weak areas.
             </p>
 
         </div>
@@ -1756,9 +1586,8 @@ function createPlan() {
             <h3>🔍 Review</h3>
 
             <p>
-                Review mistakes and
-                spend extra time on
-                difficult concepts.
+                Review mistakes and spend extra
+                time on difficult concepts.
             </p>
 
         </div>
@@ -1768,16 +1597,14 @@ function createPlan() {
             <h3>🎯 Final Revision</h3>
 
             <p>
-                Test yourself without
-                notes before the exam.
+                Test yourself without notes
+                before the exam.
             </p>
 
         </div>
-
     `;
 
     addXP(10);
-
 }
 
 
@@ -1788,7 +1615,6 @@ function createPlan() {
 let timeLeft = 25 * 60;
 
 let timer = null;
-
 
 function updateTimer() {
 
@@ -1805,22 +1631,22 @@ function updateTimer() {
     ).textContent =
 
         String(minutes)
-        .padStart(2,"0")
+        .padStart(2, "0")
 
         + ":"
 
         +
 
         String(seconds)
-        .padStart(2,"0");
-
+        .padStart(2, "0");
 }
 
 
 function startTimer() {
 
-    if (timer)
+    if (timer) {
         return;
+    }
 
     document.getElementById(
         "timerStatus"
@@ -1862,13 +1688,11 @@ function startTimer() {
                     alert(
                         "🎉 Study session complete! You earned 25 XP."
                     );
-
                 }
 
             },
             1000
         );
-
 }
 
 
@@ -1882,7 +1706,6 @@ function pauseTimer() {
         "timerStatus"
     ).textContent =
         "⏸️ Session paused.";
-
 }
 
 
@@ -1901,7 +1724,6 @@ function resetTimer() {
         "timerStatus"
     ).textContent =
         "Ready to focus.";
-
 }
 
 
@@ -1937,12 +1759,11 @@ function escapeHTML(value) {
             /'/g,
             "&#039;"
         );
-
 }
 
 
 /* =========================
-   START AKIM
+   START
 ========================= */
 
 updateTimer();
@@ -1951,9 +1772,33 @@ displayTasks();
 
 updateDashboard();
 
-</script>
 
-<script>
+/* =========================
+   ENTER KEY = ASK AKIM
+========================= */
+
+document
+    .getElementById("aiQuestion")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                askAkim();
+            }
+        }
+    );
+
+
+/* =========================
+   SERVICE WORKER
+========================= */
 
 if ("serviceWorker" in navigator) {
 
@@ -1961,10 +1806,8 @@ if ("serviceWorker" in navigator) {
         "load",
         () => {
 
-            navigator
-                .serviceWorker
+            navigator.serviceWorker
                 .register("./sw.js")
-
                 .then(() => {
 
                     console.log(
@@ -1972,7 +1815,6 @@ if ("serviceWorker" in navigator) {
                     );
 
                 })
-
                 .catch(error => {
 
                     console.error(
@@ -1981,10 +1823,8 @@ if ("serviceWorker" in navigator) {
                     );
 
                 });
-
         }
     );
-
 }
 
 </script>
